@@ -36,7 +36,7 @@
 |---|---|---|
 | Runtime | Node 24 LTS, ESM-only | Active LTS до апреля 2028; stable `require(esm)` |
 | Package manager | **pnpm 10** | Lifecycle-скрипты выключены по умолчанию (supply-chain), стабильный lockfile |
-| TypeScript | 5.9 strict | `verbatimModuleSyntax`, `moduleResolution: bundler`, `noUncheckedIndexedAccess`, `isolatedModules`, `noImplicitOverride` |
+| TypeScript | **6.0** strict (stable с 23.03.2026, последний JS-based major перед 7.0 на Go) | `verbatimModuleSyntax`, `moduleResolution: bundler`, `noUncheckedIndexedAccess`, `isolatedModules`, `noImplicitOverride` |
 | Bundler / dev | **Vite 8 (Rolldown)** | Production-stable, ~7-10× быстрее на prod-сборке |
 
 ### Каркас React
