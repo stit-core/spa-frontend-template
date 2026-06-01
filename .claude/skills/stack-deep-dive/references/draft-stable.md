@@ -1,0 +1,29 @@
+# Промоушн draft → stable (stack)
+
+Контракт перевода артефакта `docs/stack/<kind>.md` в `status: stable`.
+
+## Чек-лист
+
+1. **Все секции заполнены** или явно `_нет_`:
+   - `service.md` § Идентичность / Связь с экосистемой
+   - `runtime.md` § Node / Browser / React
+   - `config.md` § Runtime config keys / Build-time env / Секреты
+   - `routing.md` § TanStack Router / Layouts / Guards
+   - `api.md` § HTTP-клиент / OpenAPI / Auth / Mock
+   - `styling.md` § Источники / Оси темизации
+   - `observability.md` § Sentry / Web Vitals / OTel
+   - `dependencies.md` § Базовая подборка (зафиксирована) / Проектные / Запрещено
+
+2. **Generates непуст** — конкретные файлы, которые правит `/de-template`.
+
+3. **Cross-kind согласованность**:
+   - `config.md#API_BASE_URL` совпадает с тем, что использует `shared/config`
+   - `api.md#OpenAPI source` имеет URL/path
+   - `observability.md#DSN` (если активен) — есть в `config.md`
+   - `dependencies.md` не противоречит установленному `package.json`
+
+4. **Нет открытых `**blocker**`-вопросов** в `state/<kind>-questions.md`.
+
+## Эскалация при сомнении
+
+Те же правила что у fsd-deep-dive — `**blocker**`-строка в state, не промоушать.

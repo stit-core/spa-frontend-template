@@ -1,0 +1,22 @@
+@import "@stit-design/ui/theme.css";
+@import "tailwindcss";
+
+/*
+ * Корневые стили SPA. Темизация полностью наследуется от @stit-design/ui:
+ * - все DS-токены доступны как CSS-переменные и Tailwind-утилиты;
+ * - переключение data-scheme / data-brand / data-density управляется через features/theme.
+ */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-app-bg, #fafafa);
+  color: var(--color-app-fg, #0a0a0a);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
