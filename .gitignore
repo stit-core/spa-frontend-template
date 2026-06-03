@@ -11,6 +11,8 @@ coverage
 !.env.example
 !.env.local.example
 
+.claude/settings.local.json
+
 .DS_Store
 *.log
 *.swp

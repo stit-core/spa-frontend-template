@@ -39,7 +39,8 @@ description: Оркестратор онбординга потребителя 
 ### 1. Спроектировать FSD → `/fsd-deep-dive`
 
 - Скопировать шаблоны `docs/fsd/_templates/*.md` в `docs/fsd/*.md` (если нет)
-- `/fsd-deep-dive` читает `../docs/{project,interface,domains,screens}/` как контекст
+- `/fsd-deep-dive` читает соседнюю папку проекта `../docs/projects/<slug>/`
+  (product-файлы в корне + вложенные `interface/`, `domains/`, `screens/`) как контекст
 - Чейнить волнами вопросов inside-out до `status: stable` всех 8 артефактов
 - Gate: все `status: stable`, все `Generates` непусты
 

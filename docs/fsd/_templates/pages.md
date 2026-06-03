@@ -14,7 +14,7 @@ status: draft
 
 ## Карта pages
 
-| slice | путь URL | screen (../docs/screens) | guard | компонент |
+| slice | путь URL | screen (../docs/projects/<slug>/screens/screens) | guard | компонент |
 |---|---|---|---|---|
 | _name_ | _/path_ | _slug_ | _public / authenticated / role_ | _что внутри_ |
 

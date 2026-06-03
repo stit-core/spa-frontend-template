@@ -33,6 +33,10 @@ React 19.2, TanStack, Tailwind v4, MSW, …) — здесь решаем **пр�
 7. **`observability.md`** — Sentry SaaS/self-hosted, нужен ли OTel-proxy
 8. **`dependencies.md`** — проектные добавления вне базовой подборки
 
+Обязательные секции, Generates и anti-patterns по каждому kind —
+`references/field-checklists.md`. Режимы входа (заведение / сырьё /
+углубление) и cross-kind drift — `references/workflow-patterns.md`.
+
 ## Волны (3-5 за раз)
 
 Те же принципы что у `/fsd-deep-dive`. По каждому артефакту:
@@ -40,7 +44,8 @@ React 19.2, TanStack, Tailwind v4, MSW, …) — здесь решаем **пр�
 1. Подсветить базовые выборы шаблона (что уже зашито)
 2. Спросить проектные вариации
 3. Заполнить таблицу + `Generates`
-4. Открытые вопросы → `state/<kind>-questions.md`
+4. Открытые вопросы / решения / следующие шаги → `state/<kind>.md`
+   (формат — `references/state-format.md`)
 
 ## Промоушн draft → stable
 

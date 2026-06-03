@@ -14,7 +14,7 @@ status: draft
 
 ## Карта features
 
-| slice | сценарий | situation (../docs/interface) | использует entities | результат |
+| slice | сценарий | situation (../docs/projects/<slug>/interface) | использует entities | результат |
 |---|---|---|---|---|
 | _name_ | _что делает пользователь_ | _slug_ | _какие_ | _изменение state_ |
 

@@ -61,7 +61,8 @@ pnpm prepare   # lefthook install
 
 1. **`/fsd-deep-dive`** — волнами вопросов проектирует
    `docs/fsd/{app,pages,widgets,features,entities,shared-ui,shared-api,shared-lib}.md`.
-   Читает `../docs/{project,interface,domains,screens}/` как контекст.
+   Читает соседнюю папку проекта `../docs/projects/<slug>/` (product-файлы в
+   корне + вложенные `interface`/`domains`/`screens`) как контекст.
 2. **`/stack-deep-dive`** — добивает `docs/stack/{service,runtime,config,routing,api,styling,observability,dependencies}.md`
    поверх базовых выборов шаблона.
 3. После всех `status: stable` запускает **`/de-template`** — переименование

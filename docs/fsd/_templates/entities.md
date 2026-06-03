@@ -9,9 +9,10 @@ status: draft
 
 ## Назначение
 
-Доменные сущности (data-oriented). Source — `../docs/domains/` (DDD-артефакты бэка)
-или `../docs/interface/data-items.md` (если бэка нет). Каждая сущность —
-schema + queries/mutations + примитивный UI-presenter.
+Доменные сущности (data-oriented). Source — `../docs/projects/<slug>/domains/`
+(DDD-артефакты бэка) или `../docs/projects/<slug>/interface/data-items.md`
+(если бэка нет). Каждая сущность — schema + queries/mutations + примитивный
+UI-presenter.
 
 ## Карта entities
 

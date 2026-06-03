@@ -26,8 +26,11 @@ truth**; код пишется/генерируется по ним, не нао
 `features/auth`, `pages/profile`, `pages/todos`, `features/theme` — учебные
 образцы: изучить, потом удалить под свой проект (через `/de-template`).
 
-Контекст из соседнего docs-репо: `../docs/{project,interface,domains,screens}/` —
-читается `/fsd-deep-dive` как первичный источник проектирования (если есть).
+Контекст из соседнего docs-репо: `../docs/projects/<slug>/` — product-файлы
+(vision + persona/capability/surface/…) прямо в папке проекта,
+а `interface/`, `domains/`, `screens/` — вложенные внутри неё
+(`../docs/projects/<slug>/{interface,domains,screens}/`). Читается
+`/fsd-deep-dive` как первичный источник проектирования (если есть).
 
 ## Команды
 
@@ -50,7 +53,7 @@ truth**; код пишется/генерируется по ним, не нао
 | Тема | Где |
 |---|---|
 | Архитектура FSD, слои, public API | `docs/reference/architecture.md` + rule `fsd-architecture` |
-| Экосистема (3-4 репо, контракты) | `docs/reference/ecosystem.md` |
+| Экосистема (4 форкаемых шаблона, контракты) | `docs/reference/ecosystem.md` |
 | Observability (Sentry, web-vitals, OTel-proxy) | `docs/reference/observability.md` |
 | Deployment (Dockerfile, nginx, runtime config) | `docs/reference/deployment.md` |
 | Тесты | rule `tests-pipeline` |

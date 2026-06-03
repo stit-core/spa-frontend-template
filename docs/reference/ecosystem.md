@@ -2,11 +2,14 @@
 
 ## Соседние репозитории
 
-Типовой проект stit состоит из 3-4 репо рядом:
+Экосистема stit — **4 форкаемых шаблона** под оргом `stit-template` (этот репо
+один из них), плюс корп control-plane `stit-infra/{infra, golibinfra}` и
+дизайн-система `stit-design` (см. ниже). Типовой проект разворачивает рядом
+4 форка:
 
 ```
 ~/git/<org>/<project>/
-├─ docs/      ← project-docs-template (vision, persona, interface, domains, screens)
+├─ docs/      ← project-docs-template (per-project: projects/<slug>/{vision+таблицы, interface, domains, screens})
 ├─ backend/   ← go-backend-template (опционально)
 ├─ frontend/  ← spa-frontend-template (этот репо)
 └─ infra/     ← project-infra-template-compose
@@ -25,22 +28,34 @@
 
 | источник | потребитель | что |
 |---|---|---|
-| `docs/project/` | `frontend/`, `backend/` | persona, capability, surface |
-| `docs/interface/` | `frontend/` | who, situation, zone, block (вход для `/fsd-deep-dive`) |
-| `docs/domains/` | `backend/`, `frontend/` | DDD-сущности (вход для `mock-слоя`) |
-| `docs/screens/` | `frontend/` | flow, screen, block, shell |
+| `docs/projects/<slug>/` | `frontend/`, `backend/` | product-файлы в корне папки проекта: vision, persona, capability, surface |
+| `docs/projects/<slug>/interface/` | `frontend/` | who, situation, zone, block (вход для `/fsd-deep-dive`) |
+| `docs/projects/<slug>/domains/` | `backend/`, `frontend/` | DDD-сущности (вход для `mock-слоя`) |
+| `docs/projects/<slug>/screens/` | `frontend/` | flows, screens, blocks, shells |
 | `backend/openapi.json` | `frontend/` | контракт HTTP API (вход для Hey API codegen) |
 | `frontend/dist` | `infra/` | image push → CD pipeline |
 
+## Корп control-plane
+
+Вне форкаемых шаблонов — корпоративный control-plane под оргом `stit-infra`:
+
+- `stit-infra/infra` — корп-VPS: Vault (KV + AppRole онбординг проектов), registry
+  `git.stit.tech`, приём OTLP на `otel.stit.tech`, LE-DNS. Source-of-truth карты
+  экосистемы.
+- `stit-infra/golibinfra` — общая Go-библиотека (kit'ы), которую тянет `backend/`.
+
+Эти репо **не форкаются** — общие для всех проектов.
+
 ## Дизайн-система
 
-`@stit-design/ui` — **внешний** npm-пакет из `git.stit.tech/stit-design/ui-lib`.
-Не клонируется в проект, не реэкспортируется через `shared/ui`. Импортируется
-напрямую из любого слоя FSD.
+`@stit-design/ui` — **внешний** npm-пакет из `git.stit.tech/stit-design/ui-lib`
+(орг `stit-design`). Не клонируется в проект, не реэкспортируется через
+`shared/ui`. Импортируется напрямую из любого слоя FSD.
 
 ## Шаблон vs проект
 
-Каждый из шаблонов (`go-backend-template`, `spa-frontend-template`,
-`project-docs-template`, `project-infra-template-compose`) форкается через
-Gitea «Use this template» и проходит свой `/init-service` → `/de-template`.
-После — независимый проект.
+4 форкаемых шаблона (`go-backend-template`, `spa-frontend-template`,
+`project-docs-template`, `project-infra-template-compose`) живут под оргом
+`stit-template` и форкаются через Gitea «Use this template». Этот фронт-шаблон
+проходит `/init-service` → `/de-template`, после чего становится независимым
+проектом.

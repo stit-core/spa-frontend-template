@@ -22,8 +22,10 @@
    - `observability.md#DSN` (если активен) — есть в `config.md`
    - `dependencies.md` не противоречит установленному `package.json`
 
-4. **Нет открытых `**blocker**`-вопросов** в `state/<kind>-questions.md`.
+4. **Нет открытых `**blocker**`-вопросов** в `state/<kind>.md`
+   (формат — `references/state-format.md`).
 
 ## Эскалация при сомнении
 
-Те же правила что у fsd-deep-dive — `**blocker**`-строка в state, не промоушать.
+Те же правила что у fsd-deep-dive — `**blocker**`-строка в `## Открытые
+вопросы` заметки `state/<kind>.md`, не промоушать.

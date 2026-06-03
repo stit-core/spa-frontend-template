@@ -35,7 +35,7 @@ status: draft             # draft → stable (после полного запо
 ## Workflow
 
 1. Скопировать `_templates/<kind>.md` → `docs/fsd/<kind>.md` (8 штук)
-2. `/fsd-deep-dive` — заполнить волнами вопросов на основе `../docs/{project,interface,domains,screens}/`
+2. `/fsd-deep-dive` — заполнить волнами вопросов на основе `../docs/projects/<slug>/` (product-файлы в корне + вложенные `interface`/`domains`/`screens`)
 3. Промоушн `status: draft → stable` после полного заполнения всех обязательных секций
 4. `/de-template` читает stable-артефакты и разворачивает фундамент по секциям `Generates`
 

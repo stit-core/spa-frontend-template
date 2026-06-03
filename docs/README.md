@@ -16,13 +16,14 @@
 
 ## Внешние артефакты
 
-Проектная аналитика — в соседнем репо (`../docs/`), который создаётся из
-`project-docs-template`:
+Проектная аналитика — в соседнем репо (`../docs/`, форк `project-docs-template`),
+вложенная per-project в папке проекта `../docs/projects/<slug>/`:
 
-- `../docs/project/` — vision, persona, capability, surface, integration…
-- `../docs/interface/` — who, stage, situation, zone, block, ux-substrate, data-items
-- `../docs/domains/` — DDD-артефакты бэкенда (если есть)
-- `../docs/screens/` — flow, screen, block, shell
+- `../docs/projects/<slug>/` — product-файлы прямо в корне папки проекта:
+  vision.md + таблицы persona, capability, surface, integration…
+- `../docs/projects/<slug>/interface/` — who, stage, situation, zone, block, ux-substrate, data-items
+- `../docs/projects/<slug>/domains/` — DDD-артефакты бэкенда (если есть)
+- `../docs/projects/<slug>/screens/` — flows, screens, blocks, shells (каждый — подкаталог)
 
 `/fsd-deep-dive` **читает** эти артефакты как первичный контекст и мапит
 ситуации/блоки/сущности на FSD-слои.
@@ -30,7 +31,7 @@
 ## Reference
 
 - [`reference/architecture.md`](./reference/architecture.md) — слои, импорты, public API
-- [`reference/ecosystem.md`](./reference/ecosystem.md) — место в 3-репо схеме (docs/frontend/backend/infra)
+- [`reference/ecosystem.md`](./reference/ecosystem.md) — место в экосистеме шаблонов (docs/frontend/backend/infra + корп control-plane + дизайн-система)
 - [`reference/observability.md`](./reference/observability.md) — Sentry, web-vitals, OTel-proxy
 - [`reference/deployment.md`](./reference/deployment.md) — Dockerfile, nginx, runtime config
 - [`getting-started.md`](./getting-started.md) — для потребителя шаблона (META, удаляется в de-template)

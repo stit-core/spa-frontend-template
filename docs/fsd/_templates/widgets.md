@@ -17,7 +17,7 @@ status: draft
 
 ## Карта widgets
 
-| slice | назначение | использует entities/features | block (../docs/screens) |
+| slice | назначение | использует entities/features | block (../docs/projects/<slug>/screens/blocks) |
 |---|---|---|---|
 | _name_ | _что_ | _что_ | _slug_ |
 
