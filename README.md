@@ -1,9 +1,31 @@
+<div align="center">
+
 # spa-frontend-template
 
-Шаблон React SPA: TypeScript 6 / Vite 8 / React 19.2 + Compiler 1.0 /
-TanStack Router + Query + Form / Zustand / Zod 4 / Tailwind v4 + `@sftbmb/ui` /
-MSW для mock-режима / Sentry condit. + web-vitals / Biome + ESLint + Steiger /
-Vitest 4 + Playwright / pnpm 10 / lefthook.
+### React SPA на строгой FSD-архитектуре, mock-first
+
+Шаблон фронтенда экосистемы sftbmb: Vite + TypeScript + React 19 + TanStack,
+Feature-Sliced Design под линтером, дизайн-система `@sftbmb/ui`, mock-режим из
+коробки. Крутится без бэкенда с первой минуты; код пишется по спроектированной
+FSD-карте.
+
+[![License](https://img.shields.io/badge/license-Apache--2.0-2563eb)](LICENSE)
+[![Часть sftbmb](https://img.shields.io/badge/sftbmb-открытые_шаблоны-6366f1)](https://git.sftbmb.ru/sftbmb-core/sftbmb-public)
+[![Vite](https://img.shields.io/badge/Vite-8-646cff)](#стек)
+[![React](https://img.shields.io/badge/React-19.2-149eca)](#стек)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6)](#стек)
+[![Arch](https://img.shields.io/badge/arch-FSD_%2B_Steiger-22c55e)](#структура)
+
+</div>
+
+---
+
+## Стек
+
+TypeScript 6 · Vite 8 · React 19.2 + Compiler 1.0 · TanStack Router (file-based)
++ Query + Form · Zustand · Zod 4 · Tailwind v4 + `@sftbmb/ui` · MSW (mock-режим) ·
+Sentry + web-vitals · Biome + ESLint + Steiger · Vitest 4 + Playwright · pnpm 10 ·
+lefthook.
 
 ## Быстрый старт
 
@@ -19,24 +41,27 @@ pnpm dev             # mock-режим по умолчанию → http://localh
 ```
 
 В углу появится мини-панель `mock:` — переключатель сценариев
-(`empty | populated | authenticated | error`) и кнопка `reset`.
+(`empty | populated | authenticated | error`) и кнопка `reset`. Бэкенд не нужен.
 
-## Воркфлоу для нового проекта
+## Воркфлоу нового проекта
 
 ```
 0. Use this template на Gitea → клон → pnpm install
-1. /smartdev                  → сводка состояния
-2. /init-service              → оркестратор онбординга:
-   ├─ /fsd-deep-dive          → проектирование FSD-карты (docs/fsd/*)
-   ├─ /stack-deep-dive        → проектирование стека (docs/stack/*)
-   ├─ /de-template            → разворот фундамента
-   └─ /scaffold (по слайсам)  → реализация
-3. pnpm dev → SPA крутится в mock-режиме
-4. pnpm gen:api → клиент из /openapi.json (когда бэк появится)
-5. pnpm check → git push → CI собирает Docker image
+1. /smartdev          → сводка состояния
+2. /init-service      → оркестратор онбординга:
+   ├─ /fsd-deep-dive  → проектирование FSD-карты (docs/fsd/*)
+   ├─ /stack-deep-dive→ проектирование стека (docs/stack/*)
+   ├─ /de-template    → разворот фундамента
+   └─ /scaffold       → реализация по слайсам
+3. pnpm dev           → SPA крутится в mock-режиме
+4. pnpm gen:api       → клиент из /openapi.json (когда бэк появится)
+5. pnpm check → push  → CI собирает Docker image
 ```
 
-Полный путь — `docs/getting-started.md`.
+FSD-артефакты (`docs/fsd/`) и стек (`docs/stack/`) — **source of truth**; код
+пишется по ним. Reference-слайсы (`features/auth`, `pages/profile`, …) — учебные
+образцы: изучить, удалить под свой проект через `/de-template`. Полный путь —
+[`docs/getting-started.md`](docs/getting-started.md).
 
 ## Команды
 
@@ -51,33 +76,51 @@ pnpm gen              # route-tree + OpenAPI codegen
 pnpm check            # gate: typecheck + lint + format + test + steiger + size + build
 ```
 
+Перед claim «готово» / push — **`pnpm check`** (его же гоняет `lefthook pre-push`).
+
 ## Структура
 
-- `src/app/` — bootstrap, providers, router, root-стили
-- `src/pages/` — file-based TanStack Router routes
-- `src/widgets/` — переиспользуемые блоки
-- `src/features/` — пользовательские сценарии
-- `src/entities/` — доменные сущности
-- `src/shared/` — инфра: api, config, i18n, lib, ui, ui-lib
-- `docs/fsd/` — проектная карта слоёв (`/fsd-deep-dive`)
-- `docs/stack/` — проектная карта стека (`/stack-deep-dive`)
-- `docs/reference/` — стационарные доки (architecture, ecosystem, observability, deployment)
-- `.claude/skills/` — процедуры (init-service, fsd-deep-dive, stack-deep-dive, de-template, scaffold, plan, smartdev)
-- `.claude/rules/` — path-scoped правила (FSD, forward-only, comments, env, tests, ui-lib-gaps)
+Feature-Sliced Design, импорты строго нисходящие (`app → pages → widgets →
+features → entities → shared`), между слайсами одного слоя — запрещены; ловит
+Steiger.
 
-## Документация
-
-- [`docs/README.md`](./docs/README.md) — карта документации
-- [`docs/getting-started.md`](./docs/getting-started.md) — старт для потребителя шаблона
-- [`docs/reference/architecture.md`](./docs/reference/architecture.md) — FSD, слои, public API
-- [`docs/reference/deployment.md`](./docs/reference/deployment.md) — Docker + nginx + runtime config
+```
+src/app/          bootstrap, providers, router, root-стили
+src/pages/        file-based TanStack Router routes
+src/widgets/      переиспользуемые блоки
+src/features/     пользовательские сценарии
+src/entities/     доменные сущности
+src/shared/       инфра: api, config, i18n, lib, ui, ui-lib
+docs/fsd/         проектная карта слоёв (/fsd-deep-dive)
+docs/stack/       проектная карта стека (/stack-deep-dive)
+docs/reference/   стационарные доки (architecture, ecosystem, deployment)
+.claude/          скиллы и path-scoped правила
+```
 
 ## Дизайн-система
 
-`@sftbmb/ui` — внешний npm-пакет из `git.sftbmb.ru/sftbmb-core/ui-lib`.
-Импортируется напрямую из любого слоя. Если чего-то не хватает — gap-шим в
-`src/shared/ui-lib/` + запись в [`docs/ui-lib-gaps.md`](./docs/ui-lib-gaps.md).
+`@sftbmb/ui` — внешний npm-пакет из
+[`sftbmb-core/ui-lib`](https://git.sftbmb.ru/sftbmb-core/ui-lib). Импортируется
+напрямую из любого слоя. Чего-то не хватает — gap-шим в `src/shared/ui-lib/` +
+запись в [`docs/ui-lib-gaps.md`](docs/ui-lib-gaps.md), не самописный велосипед.
+
+## Документация
+
+| Документ | О чём |
+|---|---|
+| [`docs/README.md`](docs/README.md) | карта документации |
+| [`docs/getting-started.md`](docs/getting-started.md) | старт для потребителя шаблона |
+| [`docs/reference/architecture.md`](docs/reference/architecture.md) | FSD, слои, public API |
+| [`docs/reference/deployment.md`](docs/reference/deployment.md) | Docker + nginx + runtime config |
+| [`CLAUDE.md`](CLAUDE.md) | гайд для агента (ядро + роутер) |
+
+## Часть экосистемы sftbmb
+
+Это один из открытых шаблонов sftbmb (Apache-2.0) — фундамент «-1 уровня»,
+берите бесплатно и владейте. Карта всех шаблонов и точка входа —
+**[витрина sftbmb](https://git.sftbmb.ru/sftbmb-core/sftbmb-public)**. Нужна
+команда, стандарт или поддержка — **[наш подход и контакты (vision)](https://git.sftbmb.ru/sftbmb/vision)**.
 
 ## Лицензия
 
-Apache-2.0 — см. [LICENSE](./LICENSE).
+**Apache-2.0** — см. [`LICENSE`](LICENSE).
