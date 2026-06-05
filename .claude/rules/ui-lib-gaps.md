@@ -1,11 +1,11 @@
 ---
-description: Дисциплина шимов поверх @stit-design/ui. Активируется при правке shared/ui-lib/.
+description: Дисциплина шимов поверх @sftbmb/ui. Активируется при правке shared/ui-lib/.
 globs: ["src/shared/ui-lib/**", "docs/ui-lib-gaps.md"]
 ---
 
 # ui-lib gaps
 
-`@stit-design/ui` — источник DS. Если в DS чего-то **нет**, не пишем свой
+`@sftbmb/ui` — источник DS. Если в DS чего-то **нет**, не пишем свой
 велосипед в `shared/ui/`, а:
 
 1. Делаем **аккуратный шим** в `src/shared/ui-lib/<name>/`
@@ -17,7 +17,7 @@ globs: ["src/shared/ui-lib/**", "docs/ui-lib-gaps.md"]
 
 ## Когда выйдет в DS
 
-- Заменяем все импорты `@/shared/ui-lib/<name>` → `@stit-design/ui` (одной заменой)
+- Заменяем все импорты `@/shared/ui-lib/<name>` → `@sftbmb/ui` (одной заменой)
 - Удаляем папку шима
 - Удаляем запись из `docs/ui-lib-gaps.md` (forward-only)
 

@@ -1,8 +1,8 @@
-@import "@stit-design/ui/theme.css";
+@import "@sftbmb/ui/theme.css";
 @import "tailwindcss";
 
 /*
- * Корневые стили SPA. Темизация полностью наследуется от @stit-design/ui:
+ * Корневые стили SPA. Темизация полностью наследуется от @sftbmb/ui:
  * - все DS-токены доступны как CSS-переменные и Tailwind-утилиты;
  * - переключение data-scheme / data-brand / data-density управляется через features/theme.
  */

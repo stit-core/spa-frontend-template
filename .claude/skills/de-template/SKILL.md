@@ -27,7 +27,7 @@ description: Развернуть форк spa-frontend-template в самост
 ## Gate (проверить ДО любых правок)
 
 1. **Не канонический шаблон.** `package.json#name` ещё
-   `@stit/spa-frontend-template` И каталог — не временная копия/форк → СТОП.
+   `@sftbmb/spa-frontend-template` И каталог — не временная копия/форк → СТОП.
    Спроси юзера явно подтвердить, что это форк/тест-копия.
 
 2. **Артефакты stable.** Все 8 FSD-kind и все 8 stack-kind имеют
@@ -56,7 +56,7 @@ description: Развернуть форк spa-frontend-template в самост
 
 ```bash
 NEW_NAME=<scope из service.md>
-git grep -lF '@stit/spa-frontend-template' | xargs sed -i "s|@stit/spa-frontend-template|$NEW_NAME|g"
+git grep -lF '@sftbmb/spa-frontend-template' | xargs sed -i "s|@sftbmb/spa-frontend-template|$NEW_NAME|g"
 pnpm install
 ```
 

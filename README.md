@@ -1,7 +1,7 @@
 # spa-frontend-template
 
-Шаблон React SPA stit.tech: TypeScript 6 / Vite 8 / React 19.2 + Compiler 1.0 /
-TanStack Router + Query + Form / Zustand / Zod 4 / Tailwind v4 + `@stit-design/ui` /
+Шаблон React SPA: TypeScript 6 / Vite 8 / React 19.2 + Compiler 1.0 /
+TanStack Router + Query + Form / Zustand / Zod 4 / Tailwind v4 + `@sftbmb/ui` /
 MSW для mock-режима / Sentry condit. + web-vitals / Biome + ESLint + Steiger /
 Vitest 4 + Playwright / pnpm 10 / lefthook.
 
@@ -74,10 +74,10 @@ pnpm check            # gate: typecheck + lint + format + test + steiger + size 
 
 ## Дизайн-система
 
-`@stit-design/ui` — внешний npm-пакет из `git.stit.tech/stit-design/ui-lib`.
+`@sftbmb/ui` — внешний npm-пакет из `git.sftbmb.ru/sftbmb-core/ui-lib`.
 Импортируется напрямую из любого слоя. Если чего-то не хватает — gap-шим в
 `src/shared/ui-lib/` + запись в [`docs/ui-lib-gaps.md`](./docs/ui-lib-gaps.md).
 
 ## Лицензия
 
-Внутренний шаблон stit.tech.
+Apache-2.0 — см. [LICENSE](./LICENSE).

@@ -13,16 +13,16 @@ status: draft
 |---|---|
 | name | _<service>_ |
 | scope | `@<org>/<service>-spa` |
-| repository | `git@git.stit.tech:<org>/<service>-frontend.git` |
-| image registry | `git.stit.tech/<org>/<service>-spa` |
+| repository | `git@git.sftbmb.ru:<org>/<service>-frontend.git` |
+| image registry | `git.sftbmb.ru/<org>/<service>-spa` |
 | version scheme | _semver / git-sha_ |
 | owners | _кто_ |
 
 ## Связь с экосистемой
 
-- backend: `git.stit.tech/<org>/<service>-backend` (если есть)
-- docs: `git.stit.tech/<org>/<service>-docs`
-- infra: `git.stit.tech/<org>/<service>-infra`
+- backend: `git.sftbmb.ru/<org>/<service>-backend` (если есть)
+- docs: `git.sftbmb.ru/<org>/<service>-docs`
+- infra: `git.sftbmb.ru/<org>/<service>-infra`
 
 ## Generates
 
