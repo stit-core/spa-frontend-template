@@ -1,6 +1,3 @@
-###############################################################################
-# build stage
-###############################################################################
 FROM node:24-alpine AS build
 
 WORKDIR /app
@@ -14,9 +11,6 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
 COPY . .
 RUN pnpm build
 
-###############################################################################
-# runtime stage
-###############################################################################
 FROM nginx:1.27-alpine
 
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
