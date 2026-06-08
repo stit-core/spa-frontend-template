@@ -10,7 +10,7 @@ Feature-Sliced Design под линтером, дизайн-система `@sti
 FSD-карте.
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-2563eb)](LICENSE)
-[![Часть stit](https://img.shields.io/badge/stit-открытые_шаблоны-6366f1)](https://git.stit.tech/stit-core/sftbmb-public)
+[![Часть stit](https://img.shields.io/badge/stit-открытые_шаблоны-6366f1)](https://git.stit.tech/stit-core/stit-public)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff)](#стек)
 [![React](https://img.shields.io/badge/React-19.2-149eca)](#стек)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6)](#стек)
@@ -118,7 +118,7 @@ docs/reference/   стационарные доки (architecture, ecosystem, de
 
 Это один из открытых шаблонов stit (Apache-2.0) — фундамент «-1 уровня»,
 берите бесплатно и владейте. Карта всех шаблонов и точка входа —
-**[витрина stit](https://git.stit.tech/stit-core/sftbmb-public)**. Нужна
+**[витрина stit](https://git.stit.tech/stit-core/stit-public)**. Нужна
 команда, стандарт или поддержка — **[наш подход и контакты (vision)](https://git.stit.tech/stit/vision)**.
 
 ## Лицензия
