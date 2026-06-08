@@ -9,16 +9,16 @@ status: draft
 
 ## Источники
 
-- **Дизайн-система**: `@sftbmb/ui` — внешний npm-пакет из `git.sftbmb.ru/sftbmb-core/ui-lib`
+- **Дизайн-система**: `@stit-design/ui` — внешний npm-пакет из `git.stit.tech/stit-core/ui-lib`
 - **CSS framework**: Tailwind v4 (Oxide engine, `@theme`)
-- **Темизация**: через CSS-переменные из `@sftbmb/ui/theme.css`
+- **Темизация**: через CSS-переменные из `@stit-design/ui/theme.css`
 
 ## Корневой импорт
 
 `src/app/styles/index.css`:
 
 ```css
-@import "@sftbmb/ui/theme.css";
+@import "@stit-design/ui/theme.css";
 @import "tailwindcss";
 ```
 

@@ -2,9 +2,9 @@
 
 ## Соседние репозитории
 
-Экосистема sftbmb — **4 форкаемых шаблона** под оргом `sftbmb-core` (этот репо
-один из них), плюс корп control-plane `sftbmb-infra/infra`, общая Go-библиотека
-`sftbmb-core/golibinfra` и дизайн-система `sftbmb-core/ui-lib` (см. ниже). Типовой
+Экосистема sftbmb — **4 форкаемых шаблона** под оргом `stit-core` (этот репо
+один из них), плюс корп control-plane `stit-infra/infra`, общая Go-библиотека
+`stit-core/golibinfra` и дизайн-система `stit-core/ui-lib` (см. ниже). Типовой
 проект разворачивает рядом 4 форка:
 
 ```
@@ -37,18 +37,18 @@
 
 ## Корп control-plane
 
-Вне форкаемых шаблонов — корпоративный control-plane под оргом `sftbmb-infra`:
+Вне форкаемых шаблонов — корпоративный control-plane под оргом `stit-infra`:
 
-- `sftbmb-infra/infra` — корп-VPS: Vault (KV + AppRole онбординг проектов), registry
-  `git.sftbmb.ru`, приём OTLP на `otel.sftbmb.ru`, LE-DNS. Source-of-truth карты
+- `stit-infra/infra` — корп-VPS: Vault (KV + AppRole онбординг проектов), registry
+  `git.stit.tech`, приём OTLP на `otel.stit.tech`, LE-DNS. Source-of-truth карты
   экосистемы.
-- `sftbmb-core/golibinfra` — общая Go-библиотека (kit'ы), которую тянет `backend/`.
+- `stit-core/golibinfra` — общая Go-библиотека (kit'ы), которую тянет `backend/`.
 
 Эти репо **не форкаются** — общие для всех проектов.
 
 ## Дизайн-система
 
-`@sftbmb/ui` — **внешний** npm-пакет из `git.sftbmb.ru/sftbmb-core/ui-lib`.
+`@stit-design/ui` — **внешний** npm-пакет из `git.stit.tech/stit-core/ui-lib`.
 Не клонируется в проект, не реэкспортируется через
 `shared/ui`. Импортируется напрямую из любого слоя FSD.
 
@@ -56,6 +56,6 @@
 
 4 форкаемых шаблона (`go-backend-template`, `spa-frontend-template`,
 `project-docs-template`, `project-infra-template-compose`) живут под оргом
-`sftbmb-core` и форкаются через Gitea «Use this template». Этот фронт-шаблон
+`stit-core` и форкаются через Gitea «Use this template». Этот фронт-шаблон
 проходит `/init-service` → `/de-template`, после чего становится независимым
 проектом.

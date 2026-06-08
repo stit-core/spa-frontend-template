@@ -20,7 +20,7 @@ status: draft
 | HTTP | `openapi-fetch` | 0.13 |
 | Validation | `zod` | 4 |
 | i18n | `@lingui/core`, `@lingui/react`, `@lingui/macro` | 5 |
-| Styling | `tailwindcss`, `@sftbmb/ui` | 4 / latest |
+| Styling | `tailwindcss`, `@stit-design/ui` | 4 / latest |
 | Mock | `msw`, `@mswjs/data`, `@faker-js/faker` | 2 / 0.16 / 10 |
 | Observability | `@sentry/react`, `web-vitals` | 8 / 4 |
 | Testing | `vitest`, `@vitest/browser`, `@testing-library/*`, `playwright` | 4 / latest |
@@ -36,7 +36,7 @@ status: draft
 ## Запрещено
 
 - ❌ Дублирование функционала базовых пакетов (axios вместо openapi-fetch, Redux вместо Zustand+Query)
-- ❌ DS-аналоги (Material UI, shadcn, …) — используется `@sftbmb/ui`
+- ❌ DS-аналоги (Material UI, shadcn, …) — используется `@stit-design/ui`
 - ❌ Полифиллы без явной причины (target es2024 покрывает 99%)
 
 ## Generates

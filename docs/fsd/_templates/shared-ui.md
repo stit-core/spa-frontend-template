@@ -9,7 +9,7 @@ status: draft
 
 ## Назначение
 
-- `shared/ui/` — проектные обёртки над `@sftbmb/ui` (PageHeader,
+- `shared/ui/` — проектные обёртки над `@stit-design/ui` (PageHeader,
   DataTable c biz-семантикой). Тонкие, с layout-конвенциями проекта.
 - `shared/ui-lib/` — временные шимы для отсутствующих в DS компонентов.
   Дисциплина — `docs/ui-lib-gaps.md`.

@@ -1,6 +1,6 @@
 ---
 name: init-service
-description: Оркестратор онбординга потребителя шаблона — ведёт путь форк → проектирование FSD (fsd-deep-dive) → проектирование стека (stack-deep-dive) → de-template → /scaffold собственных слайсов, пока проект не перестанет помнить про шаблон. Активируй когда юзер форкнул spa-frontend-template и говорит "/init-service", "онбординг", "развернуть SPA из шаблона", "с чего начать новый фронтенд", или когда видишь свежий форк (package.json#name всё ещё @sftbmb/spa-frontend-template, reference-слайсы auth/profile/todos/theme на месте). Сам не проектирует и не де-темплейтит — чейнит специализированные скиллы по порядку.
+description: Оркестратор онбординга потребителя шаблона — ведёт путь форк → проектирование FSD (fsd-deep-dive) → проектирование стека (stack-deep-dive) → de-template → /scaffold собственных слайсов, пока проект не перестанет помнить про шаблон. Активируй когда юзер форкнул spa-frontend-template и говорит "/init-service", "онбординг", "развернуть SPA из шаблона", "с чего начать новый фронтенд", или когда видишь свежий форк (package.json#name всё ещё @stit-design/spa-frontend-template, reference-слайсы auth/profile/todos/theme на месте). Сам не проектирует и не де-темплейтит — чейнит специализированные скиллы по порядку.
 ---
 
 # Skill: init-service (онбординг-оркестратор)
@@ -15,7 +15,7 @@ description: Оркестратор онбординга потребителя 
 ## Когда применять
 
 - "/init-service" / «онбординг» / «развернул форк, что дальше»
-- Свежий форк: `package.json#name` ещё `@sftbmb/spa-frontend-template`,
+- Свежий форк: `package.json#name` ещё `@stit-design/spa-frontend-template`,
   reference-слайсы `features/auth`, `pages/profile`, `pages/todos`,
   `features/theme` на месте
 - Юзер: «хочу развернуть свой SPA из шаблона»

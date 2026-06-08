@@ -1,5 +1,5 @@
 {
-  "name": "@sftbmb/spa-frontend-template",
+  "name": "@stit-design/spa-frontend-template",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -32,7 +32,7 @@
     "prepare": "lefthook install"
   },
   "dependencies": {
-    "@sftbmb/ui": "^0.1.0",
+    "@stit-design/ui": "^0.1.0",
     "@tanstack/react-query": "^5.62.0",
     "@tanstack/react-router": "^1.95.0",
     "@lingui/core": "^5.2.0",

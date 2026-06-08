@@ -2,7 +2,7 @@
 
 Шаблон React SPA: TypeScript 6 / Vite 8 / React 19.2 + Compiler 1.0 /
 TanStack Router (file-based) + Query + Form / Zustand / Zod 4 / Tailwind v4 /
-`@sftbmb/ui` / MSW для mock-режима / Sentry condit. + web-vitals /
+`@stit-design/ui` / MSW для mock-режима / Sentry condit. + web-vitals /
 Biome 2 + ESLint 9 + Steiger / Vitest 4 + Playwright / pnpm 10 / lefthook.
 
 Этот файл — **ядро (always-on) + роутер**. Детали — в `docs/`, контекстные
@@ -105,7 +105,7 @@ truth**; код пишется/генерируется по ним, не нао
 - Коммитить `.env`, `*.pem`, `*.key`
 - Прямой `export *` из `index.ts` (только explicit re-exports)
 - Импорт из `../*/*/*/*` или мимо public API
-- Reimport `@sftbmb/ui` в `shared/ui/` (DS импортируется напрямую)
+- Reimport `@stit-design/ui` в `shared/ui/` (DS импортируется напрямую)
 - Самописная DS-альтернатива в `shared/ui/` (то, что есть в DS, должно быть из DS)
 
 ## Forward-only

@@ -66,7 +66,7 @@ app → pages → widgets → features → entities → shared
 widget/feature **только когда** реально переиспользуется. Steiger ловит
 `insignificant-slice` (widget с 1 референсом).
 
-## `@sftbmb/ui`
+## `@stit-design/ui`
 
 Импортируется **напрямую** из любого слоя — внешний пакет, не часть FSD-графа.
 **Не** реэкспортируется через `shared/ui`.
