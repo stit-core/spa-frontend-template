@@ -5,7 +5,7 @@
 ### React SPA на строгой FSD-архитектуре, mock-first
 
 Шаблон фронтенда экосистемы stit: Vite + TypeScript + React 19 + TanStack,
-Feature-Sliced Design под линтером, дизайн-система `@stit-design/ui`, mock-режим из
+Feature-Sliced Design под линтером, дизайн-система `@stit/ui`, mock-режим из
 коробки. Крутится без бэкенда с первой минуты; код пишется по спроектированной
 FSD-карте.
 
@@ -23,7 +23,7 @@ FSD-карте.
 ## Стек
 
 TypeScript 6 · Vite 8 · React 19.2 + Compiler 1.0 · TanStack Router (file-based)
-+ Query + Form · Zustand · Zod 4 · Tailwind v4 + `@stit-design/ui` · MSW (mock-режим) ·
++ Query + Form · Zustand · Zod 4 · Tailwind v4 + `@stit/ui` · MSW (mock-режим) ·
 Sentry + web-vitals · Biome + ESLint + Steiger · Vitest 4 + Playwright · pnpm 10 ·
 lefthook.
 
@@ -99,7 +99,7 @@ docs/reference/   стационарные доки (architecture, ecosystem, de
 
 ## Дизайн-система
 
-`@stit-design/ui` — внешний npm-пакет из
+`@stit/ui` — внешний npm-пакет из
 [`stit-core/ui-lib`](https://git.stit.tech/stit-core/ui-lib). Импортируется
 напрямую из любого слоя. Чего-то не хватает — gap-шим в `src/shared/ui-lib/` +
 запись в [`docs/ui-lib-gaps.md`](docs/ui-lib-gaps.md), не самописный велосипед.

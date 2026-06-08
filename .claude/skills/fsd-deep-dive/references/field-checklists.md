@@ -108,7 +108,7 @@ pages-first: вернуть в page-слайс); `widgets/<slice>.block` →
 `ui-lib-gaps`).
 
 **Anti-patterns**:
-- Реэкспорт `@stit-design/ui` через `shared/ui`.
+- Реэкспорт `@stit/ui` через `shared/ui`.
 - Самописная DS-альтернатива тому, что есть в DS.
 
 ---

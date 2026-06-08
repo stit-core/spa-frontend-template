@@ -23,7 +23,7 @@
 `project-slug` — папка продукта в `../docs/projects/<slug>/`.
 
 **Anti-patterns**:
-- `package.json#name` остался шаблонным (`@stit-design/spa-frontend-template`).
+- `package.json#name` остался шаблонным (`@stit/spa-frontend-template`).
 - Image-теги `:latest`/`:edge`.
 
 ---
@@ -99,7 +99,7 @@ guard-обвязка.
 **Generates содержит**: Tailwind v4 config, активные оси темизации
 (scheme/brand/density), корневой CSS-импорт.
 
-**Cross-kind**: оси темизации ↔ `@stit-design/ui` (DS-токены).
+**Cross-kind**: оси темизации ↔ `@stit/ui` (DS-токены).
 
 **Anti-patterns**:
 - Самописные токены поверх DS вместо DS-осей.
@@ -135,4 +135,4 @@ OTel-token — **только на бэке** (backend-as-proxy).
 
 **Anti-patterns**:
 - Проектная dep без обоснования в `Проектные добавления`.
-- Dep, дублирующая то, что уже даёт `@stit-design/ui` или базовая подборка.
+- Dep, дублирующая то, что уже даёт `@stit/ui` или базовая подборка.

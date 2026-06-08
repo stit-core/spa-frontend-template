@@ -6,7 +6,7 @@ interface PageHeaderProps {
   actions?: ReactNode
 }
 
-// Проектная обёртка с layout-семантикой. UI-примитивы (Heading, Stack) — из @stit-design/ui.
+// Проектная обёртка с layout-семантикой. UI-примитивы (Heading, Stack) — из @stit/ui.
 export function PageHeader({ title, description, actions }: PageHeaderProps) {
   return (
     <header className="flex items-start justify-between gap-4 border-b border-divider pb-4 mb-6">

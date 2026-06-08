@@ -48,7 +48,7 @@
 
 ## Дизайн-система
 
-`@stit-design/ui` — **внешний** npm-пакет из `git.stit.tech/stit-core/ui-lib`.
+`@stit/ui` — **внешний** npm-пакет из `git.stit.tech/stit-core/ui-lib`.
 Не клонируется в проект, не реэкспортируется через
 `shared/ui`. Импортируется напрямую из любого слоя FSD.
 

@@ -20,7 +20,7 @@ description: Cockpit сессии — сводка состояния (ветк�
 1. **Состояние git**: `git status --short` + `git log -3 --oneline`
 2. **Активный план**: первая Active-секция `.claude/plans/roadmap.md` (если есть)
 3. **Шаблонное ли состояние** репо:
-   - `head -1 package.json` показывает `"name": "@stit-design/spa-frontend-template"` (форк не разворачивался)
+   - `head -1 package.json` показывает `"name": "@stit/spa-frontend-template"` (форк не разворачивался)
    - reference-слайсы на месте (`src/features/auth`, `src/pages/profile`, `src/pages/todos`, `src/features/theme`)
    - `docs/fsd/*.md` — все ли `status: stable` (если нет — `/init-service`)
 4. **Gate-состояние**: можно ли запустить `pnpm check` (без выполнения — только подсказка)
