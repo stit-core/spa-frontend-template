@@ -5,7 +5,7 @@
 
 ## Что это
 
-Шаблон React SPA на TypeScript для sftbmb-проектов. Жёсткий FSD,
+Шаблон React SPA на TypeScript для stit-проектов. Жёсткий FSD,
 TanStack Router/Query, MSW для mock-режима, дизайн-система
 `@stit-design/ui` из приватного registry. После форка ты пройдёшь
 несколько этапов проектирования, и репо разверётся в самостоятельный
