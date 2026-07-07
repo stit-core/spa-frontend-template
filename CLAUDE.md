@@ -2,7 +2,7 @@
 
 Шаблон React SPA: TypeScript 6 / Vite 8 / React 19.2 + Compiler 1.0 /
 TanStack Router (file-based) + Query + Form / Zustand / Zod 4 / Tailwind v4 /
-`@stit/ui` / MSW для mock-режима / Sentry condit. + web-vitals /
+MSW для mock-режима / Sentry condit. + web-vitals /
 Biome 2 + ESLint 9 + Steiger / Vitest 4 + Playwright / pnpm 10 / lefthook.
 
 Этот файл — **ядро (always-on) + роутер**. Детали — в `docs/`, контекстные
@@ -58,7 +58,7 @@ truth**; код пишется/генерируется по ним, не нао
 | Deployment (Dockerfile, nginx, runtime config) | `docs/reference/deployment.md` |
 | Тесты | rule `tests-pipeline` |
 | env, секреты, runtime config | rule `env-local` |
-| Дисциплина шимов ui-lib | rule `ui-lib-gaps` + `docs/ui-lib-gaps.md` |
+| UI-компоненты (свои, agnostic, свой токен-слой) | rule `shared-ui` |
 | FSD-артефакты (8 kinds) | `docs/fsd/README.md` |
 | Stack-артефакты (8 kinds) | `docs/stack/README.md` |
 | Forward-only стиль | rule `forward-only` |
@@ -72,7 +72,8 @@ truth**; код пишется/генерируется по ним, не нао
   кроме обоснованных случаев (`eslint-plugin-react-compiler` ловит нарушения Rules of React)
 - **FSD-импорты** строго нисходящие (Steiger + `eslint-plugin-boundaries` + `no-restricted-imports`)
 - **Public API** — `index.ts` на каждом слайсе/сегменте sliceless-слоя, explicit re-exports
-- **`shared/ui-lib/` дисциплина** — каждый шим = запись в `docs/ui-lib-gaps.md`
+- **UI-компоненты пишутся в проекте** — design-system-agnostic, на собственном
+  токен-слое (`app/styles/index.css`), без внешней DS (rule `shared-ui`)
 - **Комментарии** — только WHY, кратко (rule `comments`)
 - **Forward-only** — все доки/комментарии описывают текущее состояние,
   без «было/стало», без changelog'ов в prose
@@ -105,8 +106,8 @@ truth**; код пишется/генерируется по ним, не нао
 - Коммитить `.env`, `*.pem`, `*.key`
 - Прямой `export *` из `index.ts` (только explicit re-exports)
 - Импорт из `../*/*/*/*` или мимо public API
-- Reimport `@stit/ui` в `shared/ui/` (DS импортируется напрямую)
-- Самописная DS-альтернатива в `shared/ui/` (то, что есть в DS, должно быть из DS)
+- Импорт внешней дизайн-системы / вендорных UI-китов (Material UI, shadcn, chakra…)
+- Хардкод сырых цветов/размеров в компонентах вместо семантических токенов (`app/styles/index.css`)
 
 ## Forward-only
 

@@ -17,7 +17,7 @@
 | `config` | `config.md` | runtime config keys, env, секреты-классы |
 | `routing` | `routing.md` | TanStack Router конфигурация, layouts |
 | `api` | `api.md` | OpenAPI source, codegen, mock-стратегия, auth scheme |
-| `styling` | `styling.md` | DS-источник, темы, layout-конвенции |
+| `styling` | `styling.md` | токен-слой, темы, layout-конвенции |
 | `observability` | `observability.md` | Sentry, web-vitals, OTel-proxy решение |
 | `dependencies` | `dependencies.md` | внешние deps вне базовой подборки, reasoning |
 

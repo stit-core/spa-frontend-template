@@ -32,7 +32,6 @@
     "prepare": "lefthook install"
   },
   "dependencies": {
-    "@stit/ui": "^0.1.0",
     "@tanstack/react-query": "^5.62.0",
     "@tanstack/react-router": "^1.95.0",
     "@lingui/core": "^5.2.0",

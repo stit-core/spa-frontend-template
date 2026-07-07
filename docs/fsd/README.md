@@ -17,7 +17,7 @@
 | `widgets` | `widgets.md` | переиспользуемые блоки, маппинг на `blocks/*` |
 | `features` | `features.md` | сценарии, маппинг на `situation/*` |
 | `entities` | `entities.md` | доменные сущности, маппинг на `domains/*` или `data-items` |
-| `shared-ui` | `shared-ui.md` | проектные обёртки над DS, шимы `ui-lib/` |
+| `shared-ui` | `shared-ui.md` | проектные UI-компоненты (свой токен-слой, agnostic) |
 | `shared-api` | `shared-api.md` | HTTP-клиент, OpenAPI codegen, mock-стратегия |
 | `shared-lib` | `shared-lib.md` | i18n, observability, lib-утилиты |
 

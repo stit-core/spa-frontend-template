@@ -19,7 +19,7 @@ app → pages → widgets → features → entities → shared
 | `widgets/` | переиспользуемые UI-блоки на ≥2 pages (Header, Sidebar, AppShell…) |
 | `features/` | пользовательские сценарии (LoginForm, CreateTodo, ThemeSwitcher) |
 | `entities/` | доменные сущности (Session, User, Todo) — schema + queries + ui-presenter |
-| `shared/` | инфра: api-клиент, mock-слой, config, i18n, lib, ui-обёртки, ui-lib-шимы |
+| `shared/` | инфра: api-клиент, mock-слой, config, i18n, lib, ui-компоненты |
 
 ## Сегменты слайса
 
@@ -59,13 +59,19 @@ Steiger ловит `insignificant-slice`.
 3. `@x`-нотация **только для `entities/`** (`entities/song/@x/playlist.ts`),
    не для `features/`
 
-## Дизайн-система
+## UI-компоненты
 
-`@stit/ui` — внешний npm-пакет, импортируется напрямую из любого слоя.
+Внешней дизайн-системы нет — все компоненты пишутся в проекте и делаются
+design-system-agnostic: опираются только на собственный токен-слой
+(`app/styles/index.css` — Tailwind v4 `@theme` + семантические переменные,
+тема через `data-scheme`), не на вендорную DS.
 
-- `shared/ui/` — проектные обёртки над DS (PageHeader, DataTable c biz-семантикой)
-- `shared/ui-lib/` — временные шимы для отсутствующих в DS компонентов
-  (см. `docs/ui-lib-gaps.md` для дисциплины)
+- `shared/ui/` — переиспользуемые примитивы и обёртки с layout-/biz-семантикой
+  (PageHeader, DataTable…)
+- слайс-локальный UI — в `ui/`-сегменте слайса, поднимается в `shared/ui/`
+  при реальном переиспользовании
+
+Дисциплина — rule `shared-ui`.
 
 ## Линт-стек
 

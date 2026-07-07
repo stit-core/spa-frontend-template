@@ -49,8 +49,8 @@ app → pages → widgets → features → entities → shared
 | Route-tree (autogen) | `src/app/router/routeTree.gen.ts` |
 | File-based routes | `src/pages/<slug>.tsx` или `src/pages/<slug>/route.ts` |
 | Mock-слой | `src/shared/api/mock/` |
-| DS-обёртки | `src/shared/ui/<name>/` |
-| DS-шимы (gaps) | `src/shared/ui-lib/<name>/` + запись в `docs/ui-lib-gaps.md` |
+| Проектные UI-компоненты | `src/shared/ui/<name>/` |
+| Семантические токены, темы | `src/app/styles/index.css` |
 
 ## Cross-feature
 
@@ -66,10 +66,12 @@ app → pages → widgets → features → entities → shared
 widget/feature **только когда** реально переиспользуется. Steiger ловит
 `insignificant-slice` (widget с 1 референсом).
 
-## `@stit/ui`
+## UI-компоненты
 
-Импортируется **напрямую** из любого слоя — внешний пакет, не часть FSD-графа.
-**Не** реэкспортируется через `shared/ui`.
+Внешней дизайн-системы нет — компоненты пишутся в проекте и делаются
+design-system-agnostic (опираются только на собственный токен-слой
+`app/styles/index.css`). Полное правило — `shared-ui`.
 
-В `shared/ui/` — только проектные обёртки (layout-семантика, biz-семантика).
-В `shared/ui-lib/` — только gap-шимы.
+- `shared/ui/` — переиспользуемые примитивы и обёртки (layout-/biz-семантика)
+- слайс-локальный UI — в `ui/`-сегменте слайса, поднимается в `shared/ui/`
+  при реальном переиспользовании

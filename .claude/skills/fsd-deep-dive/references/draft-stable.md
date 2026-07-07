@@ -12,7 +12,7 @@ DDD-проектирование, которое FSD мапит на слои).
    - `widgets.md` § Карта widgets
    - `features.md` § Карта features / Cross-feature
    - `entities.md` § Карта entities / Schema и валидация
-   - `shared-ui.md` § Карта shared/ui/ / Карта shared/ui-lib/
+   - `shared-ui.md` § Карта shared/ui/
    - `shared-api.md` § HTTP-клиент / OpenAPI codegen / Mock-стратегия / Telemetry-proxy
    - `shared-lib.md` § Состав / i18n
 

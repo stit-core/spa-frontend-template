@@ -28,9 +28,10 @@
   Между слайсами одного слоя импорт запрещён; только вниз через public API. Steiger +
   `eslint-plugin-boundaries` enforce'ят.
 - **Public API** — `index.ts` на каждом слайсе/сегменте, explicit re-exports (не `export *`).
-- **`@stit/ui` — источник DS.** Импортируется напрямую из любого слоя, не
-  реэкспортируется через `shared/ui`. Чего нет в DS — gap-шим в `src/shared/ui-lib/`
-  + запись в `docs/ui-lib-gaps.md`, не самописный велосипед.
+- **UI-компоненты пишутся в проекте, design-system-agnostic.** Внешней DS нет;
+  компоненты опираются только на собственный токен-слой (`src/app/styles/index.css`,
+  тема через `data-scheme`) — в `shared/ui/` (переиспользуемое) или `ui/`-сегменте
+  слайса. Rule `shared-ui`.
 - **Секреты не в бандле.** Access-token не в localStorage; в `import.meta.env.VITE_*` —
   только не-секретное (попадает в публичный бандл). Детали — rule `env-local`.
 - **Forward-only документация.** Текст описывает текущее состояние, без «было/стало» —

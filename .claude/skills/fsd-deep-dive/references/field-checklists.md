@@ -98,18 +98,16 @@ pages-first: вернуть в page-слайс); `widgets/<slice>.block` →
 
 ## shared-ui
 
-**Обязательные секции**: `Карта shared/ui/`, `Карта shared/ui-lib/`,
-`Generates`.
+**Обязательные секции**: `Карта shared/ui/`, `Generates`.
 
-**Generates содержит**: `src/shared/ui/<name>/` (проектные обёртки),
-`src/shared/ui-lib/<name>/` (gap-шимы) + строки в `docs/ui-lib-gaps.md`.
+**Generates содержит**: `src/shared/ui/<name>/` (проектные компоненты) + `index.ts`.
 
-**Cross-kind**: каждый gap-шим — запись в `docs/ui-lib-gaps.md` (rule
-`ui-lib-gaps`).
+**Cross-kind**: компоненты опираются на токен-слой `app/styles/index.css`
+(rule `shared-ui`, `styling.md`).
 
 **Anti-patterns**:
-- Реэкспорт `@stit/ui` через `shared/ui`.
-- Самописная DS-альтернатива тому, что есть в DS.
+- Импорт внешней дизайн-системы / вендорных UI-пакетов.
+- Хардкод сырых цветов/размеров вместо семантических токенов.
 
 ---
 

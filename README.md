@@ -5,9 +5,8 @@
 ### React SPA на строгой FSD-архитектуре, mock-first
 
 Шаблон фронтенда экосистемы stit: Vite + TypeScript + React 19 + TanStack,
-Feature-Sliced Design под линтером, дизайн-система `@stit/ui`, mock-режим из
-коробки. Крутится без бэкенда с первой минуты; код пишется по спроектированной
-FSD-карте.
+Feature-Sliced Design под линтером, mock-режим из коробки. Крутится без бэкенда
+с первой минуты; код пишется по спроектированной FSD-карте.
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-2563eb)](LICENSE)
 [![Часть stit](https://img.shields.io/badge/stit-открытые_шаблоны-6366f1)](https://git.stit.tech/stit-core/stit-public)
@@ -23,7 +22,7 @@ FSD-карте.
 ## Стек
 
 TypeScript 6 · Vite 8 · React 19.2 + Compiler 1.0 · TanStack Router (file-based)
-+ Query + Form · Zustand · Zod 4 · Tailwind v4 + `@stit/ui` · MSW (mock-режим) ·
++ Query + Form · Zustand · Zod 4 · Tailwind v4 · MSW (mock-режим) ·
 Sentry + web-vitals · Biome + ESLint + Steiger · Vitest 4 + Playwright · pnpm 10 ·
 lefthook.
 
@@ -90,19 +89,21 @@ src/pages/        file-based TanStack Router routes
 src/widgets/      переиспользуемые блоки
 src/features/     пользовательские сценарии
 src/entities/     доменные сущности
-src/shared/       инфра: api, config, i18n, lib, ui, ui-lib
+src/shared/       инфра: api, config, i18n, lib, ui
 docs/fsd/         проектная карта слоёв (/fsd-deep-dive)
 docs/stack/       проектная карта стека (/stack-deep-dive)
 docs/reference/   стационарные доки (architecture, ecosystem, deployment)
 .claude/          скиллы и path-scoped правила
 ```
 
-## Дизайн-система
+## UI-компоненты
 
-`@stit/ui` — внешний npm-пакет из
-[`stit-core/ui-lib`](https://git.stit.tech/stit-core/ui-lib). Импортируется
-напрямую из любого слоя. Чего-то не хватает — gap-шим в `src/shared/ui-lib/` +
-запись в [`docs/ui-lib-gaps.md`](docs/ui-lib-gaps.md), не самописный велосипед.
+Внешней дизайн-системы нет — компоненты пишутся в проекте и делаются
+design-system-agnostic: опираются только на собственный токен-слой
+(`src/app/styles/index.css` — Tailwind v4 `@theme` + семантические
+CSS-переменные, тема через `data-scheme`). Слайс-локальный UI — в `ui/`-сегменте
+слайса; переиспользуемые примитивы/обёртки — в `src/shared/ui/`. Дисциплина —
+rule `shared-ui`.
 
 ## Документация
 
