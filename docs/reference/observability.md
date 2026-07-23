@@ -36,25 +36,6 @@ API/SDK, лёгкий (postgres + redis), поднимается одним dock
 
 Без аутентификации, без токенов.
 
-## OTel-collector через backend-proxy
-
-Стаб лежит в `src/shared/api/telemetry/` с `// TODO: backend proxy`.
-
-**Идея**:
-
-1. Фронт батчит OTel spans/logs/metrics
-2. Отправляет на свой бэк по `/api/v1/telemetry` (cookie-auth, same-origin)
-3. Бэк форвардит в OTel-collector со своим service-token (из Vault)
-
-**Плюсы**:
-
-- service-token не светится в браузере
-- коллектор доверяет только бэкенду
-- бэк может сэмплить/фильтровать
-
-**Активация** — решение `/stack-deep-dive` под конкретный проект. По умолчанию
-заглушка не делает ничего.
-
 ## Что НЕ собираем
 
 - Session replay (Sentry replay) — privacy-чувствительно, включается осознанно

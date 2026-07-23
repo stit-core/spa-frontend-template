@@ -40,10 +40,6 @@ MSW Service Worker перехватывает `/api/*` на сетевом ур�
 |---|---|---|
 | _name_ | _список_ | _domain или data-item_ |
 
-## Telemetry-proxy
-
-`shared/api/telemetry/` — заглушка. Активация — решение `/stack-deep-dive`.
-
 ## Generates
 
 - `src/shared/api/client.ts` — общий HTTP-клиент

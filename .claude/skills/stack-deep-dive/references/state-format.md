@@ -8,7 +8,7 @@
 Не часть артефактного канона `docs/stack/` (туда уходят зафиксированные
 платформенные решения). Forward-only: только текущее открытое, не
 «было/стало», без дат сессий. Это держит `git log` чистым — коммиты в state
-маленькие и тематические («закрыл blocker про OTel-proxy»), а не нарратив.
+маленькие и тематические («закрыл blocker про Sentry self-hosted»), а не нарратив.
 
 Стек — 8 фиксированных singleton-артефактов (`service`, `runtime`, `config`,
 `routing`, `api`, `styling`, `observability`, `dependencies`), поэтому путь
@@ -25,7 +25,7 @@ ref: docs/stack/observability.md
 
 ## Открытые вопросы
 - Sentry SaaS или self-hosted? от этого зависит DSN в `config.md`. (**blocker**)
-- Нужен ли OTel-proxy на бэке, или web-vitals хватает?
+- Включаем ли Sentry session replay, или это privacy-риск для проекта?
 
 ## Платформенные решения
 - `API_BASE_URL` — runtime config (`window.__APP_CONFIG__`), не build-time:
@@ -52,8 +52,8 @@ ref: docs/stack/observability.md
 
 - Префикс `**blocker:**` ИЛИ суффикс `(**blocker**)` — блокирует stable.
 - Закрытый вопрос **удаляется** (не зачёркивается). Пусто → удалить секцию.
-- Falsifiable формулировка. Хорошо: «Нужен ли OTel-proxy, если web-vitals
-  уходят прямо в Sentry?». Плохо: «разобраться с observability».
+- Falsifiable формулировка. Хорошо: «Нужен ли Sentry self-hosted, если SaaS
+  покрывает объёмы?». Плохо: «разобраться с observability».
 - **Cross-kind blocker** (kit-артефакт объявил env, который не появился в
   `config.md`) — частый случай для стека. Помечать в state того роллапа,
   который недополучил: `state/config.md` → «`observability` объявил

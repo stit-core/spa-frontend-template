@@ -25,6 +25,5 @@ nginx-конфиге, secret в публичном бандле через `impo
 закоммичены с placeholder'ами; `.env`, `.env.local`, `.env.*` — gitignored.
 Access-token живёт в httpOnly-cookie на стороне бэка, не в localStorage/
 sessionStorage. Sentry DSN public by design — безопасно в runtime config; всё
-остальное не-public в `window.__APP_CONFIG__` не пишем. OTel-токен — только на
-бэке (backend-as-proxy). Если случайно закоммитил секрет в свой форк — ротируй
-его и вычисти историю.
+остальное не-public в `window.__APP_CONFIG__` не пишем. Если случайно
+закоммитил секрет в свой форк — ротируй его и вычисти историю.

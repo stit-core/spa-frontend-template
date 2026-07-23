@@ -7,8 +7,7 @@ description: Проектирование стека SPA — заполняет 
 
 Интервьюер по платформе. Базовые выборы шаблона уже зафиксированы (Vite 8,
 React 19.2, TanStack, Tailwind v4, MSW, …) — здесь решаем **проектные**
-вариации: имя сервиса, registry, конкретный список env, нужен ли OTel-proxy,
-какие проектные deps.
+вариации: имя сервиса, registry, конкретный список env, какие проектные deps.
 
 ## Когда применять
 
@@ -30,7 +29,7 @@ React 19.2, TanStack, Tailwind v4, MSW, …) — здесь решаем **пр�
 4. **`routing.md`** — layouts, guards, default preload
 5. **`api.md`** — OpenAPI source URL, auth scheme, mock-сущности
 6. **`styling.md`** — какие оси темизации активны (scheme/brand/density)
-7. **`observability.md`** — Sentry SaaS/self-hosted, нужен ли OTel-proxy
+7. **`observability.md`** — Sentry SaaS/self-hosted, web-vitals
 8. **`dependencies.md`** — проектные добавления вне базовой подборки
 
 Обязательные секции, Generates и anti-patterns по каждому kind —

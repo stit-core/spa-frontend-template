@@ -13,7 +13,7 @@ DDD-проектирование, которое FSD мапит на слои).
    - `features.md` § Карта features / Cross-feature
    - `entities.md` § Карта entities / Schema и валидация
    - `shared-ui.md` § Карта shared/ui/
-   - `shared-api.md` § HTTP-клиент / OpenAPI codegen / Mock-стратегия / Telemetry-proxy
+   - `shared-api.md` § HTTP-клиент / OpenAPI codegen / Mock-стратегия
    - `shared-lib.md` § Состав / i18n
 
 2. **Generates непуст** — есть конкретные пути файлов, которые родит

@@ -26,9 +26,8 @@ globs: [".env*", "src/shared/config/**", "docker/**", "vite.config.ts"]
 
 - Не хранятся в фронт-бандле. Cookie-auth (httpOnly) на стороне бэка.
 - Sentry DSN — public by design, безопасно в runtime config.
-- OTel-token — **только на бэке** (через backend-as-proxy паттерн).
-- В CI секреты приходят из Vault/Secret-store через env переменные → в
-  Docker контейнер → nginx-entrypoint впишет в `config.js` (только не-секретные).
+- В CI секреты приходят через env переменные → в Docker контейнер →
+  nginx-entrypoint впишет в `config.js` (только не-секретные).
 
 ## Что нельзя
 

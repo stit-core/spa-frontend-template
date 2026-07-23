@@ -11,7 +11,7 @@
    - `routing.md` § TanStack Router / Layouts / Guards
    - `api.md` § HTTP-клиент / OpenAPI / Auth / Mock
    - `styling.md` § Источники / Оси темизации
-   - `observability.md` § Sentry / Web Vitals / OTel
+   - `observability.md` § Sentry / Web Vitals
    - `dependencies.md` § Базовая подборка (зафиксирована) / Проектные / Запрещено
 
 2. **Generates непуст** — конкретные файлы, которые правит `/de-template`.

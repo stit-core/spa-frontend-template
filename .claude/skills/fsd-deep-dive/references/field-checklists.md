@@ -114,7 +114,7 @@ pages-first: вернуть в page-слайс); `widgets/<slice>.block` →
 ## shared-api
 
 **Обязательные секции**: `HTTP-клиент`, `OpenAPI codegen`, `Mock-стратегия`,
-`Telemetry-proxy`, `Generates`.
+`Generates`.
 
 **Generates содержит**: `src/shared/api/client.ts`, `__generated__/`,
 `src/shared/api/mock/handlers/*`.

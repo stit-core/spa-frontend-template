@@ -31,7 +31,7 @@
 
 - [`reference/architecture.md`](./reference/architecture.md) — слои, импорты, public API
 - [`reference/ecosystem.md`](./reference/ecosystem.md) — место в экосистеме шаблонов (docs/frontend/backend/infra + корп control-plane)
-- [`reference/observability.md`](./reference/observability.md) — Sentry, web-vitals, OTel-proxy
+- [`reference/observability.md`](./reference/observability.md) — Sentry, web-vitals
 - [`reference/deployment.md`](./reference/deployment.md) — Dockerfile, nginx, runtime config
 - [`getting-started.md`](./getting-started.md) — для потребителя шаблона (META, удаляется в de-template)
 - [`contributing.md`](./contributing.md) — устройство `.claude`-системы (наследуется форком)

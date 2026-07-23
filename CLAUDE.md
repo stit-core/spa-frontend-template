@@ -54,7 +54,7 @@ truth**; код пишется/генерируется по ним, не нао
 |---|---|
 | Архитектура FSD, слои, public API | `docs/reference/architecture.md` + rule `fsd-architecture` |
 | Экосистема (4 форкаемых шаблона, контракты) | `docs/reference/ecosystem.md` |
-| Observability (Sentry, web-vitals, OTel-proxy) | `docs/reference/observability.md` |
+| Observability (Sentry, web-vitals) | `docs/reference/observability.md` |
 | Deployment (Dockerfile, nginx, runtime config) | `docs/reference/deployment.md` |
 | Тесты | rule `tests-pipeline` |
 | env, секреты, runtime config | rule `env-local` |

@@ -109,16 +109,14 @@ guard-обвязка.
 
 ## observability
 
-**Обязательные секции**: `Sentry`, `Web Vitals`, `OTel-collector`, `Generates`.
+**Обязательные секции**: `Sentry`, `Web Vitals`, `Generates`.
 
-**Generates содержит**: Sentry init (conditional), web-vitals репортер,
-OTel-proxy wiring (если активен).
+**Generates содержит**: Sentry init (conditional), web-vitals репортер.
 
-**Cross-kind**: `SENTRY_DSN` ↔ `config.md § Runtime config keys`;
-OTel-token — **только на бэке** (backend-as-proxy).
+**Cross-kind**: `SENTRY_DSN` ↔ `config.md § Runtime config keys`.
 
 **Anti-patterns**:
-- OTel-token в фронт-бандле.
+- Секрет-токен в фронт-бандле.
 - Sentry активен, но DSN не объявлен в `config.md`.
 
 ---

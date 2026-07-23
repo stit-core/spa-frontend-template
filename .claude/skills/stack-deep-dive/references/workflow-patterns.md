@@ -30,7 +30,7 @@ Tailwind v4, MSW, …) решает **проектные** вариации. Т�
    имя сервиса/registry → `service`; node/browser target/React Compiler →
    `runtime`; env'ы и секреты → `config`; layouts/guards/preload → `routing`;
    OpenAPI source/auth/mock → `api`; оси темизации → `styling`;
-   Sentry/web-vitals/OTel-proxy → `observability`; проектные deps → `dependencies`.
+   Sentry/web-vitals → `observability`; проектные deps → `dependencies`.
 3. Показать план через чат, подтвердить волной `AskUserQuestion`.
 4. Завести/обновить артефакты как драфты. Дыры по обязательным секциям —
    `**blocker**` в `state/<kind>.md`.

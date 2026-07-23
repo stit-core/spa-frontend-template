@@ -21,7 +21,7 @@
 | `docs/` | продуктовая аналитика (project), UX-аналитика (interface), DDD бэка (domains), композиция экранов (screens) |
 | `backend/` | HTTP API, доменная логика, миграции БД, sqlc, NATS, outbox |
 | `frontend/` | SPA: FSD-структура, mock-слой, runtime config, Docker image |
-| `infra/` | docker-compose, deploy, secrets через Vault, ingress |
+| `infra/` | docker-compose, deploy, secrets через env, ingress |
 
 ## Контракты между репо
 
@@ -38,8 +38,8 @@
 
 Вне форкаемых шаблонов — корпоративный control-plane под оргом `stit-infra`:
 
-- `stit-infra/infra` — корп-VPS: Vault (KV + AppRole онбординг проектов), registry
-  `git.stit.tech`, приём OTLP на `otel.stit.tech`, LE-DNS. Source-of-truth карты
+- `stit-infra/infra` — корп-VPS: registry `git.stit.tech` (pull образов),
+  CrowdSec-whitelist egress проектных VPS, LE-DNS. Source-of-truth карты
   экосистемы.
 - `stit-core/golibinfra` — общая Go-библиотека (kit'ы), которую тянет `backend/`.
 
