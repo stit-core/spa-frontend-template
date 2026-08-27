@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 import type { DB } from '../db'
 
 export function todoHandlers(db: DB) {
@@ -44,7 +44,10 @@ export function todoHandlers(db: DB) {
       const body = (await request.json()) as { done?: boolean; title?: string }
       const updated = db.todo.update({
         where: { id: { equals: id } },
-        data: { ...(body.done !== undefined && { done: body.done }), ...(body.title && { title: body.title }) },
+        data: {
+          ...(body.done !== undefined && { done: body.done }),
+          ...(body.title && { title: body.title }),
+        },
       })
       if (!updated) return new HttpResponse(null, { status: 404 })
       return HttpResponse.json({

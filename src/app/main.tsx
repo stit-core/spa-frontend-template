@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { App } from './root'
 import { bootstrap } from './init'
+import { App } from './root'
 import '@/app/styles/index.css'
 
 await bootstrap()

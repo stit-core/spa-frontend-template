@@ -1,7 +1,7 @@
 import { useForm } from '@tanstack/react-form'
 import { useNavigate } from '@tanstack/react-router'
-import { LoginSchema, type LoginInput } from '../model/schema'
 import { useLoginMutation } from '../api/login'
+import { type LoginInput, LoginSchema } from '../model/schema'
 
 export function LoginForm() {
   const login = useLoginMutation()
@@ -37,9 +37,9 @@ export function LoginForm() {
               aria-invalid={field.state.meta.errors.length > 0}
               className="px-3 py-2 rounded-control border border-divider"
             />
-            {field.state.meta.errors.map((err) => (
-              <span key={String(err)} className="text-body-sm text-danger">
-                {String(err)}
+            {field.state.meta.errors.map((issue) => (
+              <span key={issue?.message} className="text-body-sm text-danger">
+                {issue?.message}
               </span>
             ))}
           </label>
@@ -59,9 +59,9 @@ export function LoginForm() {
               aria-invalid={field.state.meta.errors.length > 0}
               className="px-3 py-2 rounded-control border border-divider"
             />
-            {field.state.meta.errors.map((err) => (
-              <span key={String(err)} className="text-body-sm text-danger">
-                {String(err)}
+            {field.state.meta.errors.map((issue) => (
+              <span key={issue?.message} className="text-body-sm text-danger">
+                {issue?.message}
               </span>
             ))}
           </label>

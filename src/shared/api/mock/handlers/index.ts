@@ -1,8 +1,8 @@
 import type { DB } from '../db'
 import { authHandlers } from './auth'
-import { userHandlers } from './users'
-import { todoHandlers } from './todos'
 import { errorHandlers } from './error'
+import { todoHandlers } from './todos'
+import { userHandlers } from './users'
 
 export function buildHandlers(db: DB, errorMode: boolean) {
   if (errorMode) return errorHandlers()

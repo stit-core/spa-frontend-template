@@ -13,9 +13,9 @@ export function loadSnapshot(db: DB): boolean {
     const raw = localStorage.getItem(KEY)
     if (!raw) return false
     const snap = JSON.parse(raw) as Snapshot
-    snap.users.forEach((u) => db.user.create(u))
-    snap.sessions.forEach((s) => db.session.create(s))
-    snap.todos.forEach((t) => db.todo.create(t))
+    for (const u of snap.users) db.user.create(u)
+    for (const s of snap.sessions) db.session.create(s)
+    for (const t of snap.todos) db.todo.create(t)
     return true
   } catch {
     return false

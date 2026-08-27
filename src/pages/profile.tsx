@@ -1,9 +1,9 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Suspense } from 'react'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { PageHeader } from '@/shared/ui/page-header'
-import { sessionQueryOptions, type Session } from '@/entities/session'
+import { sessionQueryOptions } from '@/entities/session'
 import { UserCard, userQueryOptions } from '@/entities/user'
+import { PageHeader } from '@/shared/ui/page-header'
 
 export const Route = createFileRoute('/profile')({
   beforeLoad: async ({ context }) => {
@@ -12,8 +12,7 @@ export const Route = createFileRoute('/profile')({
     return { session }
   },
   loader: async ({ context }) => {
-    const session = context.session as Session
-    await context.queryClient.ensureQueryData(userQueryOptions(session.userId))
+    await context.queryClient.ensureQueryData(userQueryOptions(context.session.userId))
   },
   component: ProfilePage,
 })
@@ -24,7 +23,7 @@ function ProfilePage() {
     <>
       <PageHeader title="Профиль" />
       <Suspense fallback={<p>Загрузка…</p>}>
-        <ProfileBody userId={(session as Session).userId} />
+        <ProfileBody userId={session.userId} />
       </Suspense>
     </>
   )

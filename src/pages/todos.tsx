@@ -1,7 +1,6 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Suspense } from 'react'
-import { PageHeader } from '@/shared/ui/page-header'
 import { sessionQueryOptions } from '@/entities/session'
 import {
   TodoItem,
@@ -10,6 +9,7 @@ import {
   useToggleTodoMutation,
 } from '@/entities/todo'
 import { CreateTodoForm } from '@/features/create-todo'
+import { PageHeader } from '@/shared/ui/page-header'
 
 export const Route = createFileRoute('/todos')({
   beforeLoad: async ({ context }) => {

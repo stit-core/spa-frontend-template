@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 
 // В сценарии 'error' все ручки отвечают 500 — удобно проверять error-boundaries.
 export function errorHandlers() {

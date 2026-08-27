@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
-import { QueryProvider } from './query'
 import { I18nProvider } from './i18n'
+import { QueryProvider } from './query'
+
+export { queryClient } from './query'
 
 interface AppProvidersProps {
   children: ReactNode

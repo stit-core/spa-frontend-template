@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { i18n } from '@/shared/i18n'
+import { activateLocale } from '@/shared/i18n'
 import { useThemeStore } from '../model/store'
 
 // Применение data-scheme к html и активация Lingui locale.
@@ -12,15 +12,6 @@ export function useThemeEffect(): void {
   }, [scheme])
 
   useEffect(() => {
-    void (async () => {
-      if (locale === 'ru') {
-        const { messages } = await import('@/shared/i18n/locales/ru')
-        i18n.load('ru', messages)
-      } else {
-        const { messages } = await import('@/shared/i18n/locales/en')
-        i18n.load('en', messages)
-      }
-      i18n.activate(locale)
-    })()
+    void activateLocale(locale)
   }, [locale])
 }

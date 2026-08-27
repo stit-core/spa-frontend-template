@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { PageHeader } from '@/shared/ui/page-header'
-import { LoginForm } from '@/features/auth'
 import { sessionQueryOptions } from '@/entities/session'
+import { LoginForm } from '@/features/auth'
+import { PageHeader } from '@/shared/ui/page-header'
 
 export const Route = createFileRoute('/login')({
   beforeLoad: async ({ context }) => {

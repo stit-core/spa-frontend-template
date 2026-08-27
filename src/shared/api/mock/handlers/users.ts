@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 import type { DB } from '../db'
 
 export function userHandlers(db: DB) {

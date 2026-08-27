@@ -1,4 +1,4 @@
-import { factory, primaryKey, nullable } from '@mswjs/data'
+import { factory, nullable, primaryKey } from '@mswjs/data'
 
 // In-memory ORM-зеркало доменных сущностей. Имена и поля приходят из
 // docs/domains/<context>/* (через fsd-deep-dive). Здесь — reference-набор

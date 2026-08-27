@@ -8,6 +8,7 @@ OUT=/usr/share/nginx/html/config.js
 cat > "$OUT" <<EOF
 window.__APP_CONFIG__ = {
   API_BASE_URL: "${API_BASE_URL:-/api}",
+  API_MODE: "${API_MODE:-real}",
   SENTRY_DSN: "${SENTRY_DSN:-}",
   SENTRY_ENVIRONMENT: "${SENTRY_ENVIRONMENT:-production}",
   RELEASE: "${RELEASE:-unknown}"

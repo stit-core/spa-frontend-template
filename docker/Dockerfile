@@ -22,6 +22,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Базовый набор env с дефолтами. Контейнер при старте генерирует
 # /usr/share/nginx/html/config.js из этих значений (см. nginx-entrypoint.sh).
 ENV API_BASE_URL=/api \
+    API_MODE=real \
     SENTRY_DSN= \
     SENTRY_ENVIRONMENT=production \
     RELEASE=unknown

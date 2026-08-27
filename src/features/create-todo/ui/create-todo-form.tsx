@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { NewTodoSchema, useCreateTodoMutation, type NewTodo } from '@/entities/todo'
+import { type NewTodo, NewTodoSchema, useCreateTodoMutation } from '@/entities/todo'
 
 export function CreateTodoForm() {
   const create = useCreateTodoMutation()

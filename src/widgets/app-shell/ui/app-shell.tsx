@@ -1,5 +1,5 @@
 import { Link, Outlet } from '@tanstack/react-router'
-import { useSession, useLogoutMutation } from '@/entities/session'
+import { useLogoutMutation, useSession } from '@/entities/session'
 import { ThemeSwitcher, useThemeEffect } from '@/features/theme'
 
 export function AppShell() {

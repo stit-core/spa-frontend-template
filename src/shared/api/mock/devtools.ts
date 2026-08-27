@@ -1,6 +1,6 @@
-import type { Scenario } from './scenarios'
 import { switchScenario } from './index'
 import { clearSnapshot } from './persist'
+import type { Scenario } from './scenarios'
 
 // Минимальная dev-UI панель в углу для смены сценария. Без зависимостей от React,
 // чтобы не зависеть от lifecycle и не светиться в стори/тестах.
@@ -30,7 +30,8 @@ export function mountMockDevtools({ scenario }: { scenario: Scenario }): void {
   root.append(label)
 
   const select = document.createElement('select')
-  select.style.cssText = 'background:#222;color:#fff;border:1px solid #333;padding:2px 4px;border-radius:4px'
+  select.style.cssText =
+    'background:#222;color:#fff;border:1px solid #333;padding:2px 4px;border-radius:4px'
   const scenarios: Scenario[] = ['empty', 'populated', 'authenticated', 'error']
   scenarios.forEach((s) => {
     const opt = document.createElement('option')
@@ -40,16 +41,16 @@ export function mountMockDevtools({ scenario }: { scenario: Scenario }): void {
     select.append(opt)
   })
   select.addEventListener('change', () => {
-    void switchScenario(select.value as Scenario).then(() => {
-      window.location.reload()
-    })
+    switchScenario(select.value as Scenario)
+    window.location.reload()
   })
   root.append(select)
 
   const reset = document.createElement('button')
   reset.type = 'button'
   reset.textContent = 'reset'
-  reset.style.cssText = 'background:#444;color:#fff;border:0;padding:2px 6px;border-radius:4px;cursor:pointer'
+  reset.style.cssText =
+    'background:#444;color:#fff;border:0;padding:2px 6px;border-radius:4px;cursor:pointer'
   reset.addEventListener('click', () => {
     clearSnapshot()
     window.location.reload()

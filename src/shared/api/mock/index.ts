@@ -1,14 +1,14 @@
-import { setupWorker, type SetupWorker } from 'msw/browser'
+import { type SetupWorker, setupWorker } from 'msw/browser'
 import { runtimeConfig } from '@/shared/config'
 import { db } from './db'
 import { buildHandlers } from './handlers'
-import { loadScenario, type Scenario } from './scenarios'
 import { loadSnapshot, saveSnapshot } from './persist'
+import { loadScenario, type Scenario } from './scenarios'
 
 let worker: SetupWorker | null = null
 
 export async function startMockWorker(): Promise<void> {
-  const scenario = runtimeConfig.MOCK_SCENARIO as Scenario
+  const scenario = runtimeConfig.MOCK_SCENARIO
 
   const hadSnapshot = loadSnapshot(db)
   if (!hadSnapshot) loadScenario(db, scenario)
@@ -29,7 +29,7 @@ export async function startMockWorker(): Promise<void> {
   }
 }
 
-export async function switchScenario(next: Scenario): Promise<void> {
+export function switchScenario(next: Scenario): void {
   loadScenario(db, next)
   if (worker) {
     worker.resetHandlers(...buildHandlers(db, next === 'error'))
