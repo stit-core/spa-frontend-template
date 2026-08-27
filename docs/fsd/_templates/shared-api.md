@@ -9,15 +9,15 @@ status: draft
 
 ## HTTP-клиент
 
-`openapi-fetch` поверх native `fetch`. `credentials: 'include'` — cookie-auth.
-CSRF — через middleware (читает `csrf_token` cookie → `X-CSRF-Token` header
-на mutating requests).
+Собственный тонкий враппер поверх native `fetch` (`shared/api/client.ts`).
+`credentials: 'include'` — cookie-auth. CSRF — `csrf_token` cookie →
+`X-CSRF-Token` header на mutating requests. Ошибки — `ApiError` со статусом.
 
-## OpenAPI codegen
+## Контракт API
 
-- Источник: `<backend>/openapi.json` (когда бэк появится)
-- Команда: `pnpm gen:api` → `@hey-api/openapi-ts`
-- Output: `src/shared/api/__generated__/` (типы + клиент + TanStack Query hooks + Zod-схемы + MSW handlers)
+Кодогена нет: контракт — рукописные zod-схемы в `entities/<name>/model/schema.ts`.
+Клиент возвращает `unknown`; ответ парсится схемой на вызывающей стороне
+(`TodoSchema.parse(await apiClient.get('/v1/todos'))`).
 
 ## Mock-стратегия
 
@@ -46,7 +46,6 @@ MSW Service Worker перехватывает `/api/*` на сетевом ур�
 - `src/shared/api/mock/db.ts` — `@mswjs/data` factory из доменных сущностей
 - `src/shared/api/mock/handlers/*.ts` — REST-handlers
 - `src/shared/api/mock/scenarios/index.ts` — сценарии загрузки
-- `src/shared/api/__generated__/` — после `pnpm gen:api`
 
 ## Открытые вопросы
 

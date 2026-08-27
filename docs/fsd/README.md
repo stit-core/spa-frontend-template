@@ -18,7 +18,7 @@
 | `features` | `features.md` | сценарии, маппинг на `situation/*` |
 | `entities` | `entities.md` | доменные сущности, маппинг на `domains/*` или `data-items` |
 | `shared-ui` | `shared-ui.md` | проектные UI-компоненты (свой токен-слой, agnostic) |
-| `shared-api` | `shared-api.md` | HTTP-клиент, OpenAPI codegen, mock-стратегия |
+| `shared-api` | `shared-api.md` | HTTP-клиент, контрактные zod-схемы, mock-стратегия |
 | `shared-lib` | `shared-lib.md` | i18n, observability, lib-утилиты |
 
 Каждый артефакт обязан иметь секцию **Generates** — что из него родится в коде.

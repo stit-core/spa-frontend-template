@@ -31,7 +31,7 @@
 | `docs/projects/<slug>/interface/` | `frontend/` | who, situation, zone, block (вход для `/fsd-deep-dive`) |
 | `docs/projects/<slug>/domains/` | `backend/`, `frontend/` | DDD-сущности (вход для `mock-слоя`) |
 | `docs/projects/<slug>/screens/` | `frontend/` | flows, screens, blocks, shells |
-| `backend/openapi.json` | `frontend/` | контракт HTTP API (вход для Hey API codegen) |
+| `backend/openapi.json` | `frontend/` | контракт HTTP API (референс для рукописных zod-схем) |
 | `frontend/dist` | `infra/` | image push → CD pipeline |
 
 ## Корп control-plane

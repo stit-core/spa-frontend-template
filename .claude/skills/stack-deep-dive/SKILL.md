@@ -27,7 +27,7 @@ React 19.2, TanStack, Tailwind v4, MSW, …) — здесь решаем **пр�
 2. **`runtime.md`** — node, browser target, React Compiler mode
 3. **`config.md`** — все env (runtime + build-time), их дефолты, источники
 4. **`routing.md`** — layouts, guards, default preload
-5. **`api.md`** — OpenAPI source URL, auth scheme, mock-сущности
+5. **`api.md`** — контракт API (zod-схемы), auth scheme, mock-сущности
 6. **`styling.md`** — какие оси темизации активны (scheme/brand/density)
 7. **`observability.md`** — Sentry SaaS/self-hosted, web-vitals
 8. **`dependencies.md`** — проектные добавления вне базовой подборки

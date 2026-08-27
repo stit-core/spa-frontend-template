@@ -9,16 +9,15 @@ status: draft
 
 ## HTTP-клиент
 
-`openapi-fetch` поверх native `fetch`. CSRF middleware на mutating requests.
-Cookie-auth (`credentials: 'include'`).
+Собственный тонкий враппер поверх native `fetch` (`shared/api/client.ts`).
+CSRF-заголовок на mutating requests. Cookie-auth (`credentials: 'include'`).
 
-## OpenAPI codegen
+## Контракт API
 
-- Source: `<backend>/openapi.json` (через env `OPENAPI_URL` или путь)
-- Tool: `@hey-api/openapi-ts`
-- Plugins: TanStack Query hooks, Zod schemas, MSW handlers
-- Output: `src/shared/api/__generated__/`
-- Команда: `pnpm gen:api`
+- Кодогена нет: контракт описывается **рукописными zod-схемами** в
+  `entities/<name>/model/schema.ts`
+- Клиент возвращает `unknown`, ответ парсится схемой на вызывающей стороне
+- `<backend>/openapi.json` (если есть) — референс при написании схем
 
 ## Auth scheme
 
@@ -40,8 +39,7 @@ Cookie-auth (`credentials: 'include'`).
 
 - `src/shared/api/client.ts`
 - `src/shared/api/mock/*`
-- `scripts/gen-api.ts` — обёртка над Hey API CLI
-- `package.json#scripts#gen:api`
+- `src/entities/<name>/model/schema.ts` — zod-контракты сущностей
 
 ## Открытые вопросы
 

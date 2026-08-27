@@ -9,7 +9,7 @@
    - `runtime.md` § Node / Browser / React
    - `config.md` § Runtime config keys / Build-time env / Секреты
    - `routing.md` § TanStack Router / Layouts / Guards
-   - `api.md` § HTTP-клиент / OpenAPI / Auth / Mock
+   - `api.md` § HTTP-клиент / Контракт API / Auth / Mock
    - `styling.md` § Источники / Оси темизации
    - `observability.md` § Sentry / Web Vitals
    - `dependencies.md` § Базовая подборка (зафиксирована) / Проектные / Запрещено
@@ -18,7 +18,7 @@
 
 3. **Cross-kind согласованность**:
    - `config.md#API_BASE_URL` совпадает с тем, что использует `shared/config`
-   - `api.md#OpenAPI source` имеет URL/path
+   - `api.md#Контракт API` описывает, где живут zod-схемы
    - `observability.md#DSN` (если активен) — есть в `config.md`
    - `dependencies.md` не противоречит установленному `package.json`
 

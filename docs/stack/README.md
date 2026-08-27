@@ -16,7 +16,7 @@
 | `runtime` | `runtime.md` | node version, browser support, polyfills, target |
 | `config` | `config.md` | runtime config keys, env, секреты-классы |
 | `routing` | `routing.md` | TanStack Router конфигурация, layouts |
-| `api` | `api.md` | OpenAPI source, codegen, mock-стратегия, auth scheme |
+| `api` | `api.md` | HTTP-клиент, zod-контракты, mock-стратегия, auth scheme |
 | `styling` | `styling.md` | токен-слой, темы, layout-конвенции |
 | `observability` | `observability.md` | Sentry, web-vitals |
 | `dependencies` | `dependencies.md` | внешние deps вне базовой подборки, reasoning |

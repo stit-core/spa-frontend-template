@@ -77,17 +77,18 @@ guard-обвязка.
 
 ## api
 
-**Обязательные секции**: `HTTP-клиент`, `OpenAPI codegen`, `Auth scheme`,
+**Обязательные секции**: `HTTP-клиент`, `Контракт API`, `Auth scheme`,
 `Mock-стратегия`, `Generates`.
 
-**Generates содержит**: `shared/api/client.ts`, `__generated__/`, mock-handlers.
+**Generates содержит**: `shared/api/client.ts`, `entities/*/model/schema.ts`,
+mock-handlers.
 
-**Cross-kind**: OpenAPI source URL ↔ `backend/openapi.json`; mock-сущности ↔
+**Cross-kind**: контракт API ↔ `backend/openapi.json` (референс); mock-сущности ↔
 `fsd/entities.md`.
 
 **Anti-patterns**:
-- Две несведённые линии клиента (openapi-fetch + Hey API без выбора).
-- OpenAPI source без URL/path.
+- Вторая линия HTTP-клиента (пакет-обёртка) рядом со своим fetch-враппером.
+- Схема без парса ответа в `queryFn`/`mutationFn`.
 
 ---
 

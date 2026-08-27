@@ -5,20 +5,12 @@
 
 ## Active
 
-### Выпил внешней дизайн-системы, свой токен-слой
-
-Внешней DS больше нет — компоненты пишутся в проекте, design-system-agnostic на
-собственном токен-слое. Сделано: удалён `@stit/ui` (dep + `.npmrc` registry),
-токены перенесены в `src/app/styles/index.css` (Tailwind v4 `@theme` + `@theme
-inline` со scheme-переменными light/dark), снесён `shared/ui-lib` + rule/doc
-`ui-lib-gaps`, добавлен rule `shared-ui`, доки/скиллы приведены к новой модели.
-
-Остаётся:
-- [ ] `pnpm install && pnpm check` — прогнать gate (deps не были установлены;
-  проверить, что Tailwind резолвит все семантические утилиты `text-body-*`,
-  `bg-action-*`, `border-divider`, `rounded-control` и dark-схема работает).
-- После зелёного gate — удалить эту секцию (forward-only).
+_пусто_
 
 ## Backlog
 
-_пусто_
+- Обновить observability-стек: `@sentry/react` 8→10, `web-vitals` 4→6,
+  `happy-dom` 16→20 (работает и так; бамп — осознанной волной с прогоном gate).
+- Сжать initial JS (~139KB gz): основной кандидат — zod в entry-графе
+  (рассмотреть `zod/mini` в `shared/config`).
+- E2E (`pnpm test:e2e`) — отдельный CI-stage (в gate не входит по дизайну).

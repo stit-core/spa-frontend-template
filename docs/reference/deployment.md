@@ -27,11 +27,15 @@ docker push <registry>/<service>-spa:<tag>
 ```js
 window.__APP_CONFIG__ = {
   API_BASE_URL: "${API_BASE_URL:-/api}",
+  API_MODE: "${API_MODE:-real}",
   SENTRY_DSN: "${SENTRY_DSN:-}",
   SENTRY_ENVIRONMENT: "${SENTRY_ENVIRONMENT:-production}",
   RELEASE: "${RELEASE:-unknown}"
 }
 ```
+
+`API_MODE=mock` поднимает контейнер в mock-режиме (MSW) — удобно для
+демо-стендов; дефолт прод-образа — `real`.
 
 `index.html` подгружает `/config.js` **до** основного бандла:
 

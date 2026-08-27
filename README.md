@@ -22,9 +22,9 @@ Feature-Sliced Design под линтером, mock-режим из коробк
 ## Стек
 
 TypeScript 6 · Vite 8 · React 19.2 + Compiler 1.0 · TanStack Router (file-based)
-+ Query + Form · Zustand · Zod 4 · Tailwind v4 · MSW (mock-режим) ·
-Sentry + web-vitals · Biome + ESLint + Steiger · Vitest 4 + Playwright · pnpm 10 ·
-lefthook.
++ Query + Form · Zustand · Zod 4 (рукописные контракты API) · Tailwind v4 ·
+MSW (mock-режим) · Lingui 5 (runtime-only i18n) · Sentry + web-vitals ·
+Biome + ESLint + Steiger · Vitest 4 + Playwright · pnpm 10 · lefthook.
 
 ## Быстрый старт
 
@@ -53,7 +53,7 @@ pnpm dev             # mock-режим по умолчанию → http://localh
    ├─ /de-template    → разворот фундамента
    └─ /scaffold       → реализация по слайсам
 3. pnpm dev           → SPA крутится в mock-режиме
-4. pnpm gen:api       → клиент из /openapi.json (когда бэк появится)
+4. когда бэк появится → zod-схемы сущностей по контракту, VITE_API_MODE=real
 5. pnpm check → push  → CI собирает Docker image
 ```
 
@@ -71,8 +71,8 @@ pnpm test             # Vitest
 pnpm test:e2e         # Playwright
 pnpm lint             # Biome + ESLint
 pnpm steiger          # FSD-линтер
-pnpm gen              # route-tree + OpenAPI codegen
-pnpm check            # gate: typecheck + lint + format + test + steiger + size + build
+pnpm gen              # route-tree (TanStack Router CLI)
+pnpm check            # gate: typecheck + lint + format + test + steiger + build + size
 ```
 
 Перед claim «готово» / push — **`pnpm check`** (его же гоняет `lefthook pre-push`).

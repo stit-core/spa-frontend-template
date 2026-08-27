@@ -23,7 +23,7 @@ TanStack Router/Query, MSW для mock-режима, UI-компоненты п�
    ├─ /de-template    → разворот фундамента, prune reference-слайсов
    └─ /scaffold       → для каждого своего слайса
 3. pnpm dev → SPA крутится в mock-режиме
-4. (когда бэк появится) /openapi.json → pnpm gen:api → переключи VITE_API_MODE=real
+4. (когда бэк появится) zod-схемы сущностей по контракту → переключи VITE_API_MODE=real
 5. pnpm check → git push → CI собирает Docker image → инфра деплоит
 ```
 
@@ -85,10 +85,11 @@ pnpm dev              # mock-режим по умолчанию (VITE_API_MODE=m
 # .env.local
 VITE_API_MODE=real
 VITE_API_TARGET=https://api.dev.example.com
-
-# Если у бэка есть /openapi.json — генерим клиент:
-pnpm gen:api
 ```
+
+Контракт API описывается рукописными zod-схемами в
+`src/entities/<name>/model/schema.ts` (`/openapi.json` бэка — референс);
+ответы парсятся схемой прямо в `queryFn`/`mutationFn`.
 
 ## Gate перед push
 

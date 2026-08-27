@@ -10,7 +10,7 @@ globs: [".env*", "src/shared/config/**", "docker/**", "vite.config.ts"]
 | тип | где | пример |
 |---|---|---|
 | **build-time** | `import.meta.env.VITE_*` (Vite) | `VITE_API_MODE` |
-| **runtime** | `window.__APP_CONFIG__` (генерится nginx-entrypoint.sh) | `API_BASE_URL`, `SENTRY_DSN` |
+| **runtime** | `window.__APP_CONFIG__` (генерится nginx-entrypoint.sh) | `API_BASE_URL`, `API_MODE`, `SENTRY_DSN` |
 
 **Правило**: всё, что должно меняться **между средами без пересборки**, —
 в runtime config. Всё, что **меняет поведение шаблонной сборки** (mock vs real

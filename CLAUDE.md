@@ -1,8 +1,9 @@
 # spa-frontend-template — гайд для агентов
 
 Шаблон React SPA: TypeScript 6 / Vite 8 / React 19.2 + Compiler 1.0 /
-TanStack Router (file-based) + Query + Form / Zustand / Zod 4 / Tailwind v4 /
-MSW для mock-режима / Sentry condit. + web-vitals /
+TanStack Router (file-based) + Query + Form / Zustand / Zod 4 (рукописные
+контракты API, без кодогена) / Tailwind v4 / MSW для mock-режима /
+Lingui 5 runtime-only i18n / Sentry condit. + web-vitals /
 Biome 2 + ESLint 9 + Steiger / Vitest 4 + Playwright / pnpm 10 / lefthook.
 
 Этот файл — **ядро (always-on) + роутер**. Детали — в `docs/`, контекстные
@@ -43,8 +44,8 @@ truth**; код пишется/генерируется по ним, не нао
 | `pnpm test` | Vitest (run) |
 | `pnpm test:e2e` | Playwright |
 | `pnpm steiger` | архитектурный линтер FSD |
-| `pnpm gen` | route-tree + OpenAPI codegen (Hey API) |
-| `pnpm check` | **gate**: typecheck + lint + format:check + test + steiger + size + build |
+| `pnpm gen` | route-tree (TanStack Router CLI) |
+| `pnpm check` | **gate**: typecheck + lint + format:check + test + steiger + build + size |
 
 Перед claim «готово» / push — **`pnpm check`** (его же гоняет `lefthook pre-push`).
 
@@ -68,8 +69,9 @@ truth**; код пишется/генерируется по ним, не нао
 - **Biome formatter** + **ESLint flat config** обязательны (`pnpm lint`)
 - **TypeScript strict** (`verbatimModuleSyntax`, `noUncheckedIndexedAccess`, …) —
   без `as any` без явной причины
-- **React Compiler 1.0** — полный проход; код пишется без ручных `useMemo`/`useCallback`/`memo`
-  кроме обоснованных случаев (`eslint-plugin-react-compiler` ловит нарушения Rules of React)
+- **React Compiler 1.0** (`compilationMode: infer`) — код пишется без ручных
+  `useMemo`/`useCallback`/`memo` кроме обоснованных случаев (compiler-правила
+  `eslint-plugin-react-hooks` ловят нарушения Rules of React)
 - **FSD-импорты** строго нисходящие (Steiger + `eslint-plugin-boundaries` + `no-restricted-imports`)
 - **Public API** — `index.ts` на каждом слайсе/сегменте sliceless-слоя, explicit re-exports
 - **UI-компоненты пишутся в проекте** — design-system-agnostic, на собственном

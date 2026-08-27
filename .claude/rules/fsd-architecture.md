@@ -43,8 +43,7 @@ app → pages → widgets → features → entities → shared
 
 | что | где |
 |---|---|
-| OpenAPI generated | `src/shared/api/__generated__/` |
-| Zod schema сущности | `src/entities/<name>/model/schema.ts` |
+| Zod schema сущности (контракт API) | `src/entities/<name>/model/schema.ts` |
 | HTTP-клиент | `src/shared/api/client.ts` |
 | Route-tree (autogen) | `src/app/router/routeTree.gen.ts` |
 | File-based routes | `src/pages/<slug>.tsx` или `src/pages/<slug>/route.ts` |

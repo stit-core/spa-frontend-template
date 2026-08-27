@@ -17,15 +17,15 @@ status: draft
 | Query | `@tanstack/react-query` | 5 |
 | Forms | `@tanstack/react-form` | 1 |
 | State | `zustand` | 5 |
-| HTTP | `openapi-fetch` | 0.13 |
+| HTTP | собственный fetch-враппер (`shared/api/client.ts`), без пакета | — |
 | Validation | `zod` | 4 |
-| i18n | `@lingui/core`, `@lingui/react`, `@lingui/macro` | 5 |
+| i18n | `@lingui/core`, `@lingui/react` (runtime-only) | 5 |
 | Styling | `tailwindcss` | 4 |
 | Mock | `msw`, `@mswjs/data`, `@faker-js/faker` | 2 / 0.16 / 10 |
 | Observability | `@sentry/react`, `web-vitals` | 8 / 4 |
-| Testing | `vitest`, `@vitest/browser`, `@testing-library/*`, `playwright` | 4 / latest |
-| Lint | `@biomejs/biome`, `eslint`, `typescript-eslint`, `steiger` | 2 / 9 / 8 / 0.7 |
-| Compiler | `babel-plugin-react-compiler`, `eslint-plugin-react-compiler` | 1 |
+| Testing | `vitest`, `@testing-library/*`, `vitest-axe`, `playwright` | 4 / latest |
+| Lint | `@biomejs/biome`, `eslint`, `typescript-eslint`, `steiger` | 2 / 9 / 8 / 0.6 |
+| Compiler | `babel-plugin-react-compiler` + правила в `eslint-plugin-react-hooks` | 1 / 7 |
 
 ## Проектные добавления
 
@@ -35,7 +35,7 @@ status: draft
 
 ## Запрещено
 
-- ❌ Дублирование функционала базовых пакетов (axios вместо openapi-fetch, Redux вместо Zustand+Query)
+- ❌ Дублирование функционала базовых пакетов (axios вместо своего fetch-враппера, Redux вместо Zustand+Query)
 - ❌ Внешние UI-киты / DS (Material UI, shadcn, chakra…) — компоненты пишутся в проекте
 - ❌ Полифиллы без явной причины (target es2024 покрывает 99%)
 

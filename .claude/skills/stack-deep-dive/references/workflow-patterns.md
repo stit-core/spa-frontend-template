@@ -29,7 +29,7 @@ Tailwind v4, MSW, …) решает **проектные** вариации. Т�
 2. Извлечь платформенные решения и привязать каждое к одному из 8 kind'ов:
    имя сервиса/registry → `service`; node/browser target/React Compiler →
    `runtime`; env'ы и секреты → `config`; layouts/guards/preload → `routing`;
-   OpenAPI source/auth/mock → `api`; оси темизации → `styling`;
+   контракт API/auth/mock → `api`; оси темизации → `styling`;
    Sentry/web-vitals → `observability`; проектные deps → `dependencies`.
 3. Показать план через чат, подтвердить волной `AskUserQuestion`.
 4. Завести/обновить артефакты как драфты. Дыры по обязательным секциям —
