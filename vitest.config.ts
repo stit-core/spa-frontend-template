@@ -1,5 +1,5 @@
 import { defineConfig, mergeConfig } from 'vitest/config'
-import viteConfig from './vite.config'
+import viteConfig from './vite.config.ts'
 
 export default mergeConfig(
   viteConfig({ mode: 'test', command: 'serve' }),
@@ -14,7 +14,6 @@ export default mergeConfig(
         include: ['src/**/*.{ts,tsx}'],
         exclude: [
           'src/**/*.test.{ts,tsx}',
-          'src/**/__generated__/**',
           'src/app/router/routeTree.gen.ts',
           'src/shared/api/mock/**',
         ],

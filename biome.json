@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.7/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -19,7 +19,6 @@
       "!**/coverage",
       "!**/node_modules",
       "!**/routeTree.gen.ts",
-      "!**/__generated__",
       "!**/public/mockServiceWorker.js",
       "!**/public/config.js"
     ]
@@ -42,10 +41,15 @@
       "bracketSameLine": false
     }
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "complexity": {
         "noBannedTypes": "error",
         "noUselessTypeConstraint": "error"

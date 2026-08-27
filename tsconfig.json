@@ -6,7 +6,7 @@
     "moduleResolution": "bundler",
     "moduleDetection": "force",
     "resolveJsonModule": true,
-    "allowImportingTsExtensions": false,
+    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -26,20 +26,11 @@
     "incremental": true,
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
 
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": [
-    "src",
-    "scripts",
-    "e2e",
-    "*.config.ts",
-    "*.config.js",
-    "vite.config.ts",
-    "vitest.config.ts"
-  ],
+  "include": ["src", "e2e", "*.config.ts", "*.config.js", "vitest.setup.ts"],
   "exclude": ["node_modules", "dist", "coverage"]
 }

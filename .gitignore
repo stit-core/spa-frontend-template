@@ -24,8 +24,6 @@ coverage
 !.vscode/settings.json
 
 src/app/router/routeTree.gen.ts.tmp
-src/shared/api/__generated__
-public/config.js
 
 test-results
 playwright-report

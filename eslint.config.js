@@ -1,12 +1,11 @@
 import js from '@eslint/js'
-import tseslint from 'typescript-eslint'
+import boundaries from 'eslint-plugin-boundaries'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
-import reactCompiler from 'eslint-plugin-react-compiler'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
 import testingLibrary from 'eslint-plugin-testing-library'
-import boundaries from 'eslint-plugin-boundaries'
 import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 const fsdLayers = ['app', 'pages', 'widgets', 'features', 'entities', 'shared']
 
@@ -17,7 +16,6 @@ export default tseslint.config(
       'coverage',
       'node_modules',
       'src/app/router/routeTree.gen.ts',
-      'src/shared/api/__generated__/**',
       'public/mockServiceWorker.js',
       'public/config.js',
     ],
@@ -35,7 +33,6 @@ export default tseslint.config(
     plugins: {
       react,
       'react-hooks': reactHooks,
-      'react-compiler': reactCompiler,
       'jsx-a11y': jsxA11y,
       'testing-library': testingLibrary,
       boundaries,
@@ -48,12 +45,13 @@ export default tseslint.config(
       })),
     },
     rules: {
+      // recommended у react-hooks@7 включает compiler-powered правила
+      // (purity, immutability, refs, …) — отдельный плагин компилятора не нужен.
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-      'react-compiler/react-compiler': 'error',
       '@typescript-eslint/consistent-type-imports': [
         'error',
         { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
@@ -76,29 +74,46 @@ export default tseslint.config(
           ],
         },
       ],
+      // Кросс-слайсовые импорты (в т.ч. относительные) ловят boundaries и Steiger;
+      // здесь — только запрет deep-импорта мимо public API через алиас.
       'no-restricted-imports': [
         'error',
         {
-          patterns: [
-            { group: ['../*/*'], message: 'Импорт через ../ за пределы слайса запрещён — используй public API через @/<layer>/<slice>' },
-            { group: ['@/*/*/*/*'], message: 'Deep-импорт мимо public API запрещён' },
-          ],
+          patterns: [{ group: ['@/*/*/*/*'], message: 'Deep-импорт мимо public API запрещён' }],
         },
       ],
     },
   },
   {
-    files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}', 'vitest.setup.ts'],
+    // Только vitest-тесты: e2e (Playwright) — не testing-library.
+    files: ['src/**/*.test.{ts,tsx}', 'src/**/*.spec.{ts,tsx}', 'vitest.setup.ts'],
     plugins: { 'testing-library': testingLibrary },
     rules: {
       ...testingLibrary.configs.react.rules,
       '@typescript-eslint/no-explicit-any': 'off',
+      // Augmentation-паттерн: пустой interface extends в declare module.
+      '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
   {
-    files: ['scripts/**/*.ts', '*.config.{ts,js}', 'vite.config.ts', 'vitest.config.ts'],
+    // js/cjs-конфиги вне ts-программы — линтим без type-aware правил.
+    files: ['**/*.{js,cjs}'],
+    extends: [tseslint.configs.disableTypeChecked],
+  },
+  {
+    // throw redirect() — идиома TanStack Router в guard'ах/loader'ах.
+    files: ['src/pages/**/*.tsx'],
+    rules: {
+      '@typescript-eslint/only-throw-error': 'off',
+    },
+  },
+  {
+    files: ['*.config.{ts,js}', 'vite.config.ts', 'vitest.config.ts'],
     rules: {
       'no-console': 'off',
+      // Конфиги стыкуются с нестрого типизированными плагинами (steiger и т.п.).
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
     },
   },
 )

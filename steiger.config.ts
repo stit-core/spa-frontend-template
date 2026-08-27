@@ -1,5 +1,5 @@
-import { defineConfig } from 'steiger/config'
 import fsd from '@feature-sliced/steiger-plugin'
+import { defineConfig } from 'steiger'
 
 export default defineConfig([
   ...fsd.configs.recommended,
@@ -18,7 +18,23 @@ export default defineConfig([
     },
   },
   {
-    files: ['src/shared/api/__generated__/**', 'src/app/router/routeTree.gen.ts'],
+    files: ['src/app/router/routeTree.gen.ts'],
     rules: { 'fsd/public-api': 'off' },
+  },
+  {
+    // TanStack file-based routing: index.tsx — это route '/', а не public API слоя.
+    files: ['src/pages/index.tsx'],
+    rules: { 'fsd/no-layer-public-api': 'off' },
+  },
+  {
+    // Bootstrap: dynamic import mock-подсистемы мимо index — осознанно,
+    // чтобы MSW не попадал в prod-граф модулей.
+    files: ['src/app/init.ts'],
+    rules: { 'fsd/no-public-api-sidestep': 'off' },
+  },
+  {
+    // 'providers' — устоявшееся имя сегмента app-слоя в FSD-практике.
+    files: ['src/app/**'],
+    rules: { 'fsd/segments-by-purpose': 'off' },
   },
 ])

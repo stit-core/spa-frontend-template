@@ -1,10 +1,9 @@
-import { defineConfig, loadEnv } from 'vite'
-import react from '@vitejs/plugin-react'
-import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
-import tailwindcss from '@tailwindcss/vite'
-import lingui from '@lingui/vite-plugin'
-import { analyzer } from 'vite-bundle-analyzer'
 import { fileURLToPath } from 'node:url'
+import tailwindcss from '@tailwindcss/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import react from '@vitejs/plugin-react'
+import { defineConfig, loadEnv } from 'vite'
+import { analyzer } from 'vite-bundle-analyzer'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -12,21 +11,22 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      TanStackRouterVite({
+      // Роут-дерево генерится и здесь, и standalone через `pnpm gen`
+      // (tsr читает tsr.config.json — держи оба конфига в синхроне).
+      tanstackRouter({
+        target: 'react',
         routesDirectory: 'src/pages',
         generatedRouteTree: 'src/app/router/routeTree.gen.ts',
         routeFileIgnorePrefix: '-',
       }),
       react({
         babel: {
-          plugins: [
-            ['babel-plugin-react-compiler', { compilationMode: 'all' }],
-            '@lingui/babel-plugin-lingui-macro',
-          ],
+          // infer: компилируются все компоненты/хуки; режим 'all' ломает
+          // обычные функции (useMemoCache вне рендера, напр. в тест-хелперах).
+          plugins: [['babel-plugin-react-compiler', { compilationMode: 'infer' }]],
         },
       }),
       tailwindcss(),
-      lingui(),
       mode === 'analyze' && analyzer(),
     ].filter(Boolean),
 
@@ -38,27 +38,34 @@ export default defineConfig(({ mode }) => {
 
     server: {
       port: 5173,
-      proxy:
-        env.VITE_API_MODE === 'real'
-          ? {
-              '/api': {
-                target: apiTarget,
-                changeOrigin: true,
-                secure: false,
-              },
-            }
-          : undefined,
+      ...(env.VITE_API_MODE === 'real' && {
+        proxy: {
+          '/api': {
+            target: apiTarget,
+            changeOrigin: true,
+            secure: false,
+          },
+        },
+      }),
     },
 
     build: {
       target: 'es2024',
       sourcemap: true,
+      // mock-чанк (MSW + @mswjs/data + faker) ~1.1MB — lazy, в prod не грузится.
+      chunkSizeWarningLimit: 1200,
       rollupOptions: {
         output: {
-          manualChunks: {
-            react: ['react', 'react-dom'],
-            router: ['@tanstack/react-router'],
-            query: ['@tanstack/react-query'],
+          // Rolldown-нарезка вендоров; бюджеты — .size-limit.cjs.
+          codeSplitting: {
+            groups: [
+              { name: 'react', test: /node_modules[\\/](?:react|react-dom|scheduler)[\\/]/ },
+              {
+                name: 'router',
+                test: /node_modules[\\/]@tanstack[\\/](?:react-router|router-core|history)/,
+              },
+              { name: 'query', test: /node_modules[\\/]@tanstack[\\/](?:react-query|query-core)/ },
+            ],
           },
         },
       },
