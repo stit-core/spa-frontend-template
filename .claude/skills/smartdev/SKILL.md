@@ -22,7 +22,8 @@ description: Cockpit сессии — сводка состояния (ветк�
 3. **Шаблонное ли состояние** репо:
    - `head -1 package.json` показывает `"name": "@stit/spa-frontend-template"` (форк не разворачивался)
    - reference-слайсы на месте (`src/features/auth`, `src/pages/profile`, `src/pages/todos`, `src/features/theme`)
-   - `docs/fsd/*.md` — все ли `status: stable` (если нет — `/init-service`)
+   - `docs/stack/*.md` — все ли `status: stable`; FSD-карта в `../strategy`
+     (`docs/projects/<slug>/fsd/<surface>/`) заведена (если нет — `/init-service`)
 4. **Gate-состояние**: можно ли запустить `pnpm check` (без выполнения — только подсказка)
 5. **Следующий шаг** — конкретная команда:
    - форк не развёрнут → `/init-service`
@@ -44,6 +45,6 @@ description: Cockpit сессии — сводка состояния (ветк�
 ветка: feature/login (5 коммитов сверх main, чисто)
 план: 'Реализовать /reset-password' — на шаге 2/4
 шаблон: развёрнут (de-template прошёл, reference-слайсы убраны)
-docs: fsd/* stable, stack/* stable
+docs: stack/* stable; FSD-карта в ../strategy (fsd/<surface>/) заведена
 следующий шаг: продолжить план через /plan или начать сценарий через /scaffold
 ```

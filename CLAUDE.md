@@ -15,23 +15,27 @@ Biome 2 + ESLint 9 + Steiger / Vitest 4 + Playwright / pnpm 10 / lefthook.
 - **`/smartdev`** — cockpit сессии: сводка состояния (ветка, drift, активный план, gate'ы) +
   переключение в нужный режим. Запускай в начале / после `/clear`.
 - **Потребителю шаблона** — `docs/getting-started.md`: форк → `/init-service` →
-  проектирование FSD/стека → `/de-template` → свой проект.
+  проектирование стека (FSD-карта — в `<org>/strategy`) → `/de-template` → свой проект.
 - **Planning-first.** Любое содержательное изменение идёт через план — секция в
   `.claude/plans/roadmap.md` (skill `/plan`). Прямая правка — только truly-atomic
   и багфиксы.
 
 ## Проектирование первично, код вторичен
 
-FSD-артефакты — `docs/fsd/`, артефакты платформы — `docs/stack/`. Это **source of
-truth**; код пишется/генерируется по ним, не наоборот. Reference-слайсы
+**FSD-карта проектируется в соседнем `<org>/strategy`** (форк
+`business-strategy-template`): слой `docs/projects/<slug>/fsd/<surface>/` —
+карта слайсов (entities · features · pages · widgets · app · shared-*),
+восходящая к ситуациям/экранам/доменам; там её ведёт его `/fsd-deep-dive`.
+Этот репо её **читает** (cross-repo, read-only): `/scaffold` и `/de-template`
+разворачивают stable-записи в код и сами выводят `src/<layer>/<slice>/` из
+kind + slug. Артефакты платформы — локальные `docs/stack/` (8 kinds). Код
+пишется/генерируется по артефактам, не наоборот. Reference-слайсы
 `features/auth`, `pages/profile`, `pages/todos`, `features/theme` — учебные
 образцы: изучить, потом удалить под свой проект (через `/de-template`).
 
-Контекст из соседнего docs-репо: `../docs/projects/<slug>/` — product-файлы
-(vision + persona/capability/surface/…) прямо в папке проекта,
-а `interface/`, `domains/`, `screens/` — вложенные внутри неё
-(`../docs/projects/<slug>/{interface,domains,screens}/`). Читается
-`/fsd-deep-dive` как первичный источник проектирования (если есть).
+Резолв соседа — sibling-checkout: поля `project-slug` / `strategy-path`
+(дефолт `../strategy`) / `surface` в `docs/stack/service.md`. Соседа нет —
+скиллы печатают next-step, не падают.
 
 ## Команды
 
@@ -54,13 +58,13 @@ truth**; код пишется/генерируется по ним, не нао
 | Тема | Где |
 |---|---|
 | Архитектура FSD, слои, public API | `docs/reference/architecture.md` + rule `fsd-architecture` |
-| Экосистема (4 форкаемых шаблона, контракты) | `docs/reference/ecosystem.md` |
+| Экосистема (6 шаблонов + библиотеки, контракты, оркестрация из `<org>/infra`) | `docs/reference/ecosystem.md` |
 | Observability (Sentry, web-vitals) | `docs/reference/observability.md` |
 | Deployment (Dockerfile, nginx, runtime config) | `docs/reference/deployment.md` |
 | Тесты | rule `tests-pipeline` |
 | env, секреты, runtime config | rule `env-local` |
 | UI-компоненты (свои, agnostic, свой токен-слой) | rule `shared-ui` |
-| FSD-артефакты (8 kinds) | `docs/fsd/README.md` |
+| FSD-карта (8 kinds, cross-repo) | `../strategy/docs/projects/<slug>/fsd/<surface>/` (канон — `_template/fsd/README.md` в strategy) |
 | Stack-артефакты (8 kinds) | `docs/stack/README.md` |
 | Forward-only стиль | rule `forward-only` |
 
@@ -95,7 +99,8 @@ truth**; код пишется/генерируется по ним, не нао
 - **Изменение — через план** (skill `/plan`). Отклонение — осознанное
 - Cross-feature — только через подъём в entities/shared или композицию в widget/page
 - Compute-side-effects — в `app/init.ts` или в Query (`queryFn`); никогда в рендере
-- При правке `docs/{fsd,stack}/*.md` — следить за `status: stable` и `Generates`-секцией
+- При правке `docs/stack/*.md` — следить за `status: stable` и `Generates`-секцией;
+  FSD-карта правится только в `<org>/strategy` (его `/fsd-deep-dive`), не здесь
 
 ### Сначала спросить
 - Правка `docker/*`, `.npmrc`, `package.json#dependencies` без записи в `docs/stack/dependencies.md`

@@ -1,8 +1,8 @@
 # Prune reference-слайсов
 
 Учебные слайсы шаблона — это **живой образец**, не «технический долг».
-Удаляются **после** того как собственные слайсы (из `docs/fsd/*` через
-`/scaffold`) уже сгенерированы и работают.
+Удаляются **после** того как собственные слайсы (из FSD-карты strategy
+через `/scaffold`) уже сгенерированы и работают.
 
 ## Что удалить (8 точек)
 
@@ -28,10 +28,11 @@
 
 - `auth.ts`, `todos.ts`, `users.ts` — удалить (если auth не оставляем)
 - `error.ts` — оставить (универсальный сценарий)
-- Заменить на свои handlers из `docs/fsd/shared-api.md § Сущности мока`
+- Заменить на свои handlers по `shared-api.md § Сценарии данных` FSD-карты
+  strategy (`fsd/<surface>/shared-api.md`)
 
 `src/shared/api/mock/db.ts` — пересоздать factory под свои сущности
-(см. `docs/fsd/entities.md`).
+(см. `entities.md` FSD-карты strategy).
 
 `src/shared/api/mock/seeds/factories.ts` — заменить `makeUser`/`makeTodo` на
 свои `make<Entity>`.

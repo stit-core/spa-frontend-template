@@ -1,13 +1,15 @@
 ---
 name: de-template
-description: Развернуть форк spa-frontend-template в самостоятельный проект по stable-артефактам docs/{fsd,stack} — переименовать пакет, обновить README, runtime config defaults, nginx entrypoint, prune reference-слайсов auth/profile/todos/theme. Активируй когда юзер форкнул шаблон и говорит "/de-template", "разверни фундамент", "де-темплейтизируй", "сделай из шаблона свой проект", или когда init-service дошёл до этапа 3 (FSD+стек спроектированы и stable). Движок skill-only: и механика, и wiring — reviewable edits под этой процедурой. НЕ запускать на каноническом репозитории шаблона.
+description: Развернуть форк spa-frontend-template в самостоятельный проект по stable-артефактам — локальный docs/stack + FSD-карта из соседнего <org>/strategy (docs/projects/<slug>/fsd/<surface>/) — переименовать пакет, обновить README, runtime config defaults, nginx entrypoint, prune reference-слайсов auth/profile/todos/theme. Активируй когда юзер форкнул шаблон и говорит "/de-template", "разверни фундамент", "де-темплейтизируй", "сделай из шаблона свой проект", или когда init-service дошёл до этапа 3 (FSD-карта в strategy + стек stable). Движок skill-only: и механика, и wiring — reviewable edits под этой процедурой. НЕ запускать на каноническом репозитории шаблона.
 ---
 
 # Skill: de-template (движок развёртывания)
 
 Превращает форк шаблона в проект, который ничего не помнит про
-`spa-frontend-template`. Читает **stable** `docs/{fsd,stack}` и разворачивает
-фундамент по секциям `Generates`.
+`spa-frontend-template`. Читает **stable**-артефакты — локальный `docs/stack`
+(секции `Generates`) и FSD-карту поверхности из соседнего `<org>/strategy`
+(`<strategy-path>/docs/projects/<slug>/fsd/<surface>/`; резолв — поля в
+`docs/stack/service.md`, дефолт `../strategy`) — и разворачивает фундамент.
 
 Запускается **один раз** на форке. Финал — зелёный `pnpm check` и проект
 без следов шаблона.
@@ -15,11 +17,13 @@ description: Развернуть форк spa-frontend-template в самост
 ## Когда применять
 
 - "/de-template" / «разверни фундамент» / «сделай из шаблона свой проект»
-- `/init-service` дошёл до этапа 3 (FSD+стек spable, валидаторы зелёные)
+- `/init-service` дошёл до этапа 3 (FSD-карта в strategy + стек stable,
+  валидаторы зелёные)
 
 ## Когда НЕ применять
 
-- FSD/стек ещё не `stable` — сначала `/fsd-deep-dive` + `/stack-deep-dive`
+- Стек не `stable` или FSD-карта в strategy не готова — сначала
+  `/stack-deep-dive` здесь и `/fsd-deep-dive` в `<org>/strategy`
 - Проект уже де-темплейтизирован (свой `package.json#name`, reference-слайсы
   удалены) — обычный день-в-день через `/smartdev`
 - **Канонический репозиторий шаблона** — никогда (guard ниже)
@@ -30,20 +34,21 @@ description: Развернуть форк spa-frontend-template в самост
    `@stit/spa-frontend-template` И каталог — не временная копия/форк → СТОП.
    Спроси юзера явно подтвердить, что это форк/тест-копия.
 
-2. **Артефакты stable.** Все 8 FSD-kind и все 8 stack-kind имеют
-   `status: stable`, все `Generates` непусты:
+2. **Артефакты stable.** Все 8 stack-kind имеют `status: stable`, все
+   `Generates` непусты:
    ```bash
-   for k in app pages widgets features entities shared-ui shared-api shared-lib; do
-     grep -q '^status: stable' "docs/fsd/$k.md" || { echo "STOP: docs/fsd/$k.md не stable"; exit 1; }
-   done
    for k in service runtime config routing api styling observability dependencies; do
      grep -q '^status: stable' "docs/stack/$k.md" || { echo "STOP: docs/stack/$k.md не stable"; exit 1; }
    done
    ```
+   FSD-карта: `fsd/<surface>/` в strategy существует; записи, нужные первому
+   развороту (Phase B), — `status: stable` (проверить по колонке `status`
+   их таблиц; сомнение → `/fsd-audit <slug>` на стороне strategy).
 
-3. **State deep-dive скилов чист**:
+3. **State stack-deep-dive чист** (blocker'ы FSD-карты живут в дереве state
+   strategy — их проверяет его `/fsd-audit`):
    ```bash
-   grep -RlE '\*\*blocker\*\*' .claude/skills/{fsd,stack}-deep-dive/state/ 2>/dev/null \
+   grep -RlE '\*\*blocker\*\*' .claude/skills/stack-deep-dive/state/ 2>/dev/null \
      && echo "STOP: открытые blocker'ы в state — добей сначала" \
      || echo "OK"
    ```
@@ -93,12 +98,14 @@ pnpm install
 
 ## Phase B — doc-driven wiring
 
-По stable-артефактам `docs/fsd/*` чейнить `/scaffold` для собственных слайсов:
+По stable-записям FSD-карты strategy
+(`<strategy-path>/docs/projects/<slug>/fsd/<surface>/`) чейнить `/scaffold`
+для собственных слайсов:
 
-- `entities/*` из `docs/fsd/entities.md` (по таблице)
-- `features/*` из `docs/fsd/features.md`
-- `widgets/*` из `docs/fsd/widgets.md`
-- `pages/*` из `docs/fsd/pages.md`
+- `entities/*` из `entities.md` карты (по таблице)
+- `features/*` из `features.md`
+- `widgets/*` из `widgets.md`
+- `pages/*` из `pages.md`
 
 После каждого `/scaffold` — `pnpm steiger src` должен оставаться зелёным.
 

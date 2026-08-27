@@ -1,6 +1,6 @@
 ---
 description: UI-компоненты пишутся в проекте и делаются design-system-agnostic — на собственном токен-слое. Активируется при правке UI и стилей.
-globs: ["src/**/ui/**", "src/app/styles/**", "docs/fsd/shared-ui.md", "docs/stack/styling.md"]
+globs: ["src/**/ui/**", "src/app/styles/**", "docs/stack/styling.md"]
 ---
 
 # UI-компоненты

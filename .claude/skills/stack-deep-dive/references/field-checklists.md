@@ -20,7 +20,10 @@
 образа, `docker/Dockerfile` LABEL.
 
 **Cross-kind**: registry/имя сервиса — якорь для `deployment.md`;
-`project-slug` — папка продукта в `../docs/projects/<slug>/`.
+`project-slug` / `strategy-path` (дефолт `../strategy`) / `surface` — резолв
+FSD-карты и продуктового контекста в соседнем `<org>/strategy`
+(`<strategy-path>/docs/projects/<slug>/`), по ним ходят `/scaffold` и
+`/de-template`.
 
 **Anti-patterns**:
 - `package.json#name` остался шаблонным (`@stit/spa-frontend-template`).

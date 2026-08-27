@@ -48,18 +48,19 @@ pnpm dev             # mock-режим по умолчанию → http://localh
 0. Use this template на Gitea → клон → pnpm install
 1. /smartdev          → сводка состояния
 2. /init-service      → оркестратор онбординга:
-   ├─ /fsd-deep-dive  → проектирование FSD-карты (docs/fsd/*)
+   ├─ привязка к FSD-карте из ../strategy (проектируется там: /fsd-deep-dive)
    ├─ /stack-deep-dive→ проектирование стека (docs/stack/*)
    ├─ /de-template    → разворот фундамента
    └─ /scaffold       → реализация по слайсам
 3. pnpm dev           → SPA крутится в mock-режиме
 4. когда бэк появится → zod-схемы сущностей по контракту, VITE_API_MODE=real
-5. pnpm check → push  → CI собирает Docker image
+5. pnpm check → /release → образ в registry → rollout в <org>/infra (make bump)
 ```
 
-FSD-артефакты (`docs/fsd/`) и стек (`docs/stack/`) — **source of truth**; код
-пишется по ним. Reference-слайсы (`features/auth`, `pages/profile`, …) — учебные
-образцы: изучить, удалить под свой проект через `/de-template`. Полный путь —
+FSD-карта (`../strategy/docs/projects/<slug>/fsd/<surface>/`, cross-repo) и
+стек (`docs/stack/`) — **source of truth**; код пишется по ним.
+Reference-слайсы (`features/auth`, `pages/profile`, …) — учебные образцы:
+изучить, удалить под свой проект через `/de-template`. Полный путь —
 [`docs/getting-started.md`](docs/getting-started.md).
 
 ## Команды
@@ -90,7 +91,6 @@ src/widgets/      переиспользуемые блоки
 src/features/     пользовательские сценарии
 src/entities/     доменные сущности
 src/shared/       инфра: api, config, i18n, lib, ui
-docs/fsd/         проектная карта слоёв (/fsd-deep-dive)
 docs/stack/       проектная карта стека (/stack-deep-dive)
 docs/reference/   стационарные доки (architecture, ecosystem, deployment)
 .claude/          скиллы и path-scoped правила

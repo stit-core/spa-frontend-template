@@ -61,12 +61,16 @@ window.__APP_CONFIG__ = {
 
 `HEALTHCHECK CMD wget -qO- http://127.0.0.1:8080/healthz` в Dockerfile.
 
-## CI handoff
+## Release handoff
 
-CI должен:
+CI-runner'а в экосистеме нет (сознательное решение — см. канон
+`corp-infra-template/docs/ecosystem.md`); build+push делает разработчик
+через скилл `/release`:
 
 1. Build image с тегом из git ref (`v1.2.3` или `<sha>`)
-2. Push в `<registry>`
-3. Передать infra-репо новый image-tag (через PR или event)
+2. Push в `<registry>` (`git.${DOMAIN}/<org>/frontend:<v>`)
+3. INFRA-HANDOFF: rollout выполняет `<org>/infra` —
+   `make bump SVC=frontend TAG=<v>` (правит `FRONTEND_TAG` в `.env` VPS +
+   force-recreate)
 
-CD — задача `infra/` репо (через docker-compose / k8s manifests).
+CD — задача `infra/` репо; отсюда деплой-команды не запускаются.

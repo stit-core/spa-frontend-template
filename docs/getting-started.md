@@ -17,14 +17,14 @@ TanStack Router/Query, MSW для mock-режима, UI-компоненты п�
 0. Use this template на Gitea → клон → pnpm install
 1. /smartdev          → сводка состояния
 2. /init-service      → оркестратор онбординга:
-   ├─ /fsd-deep-dive  → проектирование FSD-карты (docs/fsd/*)
+   ├─ привязка к FSD-карте из ../strategy (проектируется там его /fsd-deep-dive)
    ├─ /stack-deep-dive → проектирование стека (docs/stack/*)
-   ├─ gate: оба валидатора зелёные + state скилов чист
+   ├─ gate: stack stable + stable-записи FSD-карты + state чист
    ├─ /de-template    → разворот фундамента, prune reference-слайсов
    └─ /scaffold       → для каждого своего слайса
 3. pnpm dev → SPA крутится в mock-режиме
 4. (когда бэк появится) zod-схемы сущностей по контракту → переключи VITE_API_MODE=real
-5. pnpm check → git push → CI собирает Docker image → инфра деплоит
+5. pnpm check → /release → образ в registry → rollout в <org>/infra (make bump)
 ```
 
 ## Шаг 0: подготовка
@@ -59,15 +59,16 @@ pnpm prepare   # lefthook install
 
 Скил сам проводит по этапам:
 
-1. **`/fsd-deep-dive`** — волнами вопросов проектирует
-   `docs/fsd/{app,pages,widgets,features,entities,shared-ui,shared-api,shared-lib}.md`.
-   Читает соседнюю папку проекта `../docs/projects/<slug>/` (product-файлы в
-   корне + вложенные `interface`/`domains`/`screens`) как контекст.
+1. **Привязка к FSD-карте** — карта слайсов проектируется в соседнем
+   `<org>/strategy` (слой `docs/projects/<slug>/fsd/<surface>/`, его
+   `/fsd-deep-dive`); здесь фиксируются поля `project-slug` / `strategy-path`
+   (дефолт `../strategy`) / `surface` в `docs/stack/service.md`. Соседа нет —
+   скил подскажет спроектировать карту там и вернуться.
 2. **`/stack-deep-dive`** — добивает `docs/stack/{service,runtime,config,routing,api,styling,observability,dependencies}.md`
    поверх базовых выборов шаблона.
-3. После всех `status: stable` запускает **`/de-template`** — переименование
-   пакета, обновление README, генерация nginx env-set, удаление
-   reference-слайсов.
+3. После stable (stack + записи FSD-карты) запускает **`/de-template`** —
+   переименование пакета, обновление README, генерация nginx env-set,
+   удаление reference-слайсов.
 
 ## Шаг 3: разработка
 
@@ -102,5 +103,6 @@ Lefthook `pre-push` запускает то же самое автоматиче
 ## Когда что-то идёт не так
 
 - **`/smartdev`** покажет состояние и подскажет, в какой режим/скил идти
-- **Артефакты не stable** → доделай через `/fsd-deep-dive` или `/stack-deep-dive`
+- **Артефакты не stable** → стек — `/stack-deep-dive` здесь; FSD-карта —
+  `/fsd-deep-dive` в `<org>/strategy`
 - **Reference-слайсы мешают** — удаляются `/de-template` (см. его references/prune.md)

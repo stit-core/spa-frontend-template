@@ -1,36 +1,42 @@
 # docs/ — карта документации
 
 Документация — **source of truth** для всего, что разворачивается в коде.
-Скилы `/fsd-deep-dive` и `/stack-deep-dive` заполняют артефакты ниже до
-`status: stable`, после чего `/de-template` разворачивает по ним фундамент
-проекта, а `/scaffold` — отдельные слайсы.
+Артефакты платформы (`docs/stack/`) заполняет `/stack-deep-dive` до
+`status: stable`; FSD-карта живёт в соседнем `<org>/strategy` (см. ниже).
+По stable-артефактам `/de-template` разворачивает фундамент проекта, а
+`/scaffold` — отдельные слайсы.
 
 ## Слои
 
 | каталог | вопрос | вход |
 |---|---|---|
-| [`fsd/`](./fsd/README.md) | **как нарезан фронт по FSD** (8 артефактов слоёв) | `/fsd-deep-dive` |
 | [`stack/`](./stack/README.md) | **на какой платформе крутится фронт** (8 артефактов стека) | `/stack-deep-dive` |
 | [`reference/`](./reference/) | **архитектура и устройство** (стационарные доки) | вручную |
 
 ## Внешние артефакты
 
-Проектная аналитика — в соседнем репо (`../docs/`, форк `project-docs-template`),
-вложенная per-project в папке проекта `../docs/projects/<slug>/`:
+Проектирование живёт в соседнем `<org>/strategy` (форк
+`business-strategy-template`, sibling-checkout; резолв — поля
+`project-slug`/`strategy-path`/`surface` в `docs/stack/service.md`, дефолт
+`../strategy`); всё в `docs/projects/<slug>/` этого соседа:
 
-- `../docs/projects/<slug>/` — product-файлы прямо в корне папки проекта:
-  vision.md + таблицы persona, capability, surface, integration…
-- `../docs/projects/<slug>/interface/` — who, stage, situation, zone, block, ux-substrate, data-items
-- `../docs/projects/<slug>/domains/` — DDD-артефакты бэкенда (если есть)
-- `../docs/projects/<slug>/screens/` — flows, screens, blocks, shells (каждый — подкаталог)
+- **`fsd/<surface>/`** — FSD-карта этой поверхности (8 файлов слайсов:
+  entities · features · pages · widgets · app · shared-*) — **первичный
+  вход `/scaffold` и `/de-template`**; проектируется там (`/fsd-deep-dive`
+  strategy-репо), здесь read-only.
+- `vision.md` + таблицы user/capability/surface/… — product-файлы в корне
+  папки проекта.
+- `interface/<surface>/` — who, stage, situation, zone, block, ux-substrate,
+  data-items (контекст).
+- `services/<svc>/domains/<ctx>/` — DDD-артефакты бэкенда (если есть).
+- `screens/<surface>/` — flow, screen, block, shell (контекст композиции).
 
-`/fsd-deep-dive` **читает** эти артефакты как первичный контекст и мапит
-ситуации/блоки/сущности на FSD-слои.
+Контракт read-only и односторонний: этот репо в strategy не пишет.
 
 ## Reference
 
 - [`reference/architecture.md`](./reference/architecture.md) — слои, импорты, public API
-- [`reference/ecosystem.md`](./reference/ecosystem.md) — место в экосистеме шаблонов (docs/frontend/backend/infra + корп control-plane)
+- [`reference/ecosystem.md`](./reference/ecosystem.md) — место в экосистеме шаблонов (strategy/infra/backend/frontend/bot + корп control-plane)
 - [`reference/observability.md`](./reference/observability.md) — Sentry, web-vitals
 - [`reference/deployment.md`](./reference/deployment.md) — Dockerfile, nginx, runtime config
 - [`getting-started.md`](./getting-started.md) — для потребителя шаблона (META, удаляется в de-template)

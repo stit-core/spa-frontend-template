@@ -1,13 +1,17 @@
 ---
 name: scaffold
-description: Интерактивно разложить один FSD-слайс (entity/feature/widget/page) по канону — папка с ui/model/api/lib/config + index.ts + пустые тесты + (для page) route + (если просит) mock-handler. Активируй когда юзер говорит "/scaffold", "создай слайс X", "добавь страницу Y", "новый widget Z", или когда оркестратор /init-service / /de-template чейнит этап реализации.
+description: Интерактивно разложить один FSD-слайс (entity/feature/widget/page) по канону — папка с ui/model/api/lib/config + index.ts + пустые тесты + (для page) route + (если просит) mock-handler. Источник слайса — stable-запись FSD-карты в соседнем <org>/strategy (docs/projects/<slug>/fsd/<surface>/); src/-пути скилл выводит сам из kind + slug. Активируй когда юзер говорит "/scaffold", "создай слайс X", "добавь страницу Y", "новый widget Z", или когда оркестратор /init-service / /de-template чейнит этап реализации.
 ---
 
 # Skill: scaffold
 
 Раскладывает один слайс по FSD-канону за один проход. Не интервьюирует про
-бизнес — это работа `/fsd-deep-dive`. Просто детерминированно создаёт файлы
-по таблице из соответствующего `docs/fsd/<kind>.md`.
+бизнес — карта слайсов проектируется в `<org>/strategy` (его
+`/fsd-deep-dive`). Скилл детерминированно создаёт файлы по stable-записи
+из `<strategy-path>/docs/projects/<slug>/fsd/<surface>/<kind>.md`
+(резолв — поля `project-slug`/`strategy-path`/`surface` в
+`docs/stack/service.md`, дефолт `../strategy`); `src/`-пути выводит сам из
+kind + slug — в карте их нет.
 
 ## Когда применять
 
@@ -17,7 +21,9 @@ description: Интерактивно разложить один FSD-слайс
 
 ## Pre-flight
 
-- [ ] Соответствующий `docs/fsd/<kind>.md` имеет запись о слайсе (имя + назначение)
+- [ ] Запись слайса есть в FSD-карте strategy (`fsd/<surface>/<kind>.md`) со
+      `status: stable`; нет соседа/записи — next-step «спроектируй в
+      `<org>/strategy` (/fsd-deep-dive)», не выдумывать слайс здесь
 - [ ] Имя слайса в kebab-case, не конфликтует с существующими
 
 ## Вопросы юзеру (≤ 3, не интервью)

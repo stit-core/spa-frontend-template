@@ -17,8 +17,8 @@ React 19.2, TanStack, Tailwind v4, MSW, …) — здесь решаем **пр�
 
 ## Pre-flight
 
-- [ ] FSD-артефакты `docs/fsd/*.md` уже спроектированы (или хотя бы черновики)
-      — `shared-api.md` нужен для `stack/api.md`
+- [ ] FSD-карта поверхности в `../strategy` (`docs/projects/<slug>/fsd/<surface>/`)
+      заведена (хотя бы draft) — `shared-api.md` карты нужен для `stack/api.md`
 - [ ] `docs/stack/*.md` существуют (или скопированы из `_templates/`)
 
 ## Порядок (от внутреннего к внешнему)
