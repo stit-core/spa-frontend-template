@@ -1,4 +1,4 @@
-import type { User } from '../model/types'
+import type { User } from '../model/schema'
 
 interface UserCardProps {
   user: User

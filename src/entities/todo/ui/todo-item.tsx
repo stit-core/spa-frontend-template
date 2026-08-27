@@ -1,4 +1,4 @@
-import type { Todo } from '../model/types'
+import type { Todo } from '../model/schema'
 
 interface TodoItemProps {
   todo: Todo

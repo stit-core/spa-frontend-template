@@ -1,3 +1,3 @@
-export { userQueryOptions, userQueryKey } from './api/queries'
+export { userQueryKey, userQueryOptions } from './api/queries'
+export { type User, UserSchema } from './model/schema'
 export { UserCard } from './ui/user-card'
-export { UserSchema, type User } from './model/types'

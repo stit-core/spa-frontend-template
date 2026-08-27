@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { sessionQueryOptions } from '../api/queries'
-import type { Session } from '../model/types'
+import type { Session } from '../model/schema'
 
 interface UseSessionResult {
   session: Session | null
