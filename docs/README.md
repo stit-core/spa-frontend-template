@@ -36,7 +36,7 @@
 ## Reference
 
 - [`reference/architecture.md`](./reference/architecture.md) — слои, импорты, public API
-- [`reference/ecosystem.md`](./reference/ecosystem.md) — место в экосистеме шаблонов (strategy/infra/backend/frontend/bot + корп control-plane)
+- [`reference/ecosystem.md`](./reference/ecosystem.md) — место в экосистеме: 7 шаблонов + 2 библиотеки, соседи, когда SPA / когда сайт, как сюда приходят агенты (из хаба `<org>/infra` или прямым заходом), контракты
 - [`reference/observability.md`](./reference/observability.md) — Sentry, web-vitals
 - [`reference/deployment.md`](./reference/deployment.md) — Dockerfile, nginx, runtime config
 - [`getting-started.md`](./getting-started.md) — для потребителя шаблона (META, удаляется в de-template)

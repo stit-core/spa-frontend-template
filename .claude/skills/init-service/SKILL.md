@@ -1,96 +1,58 @@
 ---
 name: init-service
-description: Оркестратор онбординга потребителя шаблона — ведёт путь форк → привязка к FSD-карте из соседнего <org>/strategy (проектируется там его /fsd-deep-dive) → проектирование стека (stack-deep-dive) → de-template → /scaffold собственных слайсов, пока проект не перестанет помнить про шаблон. Активируй когда юзер форкнул spa-frontend-template и говорит "/init-service", "онбординг", "развернуть SPA из шаблона", "с чего начать новый фронтенд", или когда видишь свежий форк (package.json#name всё ещё @stit/spa-frontend-template, reference-слайсы auth/profile/todos/theme на месте). Сам не проектирует и не де-темплейтит — чейнит специализированные скиллы по порядку.
+description: Онбординг свежего форка spa-frontend-template — ведёт путь форк → привязка к FSD-карте поверхности в соседнем <org>/strategy → стек через /stack-deep-dive → разворот через /de-template, пока проект не перестанет помнить про шаблон. Используй, когда юзер только что форкнул шаблон или спрашивает, с чего начать новый фронтенд из него, и когда видишь неразвёрнутый форк (package.json#name — @stit/spa-frontend-template, reference-слайсы auth/profile/todos/theme на месте). Сам не проектирует и не разворачивает — по очереди передаёт этапы профильным скиллам.
 ---
 
 # Skill: init-service (онбординг-оркестратор)
 
-Дирижёр пути «форк шаблона → свой проект». Не делает проектирование/генерацию
-сам, а **ведёт по этапам и чейнит** специализированные скиллы. Один проход
-доводит до проекта, который ничего не помнит про шаблон.
+Дирижёр пути «форк шаблона → свой проект»: ведёт по этапам, а каждый этап
+выполняет профильный скилл. Этап не начинается, пока гейт предыдущего не зелёный —
+артефакты первичны, код пишется по ним. Полное описание пути для человека —
+`docs/getting-started.md`; этот скилл его исполняет.
 
-Полное описание пути для человека — `docs/getting-started.md`; этот скил его
-исполняет.
-
-## Когда применять
-
-- "/init-service" / «онбординг» / «развернул форк, что дальше»
-- Свежий форк: `package.json#name` ещё `@stit/spa-frontend-template`,
-  reference-слайсы `features/auth`, `pages/profile`, `pages/todos`,
-  `features/theme` на месте
-- Юзер: «хочу развернуть свой SPA из шаблона»
-
-## Когда НЕ применять
-
-- Проект уже де-темплейтизирован (своё имя пакета, reference-слайсы удалены) —
-  это обычный день-в-день, иди в `/smartdev`
-- Юзер хочет добавить слайс/page/widget в уже-свой проект — это `/scaffold`,
-  не онбординг
+Проект уже развёрнут (своё имя пакета, reference-слайсы удалены) — это обычная
+работа через `/smartdev`; новый слайс в развёрнутом проекте — `/scaffold`.
 
 ## Pre-flight
 
-- [ ] Форк создан, репо склонирован (Gitea → **Use this template** → `<org>/<service>-frontend`)
+- [ ] Форк создан, репо склонирован (Gitea → **Use this template** → `<org>/frontend`)
+      рядом с `<org>/strategy`
 - [ ] `pnpm install` прогнан
 - [ ] `pnpm prepare` поставил lefthook-хуки
-- [ ] Если нет — подскажи шаги 0 из `docs/getting-started.md` и дальше не иди
+- [ ] Если нет — подскажи шаг 0 из `docs/getting-started.md` и дальше не иди
 
-## Этапы (чейнить по порядку, не делать самому)
+## Этапы
 
 ### 1. Привязаться к FSD-карте в `<org>/strategy`
 
 - FSD-карта поверхности проектируется в соседнем `<org>/strategy`
-  (`docs/projects/<slug>/fsd/<surface>/`, его `/fsd-deep-dive`) — **не здесь**
+  (`docs/projects/<slug>/fsd/<surface>/`, его `/fsd-deep-dive`), не здесь
 - Проверить sibling-checkout: `../strategy` (или `strategy-path`) существует
   и слой `fsd/<surface>/` заведён. Нет — next-step юзеру: «спроектируй
-  FSD-карту в `<org>/strategy` (/fsd-deep-dive) и вернись», дальше не идти
+  FSD-карту в `<org>/strategy` (`/fsd-deep-dive`) и вернись», дальше не идти
 - Записать `project-slug` / `strategy-path` / `surface` в
   `docs/stack/service.md` — по ним `/scaffold` и `/de-template` найдут карту
 - Gate: записи карты, нужные первому развороту, — `status: stable`
 
 ### 2. Спроектировать стек → `/stack-deep-dive`
 
-- Скопировать шаблоны `docs/stack/_templates/*.md` в `docs/stack/*.md`
-- `/stack-deep-dive` ведёт волнами поверх базовых выборов шаблона
+- Скилл заводит `docs/stack/*.md` из `docs/stack/_templates/` и ведёт волнами
+  поверх базовых выборов шаблона
 - Gate: все 8 артефактов `status: stable`, `Generates` непусты
 
 ### 3. Развернуть фундамент → `/de-template`
 
-- Gate перед запуском: stack `stable`; stable-записи FSD-карты в strategy;
-  нет открытых `**blocker**`-вопросов
-- `/de-template` читает stable-артефакты и разворачивает по `Generates`:
-  - `package.json#name`
-  - `README.md`
-  - `docker/nginx-entrypoint.sh` env defaults
-  - `vite.config.ts#proxy.target` (если real-режим)
-  - Prune reference-слайсов (`auth`, `profile`, `todos`, `theme`)
-  - Удаление `docs/getting-started.md` (META)
+- Gate перед запуском: стек stable; stable-записи FSD-карты в strategy; нет
+  открытых `(**blocker**)` в state `/stack-deep-dive`
+- `/de-template` по stable-артефактам переименовывает пакет, пишет README и
+  runtime config, снимает META-файлы шаблона, раскладывает свои слайсы через
+  `/scaffold` и после этого удаляет reference-слайсы
 
-### 4. Свои слайсы → `/scaffold`
+### 4. Финал
 
-Когда фундамент развёрнут — чейнить `/scaffold` под каждый stable-слайс
-FSD-карты (`../strategy/docs/projects/<slug>/fsd/<surface>/`):
+`pnpm check` зелёный → проект самостоятельный и про шаблон не помнит. Сообщи юзеру:
+онбординг закрыт, дальше обычный флоу через `/smartdev`; новые stable-записи
+FSD-карты — `/scaffold`.
 
-- `entities/*` — из `entities.md` карты
-- `features/*` — из `features.md`
-- `widgets/*` — из `widgets.md`
-- `pages/*` — из `pages.md`
-
-### 5. Финал
-
-`pnpm check` зелёный → проект больше не помнит про шаблон. Сообщи юзеру:
-онбординг закрыт, дальше обычный флоу через `/smartdev`. `docs/getting-started.md`
-(META) удалён.
-
-## Что init-service НЕ делает
-
-- ❌ Не проектирует FSD-карту сам и не правит её — она в `<org>/strategy`
-  (его `/fsd-deep-dive`); стек — `/stack-deep-dive` здесь
-- ❌ Не правит фундамент руками и не де-темплейтит — это `/de-template`
-- ❌ Не запускает `/de-template` до зелёных gate'ов
-- ❌ Не пропускает проектирование ради «быстро сгенерить» — артефакты первичны
-
-## Anti-patterns
-
-- ❌ Кодить `src/` до того как спроектированы артефакты
-- ❌ Удалять reference-слайсы до того как свои готовы (теряешь живой образец)
-- ❌ Дублировать процедуру deep-dive внутри этого скилла
+Сам init-service артефакты и код не пишет: FSD-карта — в `<org>/strategy`,
+стек — `/stack-deep-dive`, фундамент — `/de-template`, слайсы — `/scaffold`.

@@ -1,6 +1,6 @@
 ---
 name: de-template
-description: Развернуть форк spa-frontend-template в самостоятельный проект по stable-артефактам — локальный docs/stack + FSD-карта из соседнего <org>/strategy (docs/projects/<slug>/fsd/<surface>/) — переименовать пакет, обновить README, runtime config defaults, nginx entrypoint, prune reference-слайсов auth/profile/todos/theme. Активируй когда юзер форкнул шаблон и говорит "/de-template", "разверни фундамент", "де-темплейтизируй", "сделай из шаблона свой проект", или когда init-service дошёл до этапа 3 (FSD-карта в strategy + стек stable). Движок skill-only: и механика, и wiring — reviewable edits под этой процедурой. НЕ запускать на каноническом репозитории шаблона.
+description: Развернуть форк spa-frontend-template в самостоятельный проект по stable-артефактам — локальный docs/stack и FSD-карта поверхности из соседнего <org>/strategy (docs/projects/<slug>/fsd/<surface>/) — имя пакета, README, runtime config, снятие META-файлов, свои слайсы через /scaffold и затем удаление reference-слайсов auth/profile/todos/theme. Используй, когда юзер просит развернуть фундамент или превратить форк шаблона в свой проект, и когда /init-service дошёл до этапа разворота (стек и нужные записи FSD-карты stable). Запускается один раз на форке и никогда — на каноническом репозитории шаблона.
 ---
 
 # Skill: de-template (движок развёртывания)
@@ -9,30 +9,21 @@ description: Развернуть форк spa-frontend-template в самост
 `spa-frontend-template`. Читает **stable**-артефакты — локальный `docs/stack`
 (секции `Generates`) и FSD-карту поверхности из соседнего `<org>/strategy`
 (`<strategy-path>/docs/projects/<slug>/fsd/<surface>/`; резолв — поля в
-`docs/stack/service.md`, дефолт `../strategy`) — и разворачивает фундамент.
+`docs/stack/service.md`, дефолт `../strategy`) — и разворачивает фундамент
+обычными правками рабочего дерева, которые юзер ревьюит как любой diff.
 
 Запускается **один раз** на форке. Финал — зелёный `pnpm check` и проект
-без следов шаблона.
+без следов шаблона. Стек или карта ещё не stable — сначала `/stack-deep-dive`
+здесь и `/fsd-deep-dive` в `<org>/strategy`. Проект уже развёрнут (своё
+`package.json#name`, reference-слайсы удалены) — это обычная работа через
+`/smartdev`.
 
-## Когда применять
-
-- "/de-template" / «разверни фундамент» / «сделай из шаблона свой проект»
-- `/init-service` дошёл до этапа 3 (FSD-карта в strategy + стек stable,
-  валидаторы зелёные)
-
-## Когда НЕ применять
-
-- Стек не `stable` или FSD-карта в strategy не готова — сначала
-  `/stack-deep-dive` здесь и `/fsd-deep-dive` в `<org>/strategy`
-- Проект уже де-темплейтизирован (свой `package.json#name`, reference-слайсы
-  удалены) — обычный день-в-день через `/smartdev`
-- **Канонический репозиторий шаблона** — никогда (guard ниже)
-
-## Gate (проверить ДО любых правок)
+## Gate (проверить до любых правок)
 
 1. **Не канонический шаблон.** `package.json#name` ещё
-   `@stit/spa-frontend-template` И каталог — не временная копия/форк → СТОП.
-   Спроси юзера явно подтвердить, что это форк/тест-копия.
+   `@stit/spa-frontend-template` и каталог — не временная копия/форк → СТОП.
+   Спроси юзера явно подтвердить, что это форк/тест-копия: разворот
+   переименовывает пакет и удаляет reference-слайсы.
 
 2. **Артефакты stable.** Все 8 stack-kind имеют `status: stable`, все
    `Generates` непусты:
@@ -55,13 +46,14 @@ description: Развернуть форк spa-frontend-template в самост
 
 ## Phase A — детерминированная механика
 
-### A.1 Имя пакета и module path
+### A.1 Имя пакета
 
 Источник: `docs/stack/service.md § Идентичность` (поля `scope`, `repository`).
+`.claude/` исключён: скиллы по шаблонному имени отличают неразвёрнутый форк.
 
 ```bash
 NEW_NAME=<scope из service.md>
-git grep -lF '@stit/spa-frontend-template' | xargs sed -i "s|@stit/spa-frontend-template|$NEW_NAME|g"
+git grep -lF '@stit/spa-frontend-template' -- . ':!.claude' | xargs sed -i "s|@stit/spa-frontend-template|$NEW_NAME|g"
 pnpm install
 ```
 
@@ -73,30 +65,23 @@ pnpm install
 репо. Замени шаблонную шапку `README.md` на проектную. Убери упоминания
 «шаблон»/«template»/«форкни».
 
-### A.3 Runtime config defaults
+### A.3 Runtime config
 
-Из `docs/stack/config.md § Runtime config keys`: обнови
-`docker/nginx-entrypoint.sh` и `public/config.js` (dev-заглушка) — добавь
-новые ключи с дефолтами проекта. Обнови `src/shared/config/index.ts`
-(Zod-схему) под новые поля.
+Новые ключи из `docs/stack/config.md § Runtime config keys` с дефолтами проекта
+ложатся в три места контракта: Zod-схема `src/shared/config/index.ts`, генерация
+`config.js` в `docker/nginx-entrypoint.sh` и блок `ENV` в `docker/Dockerfile`.
+`public/config.js` остаётся пустой dev-заглушкой — в dev работают дефолты схемы.
 
 ### A.4 Strip шаблонной меты
 
-- Удали `docs/getting-started.md` ([META])
+- Удали `docs/getting-started.md` ([META]) вместе со ссылками на него
+  (`README.md`, `docs/README.md`, `CLAUDE.md`)
 - `docs/contributing.md` — оставь (система наследуется), переформулируй
   «шаблон» → имя проекта
-- Сбрось `.claude/plans/roadmap.md` к пустому fork-start (history шаблона —
-  не история форка)
+- `.claude/plans/` — форк стартует без планов шаблона: только `backlog.md` с
+  `_пусто_` (планы шаблона — не планы проекта)
 
-### A.5 Prune reference-слайсов
-
-Учебные слайсы `features/auth`, `pages/profile`, `pages/todos`,
-`features/theme`, `features/create-todo`, `entities/session`, `entities/user`,
-`entities/todo` — удаляются **после того как свои слайсы спроектированы и
-сгенерированы** (иначе теряешь живой образец). Полный чеклист prune —
-см. **`references/prune.md`**.
-
-## Phase B — doc-driven wiring
+## Phase B — свои слайсы
 
 По stable-записям FSD-карты strategy
 (`<strategy-path>/docs/projects/<slug>/fsd/<surface>/`) чейнить `/scaffold`
@@ -107,7 +92,13 @@ pnpm install
 - `widgets/*` из `widgets.md`
 - `pages/*` из `pages.md`
 
-После каждого `/scaffold` — `pnpm steiger src` должен оставаться зелёным.
+После каждого `/scaffold` — `pnpm steiger` должен оставаться зелёным.
+
+## Phase C — prune reference-слайсов
+
+Учебные слайсы шаблона — живой образец, поэтому удаляются только после Phase B,
+когда свои слайсы сгенерированы и работают. Что удалить, что заменить и как
+пересобрать mock-слой — чеклист **`references/prune.md`**.
 
 ## Финал
 

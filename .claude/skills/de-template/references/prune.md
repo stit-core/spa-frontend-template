@@ -2,7 +2,7 @@
 
 Учебные слайсы шаблона — это **живой образец**, не «технический долг».
 Удаляются **после** того как собственные слайсы (из FSD-карты strategy
-через `/scaffold`) уже сгенерированы и работают.
+через `/scaffold`, Phase B) уже сгенерированы и работают.
 
 ## Что удалить (8 точек)
 
@@ -34,6 +34,9 @@
 `src/shared/api/mock/db.ts` — пересоздать factory под свои сущности
 (см. `entities.md` FSD-карты strategy).
 
+`src/shared/api/mock/persist.ts` — снапшот (`Snapshot`, `loadSnapshot`,
+`saveSnapshot`) перечисляет модели `db` поимённо: переписать под свои.
+
 `src/shared/api/mock/seeds/factories.ts` — заменить `makeUser`/`makeTodo` на
 свои `make<Entity>`.
 
@@ -47,7 +50,7 @@
 ## После prune
 
 ```bash
-pnpm steiger src     # должно быть зелёным — нет insignificant-slice
+pnpm steiger         # должно быть зелёным — нет insignificant-slice
 pnpm typecheck       # нет битых импортов
 pnpm test            # тесты собственных слайсов проходят
 pnpm build           # бандл собирается

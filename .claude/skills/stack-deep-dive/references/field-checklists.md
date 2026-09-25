@@ -17,9 +17,9 @@
 **Обязательные секции**: `Идентичность`, `Связь с экосистемой`, `Generates`.
 
 **Generates содержит**: `package.json#name`, README-шапка, registry-путь
-образа, `docker/Dockerfile` LABEL.
+образа (его читает `/release`).
 
-**Cross-kind**: registry/имя сервиса — якорь для `deployment.md`;
+**Cross-kind**: registry/имя сервиса — якорь для `docs/reference/deployment.md`;
 `project-slug` / `strategy-path` (дефолт `../strategy`) / `surface` — резолв
 FSD-карты и продуктового контекста в соседнем `<org>/strategy`
 (`<strategy-path>/docs/projects/<slug>/`), по ним ходят `/scaffold` и
@@ -35,14 +35,14 @@ FSD-карты и продуктового контекста в соседне�
 
 **Обязательные секции**: `Node`, `Browser`, `React`, `Generates`.
 
-**Generates содержит**: `.nvmrc`/`engines`, browserslist target, React Compiler
-mode в `vite.config.ts`.
+**Generates содержит**: `.nvmrc`/`engines`, `build.target` в `vite.config.ts`
+и `tsconfig.json#target`, React Compiler mode в `vite.config.ts`.
 
 **Cross-kind**: browser target ↔ `styling.md` (Tailwind target).
 
 **Anti-patterns**:
 - React Compiler выключен без обоснования.
-- Browser target шире, чем поддерживает DS.
+- Browser target шире, чем поддерживает Tailwind v4.
 
 ---
 
@@ -70,11 +70,12 @@ mode в `vite.config.ts`.
 **Generates содержит**: `routeTree.gen.ts` (vite-плагин), layout-роуты,
 guard-обвязка.
 
-**Cross-kind**: guards ↔ `api.md § Auth scheme`; layouts ↔ `app.md` (fsd).
+**Cross-kind**: guards ↔ `api.md § Auth scheme`; layouts ↔ `app.md` FSD-карты
+strategy.
 
 **Anti-patterns**:
 - Guard в рендере вместо `beforeLoad`.
-- File-based маршрут без соответствия page в `fsd/pages.md`.
+- File-based маршрут без соответствия page в `pages.md` FSD-карты strategy.
 
 ---
 
@@ -86,8 +87,8 @@ guard-обвязка.
 **Generates содержит**: `shared/api/client.ts`, `entities/*/model/schema.ts`,
 mock-handlers.
 
-**Cross-kind**: контракт API ↔ `backend/openapi.json` (референс); mock-сущности ↔
-`fsd/entities.md`.
+**Cross-kind**: контракт API ↔ OpenAPI бэкенда (`/openapi.json`, референс);
+mock-сущности ↔ `entities.md` FSD-карты strategy.
 
 **Anti-patterns**:
 - Вторая линия HTTP-клиента (пакет-обёртка) рядом со своим fetch-враппером.
@@ -100,8 +101,9 @@ mock-handlers.
 **Обязательные секции**: `Источники`, `Корневой импорт`, `Темизация — оси`,
 `Layout-конвенции проекта`, `Generates`.
 
-**Generates содержит**: Tailwind v4 config, активные оси темизации
-(scheme/brand/density), корневой CSS-импорт.
+**Generates содержит**: `src/app/styles/index.css` (Tailwind v4 `@theme`,
+семантические токены, активные оси темизации scheme/brand/density), плагин
+`tailwindcss` в `vite.config.ts`.
 
 **Cross-kind**: оси темизации ↔ токен-слой `app/styles/index.css` (rule `shared-ui`).
 

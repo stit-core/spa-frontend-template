@@ -16,13 +16,14 @@ status: draft
 ## Browser
 
 - Target: `es2024`
-- Поддержка: _Chrome ≥ 110, Firefox ≥ 110, Safari ≥ 16.4, Edge ≥ 110_
-- Polyfills: _нужны ли (обычно нет на 2026)_
+- Поддержка: _не шире минимума Tailwind v4 — Chrome/Edge ≥ 111, Firefox ≥ 128, Safari ≥ 16.4_
+- Polyfills: _нужны ли (при target `es2024` обычно нет)_
 
 ## React
 
 - Версия: `19.2.x`
-- Compiler: `1.0` — полный проход (`compilationMode: 'all'`)
+- Compiler: `1.0`, `compilationMode: 'infer'` — компоненты и хуки (`'all'` ломает
+  обычные функции, см. комментарий в `vite.config.ts`)
 - View Transitions: _включаем для навигаций?_
 
 ## Generates

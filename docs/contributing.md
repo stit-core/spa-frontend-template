@@ -7,10 +7,10 @@
 
 ```
 .claude/
-├─ skills/           # пошаговые процедуры (init-service, fsd-deep-dive, scaffold…)
-├─ rules/            # path-scoped правила (forward-only, fsd-architecture, comments…)
-├─ plans/roadmap.md  # единый план активной работы (planning-first)
-└─ settings.json     # настройки сессии (auto-allowlist, permissions)
+├─ skills/           # процедуры (smartdev, plan, init-service, stack-deep-dive, de-template, scaffold, release)
+├─ rules/            # правила по темам (forward-only, fsd-architecture, comments…)
+├─ plans/           # активные планы <slug>.md и backlog.md (skill /plan)
+└─ settings.json     # permissions.deny: publish, обход хуков, разрушительные git-команды, каталог авто-памяти
 ```
 
 ## Скилы
@@ -24,15 +24,17 @@
 
 ## Правила
 
-`.claude/rules/<topic>.md` — path-scoped правила, подгружаются автоматически
-когда matching-файл попадает в контекст. Например, `rules/fsd-architecture.md`
-активируется при правке `src/**/*.ts`.
+`.claude/rules/<topic>.md` — правила по темам. Область задаёт поле `paths:` во
+frontmatter (glob-шаблоны): правило подгружается, когда агент читает совпавший
+файл. Например, `rules/fsd-architecture.md` (`paths: ["src/**/*.ts", "src/**/*.tsx"]`)
+приходит вместе с кодом из `src/`. Правило без `paths` грузится всегда, как
+`CLAUDE.md` — так устроен `forward-only`.
 
 ## Память
 
-**Файловая авто-память отключена глобально** (см. `~/.claude/CLAUDE.md`).
-Постоянное «помни между сессиями» — только в репо: `CLAUDE.md`, правила,
-`state/` скилов.
+Долгосрочное знание — только в репо: `CLAUDE.md`, правила, `state/` скилов,
+`docs/`. Авто-память Claude Code не используется: запись в её каталог закрыта
+deny-правилом `.claude/settings.json`.
 
 ## Forward-only
 
@@ -41,11 +43,5 @@
 
 ## Изменение скилов
 
-Правки `SKILL.md` идут через `/plan` — секция в `.claude/plans/roadmap.md` —
-чтобы изменение пережило `/clear` и было видно тимейтам.
-
-## Не-входящее
-
-`/release` для приложения не нужен: релиз — это просто Docker image-tag
-от CI после merge в main. Если потребуется ритуал релиза — добавь скил
-вручную.
+Правки `SKILL.md` идут через `/plan` — план в `.claude/plans/` — чтобы
+изменение пережило `/clear` и было видно тимейтам.

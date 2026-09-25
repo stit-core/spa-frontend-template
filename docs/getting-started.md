@@ -7,9 +7,13 @@
 
 Шаблон React SPA на TypeScript для stit-проектов. Жёсткий FSD,
 TanStack Router/Query, MSW для mock-режима, UI-компоненты пишутся в
-проекте на собственном токен-слое (design-system-agnostic). После форка
-ты пройдёшь несколько этапов проектирования, и репо разверётся в
+проекте на собственном токен-слое. После форка
+ты пройдёшь несколько этапов проектирования, и репо развернётся в
 самостоятельный проект, не помнящий про шаблон.
+
+Проект стартует в `<org>/strategy` — там проектируется и FSD-карта этой
+поверхности; операционный хаб — `<org>/infra`, из него приходят задачи и туда
+уходит выкатка. Место репо среди соседей — `docs/reference/ecosystem.md`.
 
 ## Путь
 
@@ -20,8 +24,8 @@ TanStack Router/Query, MSW для mock-режима, UI-компоненты п�
    ├─ привязка к FSD-карте из ../strategy (проектируется там его /fsd-deep-dive)
    ├─ /stack-deep-dive → проектирование стека (docs/stack/*)
    ├─ gate: stack stable + stable-записи FSD-карты + state чист
-   ├─ /de-template    → разворот фундамента, prune reference-слайсов
-   └─ /scaffold       → для каждого своего слайса
+   └─ /de-template    → разворот фундамента, /scaffold для каждого своего
+                        слайса, затем prune reference-слайсов
 3. pnpm dev → SPA крутится в mock-режиме
 4. (когда бэк появится) zod-схемы сущностей по контракту → переключи VITE_API_MODE=real
 5. pnpm check → /release → образ в registry → rollout в <org>/infra (make bump)
@@ -67,7 +71,8 @@ pnpm prepare   # lefthook install
 2. **`/stack-deep-dive`** — добивает `docs/stack/{service,runtime,config,routing,api,styling,observability,dependencies}.md`
    поверх базовых выборов шаблона.
 3. После stable (stack + записи FSD-карты) запускает **`/de-template`** —
-   переименование пакета, обновление README, генерация nginx env-set,
+   переименование пакета, обновление README, runtime config (Zod-схема,
+   nginx-entrypoint, `ENV` образа), свои слайсы через `/scaffold`, затем
    удаление reference-слайсов.
 
 ## Шаг 3: разработка
@@ -76,8 +81,9 @@ pnpm prepare   # lefthook install
 pnpm dev              # mock-режим по умолчанию (VITE_API_MODE=mock)
 ```
 
-В левом нижнем углу — мини-панель переключателя mock-сценариев
-(`empty | populated | authenticated | error`). Состояние сохраняется
+С `VITE_MOCK_DEVTOOLS=1` в `.env.local` (шаблон — `.env.local.example`) в левом
+нижнем углу появляется мини-панель переключателя mock-сценариев
+(`empty | populated | authenticated | error`). Состояние mock-данных сохраняется
 в `localStorage` (`app.mock.db.v1`), кнопка **reset** чистит.
 
 Когда появится бэк:
@@ -95,7 +101,7 @@ VITE_API_TARGET=https://api.dev.example.com
 ## Gate перед push
 
 ```bash
-pnpm check   # typecheck + lint + format:check + test + steiger + size + build
+pnpm check   # typecheck + lint + format:check + test + steiger + build + size
 ```
 
 Lefthook `pre-push` запускает то же самое автоматически.

@@ -24,7 +24,8 @@
     "size": "size-limit",
     "gen": "tsr generate",
     "gen:msw": "msw init public/ --save",
-    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm steiger && pnpm build && pnpm size",
+    "plan:check": "bash scripts/validate-plan.sh",
+    "check": "pnpm plan:check && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm steiger && pnpm build && pnpm size",
     "analyze": "vite build --mode analyze",
     "prepare": "lefthook install"
   },

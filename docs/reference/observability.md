@@ -29,15 +29,16 @@ API/SDK, лёгкий (postgres + redis), поднимается одним dock
 
 ## Web Vitals — производительность
 
-`web-vitals` (LCP, INP, CLS, FCP, TTFB) подключается **всегда**:
+`web-vitals` (LCP, INP, CLS, FCP, TTFB) подключается **всегда**
+(`src/shared/observability/index.ts`):
 
 - в `dev` — выводит в `console.info`
-- в `prod` — отправляет в Sentry, если активен; иначе noop
+- в `prod` — репортер ничего не отправляет; куда слать метрики (Sentry или свой
+  приёмник) — решение проекта, дописывается в тот же репортер
 
 Без аутентификации, без токенов.
 
 ## Что НЕ собираем
 
-- Session replay (Sentry replay) — privacy-чувствительно, включается осознанно
-- Полный network capture — Sentry sampling по умолчанию 10%, не трогаем без причины
-- Авто-сборка ошибок 3rd-party скриптов — `allowUrls` ограничивает наш origin
+- Session replay (Sentry replay) — не подключён: privacy-чувствительно, включается осознанно
+- Трейсы — выборка 10% (`tracesSampleRate: 0.1`), не трогаем без причины

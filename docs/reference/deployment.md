@@ -7,10 +7,18 @@
 
 ### Сборка
 
+Dockerfile лежит в `docker/`, поэтому `-f` обязателен; образ —
+`<registry>/<org>/frontend` (путь — `docs/stack/service.md § Идентичность`):
+
 ```bash
-docker build -f docker/Dockerfile -t <registry>/<service>-spa:<tag> .
-docker push <registry>/<service>-spa:<tag>
+docker build -f docker/Dockerfile -t <registry>/<org>/frontend:<tag> .
+docker push <registry>/<org>/frontend:<tag>
 ```
+
+`pnpm install` в build-стадии монтирует необязательный BuildKit-секрет `npmrc`
+в `/root/.npmrc` — он нужен, только если зависимости тянутся из приватного
+npm-registry: `--secret id=npmrc,src=<путь к .npmrc>`. Без флага файла нет и
+пакеты ставятся из публичного registry.
 
 ### Слои образа
 
@@ -63,14 +71,13 @@ window.__APP_CONFIG__ = {
 
 ## Release handoff
 
-CI-runner'а в экосистеме нет (сознательное решение — см. канон
-`corp-infra-template/docs/ecosystem.md`); build+push делает разработчик
-через скилл `/release`:
+Build+push делает разработчик через скилл `/release`:
 
 1. Build image с тегом из git ref (`v1.2.3` или `<sha>`)
-2. Push в `<registry>` (`git.${DOMAIN}/<org>/frontend:<v>`)
+2. Push в registry: `<registry>/<org>/frontend:<v>` (по умолчанию Gitea
+   `git.stit.tech`)
 3. INFRA-HANDOFF: rollout выполняет `<org>/infra` —
    `make bump SVC=frontend TAG=<v>` (правит `FRONTEND_TAG` в `.env` VPS +
    force-recreate)
 
-CD — задача `infra/` репо; отсюда деплой-команды не запускаются.
+Выкатка — задача `<org>/infra`; отсюда деплой-команды не запускаются.

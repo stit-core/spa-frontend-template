@@ -13,7 +13,7 @@
 
 | kind | файл | что описывает |
 |---|---|---|
-| `service` | `service.md` | имя, scope (`@org/<service>`), repository URL, image registry |
+| `service` | `service.md` | имя, scope (`@<org>/frontend`), repository URL, image registry, резолв strategy |
 | `runtime` | `runtime.md` | node version, browser support, polyfills, target |
 | `config` | `config.md` | runtime config keys, env, секреты-классы |
 | `routing` | `routing.md` | TanStack Router конфигурация, layouts |
@@ -42,5 +42,5 @@ status: draft
 
 ## Gate
 
-`/de-template` не запускается, пока не все 8 артефактов `stable`.
-Зеркалит FSD-gate.
+`/de-template` не запускается, пока не все 8 артефактов `stable`; записи
+FSD-карты strategy, нужные развороту, тоже должны быть `stable`.

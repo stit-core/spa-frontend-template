@@ -7,18 +7,34 @@ Lingui 5 runtime-only i18n / Sentry condit. + web-vitals /
 Biome 2 + ESLint 9 + Steiger / Vitest 4 + Playwright / pnpm 10 / lefthook.
 
 Этот файл — **ядро (always-on) + роутер**. Детали — в `docs/`, контекстные
-правила — в `.claude/rules/` (path-scoped), процедуры — в `.claude/skills/`.
+правила — в `.claude/rules/` (подгружаются по `paths`, когда читаешь файл их темы;
+`forward-only` — всегда), процедуры — в `.claude/skills/`.
 Карта документации — `docs/README.md`.
 
 ## Точка входа
 
-- **`/smartdev`** — cockpit сессии: сводка состояния (ветка, drift, активный план, gate'ы) +
-  переключение в нужный режим. Запускай в начале / после `/clear`.
-- **Потребителю шаблона** — `docs/getting-started.md`: форк → `/init-service` →
+Сюда приходят двумя путями, и в обоих работаешь обвязкой этого репо — этот файл,
+скиллы, гейт `pnpm check`:
+
+- **агентом из хаба `<org>/infra`** — проект стартует в `<org>/strategy`, дальше
+  работа идёт из операционного хаба: сквозная задача — план-программа в
+  `.claude/plans/` инфры, оттуда её фаза приходит сюда (`../frontend`) и ведётся
+  планом здесь (`/plan`, `parent: infra:<slug>`). Итог работы здесь — образ в registry
+  (`/release`); выкатка тега — только в `<org>/infra` (`make bump`);
+- **прямым заходом** — нормальный режим; то, что задевает соседей, уходит
+  handoff-блоком для `<org>/infra` (его печатает `/release`: новый образ, новые
+  runtime-ключи env), изменение дизайна — в `<org>/strategy` его скиллами.
+
+Дальше:
+
+- **`/smartdev`** — сводка состояния и следующий шаг. Запускай в начале сессии и
+  после `/clear`.
+- **Свежий форк шаблона** — путь `docs/getting-started.md`: форк → `/init-service` →
   проектирование стека (FSD-карта — в `<org>/strategy`) → `/de-template` → свой проект.
-- **Planning-first.** Любое содержательное изменение идёт через план — секция в
-  `.claude/plans/roadmap.md` (skill `/plan`). Прямая правка — только truly-atomic
-  и багфиксы.
+- **Planning-first.** Содержательное изменение идёт через план — файл в
+  `.claude/plans/` (skill `/plan`: критерии приёмки, шаги с проверками, «Где мы
+  сейчас» для продолжения после `/clear`); бэклог — `.claude/plans/backlog.md`.
+  Прямая правка — только truly-atomic и багфиксы.
 
 ## Проектирование первично, код вторичен
 
@@ -58,15 +74,17 @@ kind + slug. Артефакты платформы — локальные `docs/
 | Тема | Где |
 |---|---|
 | Архитектура FSD, слои, public API | `docs/reference/architecture.md` + rule `fsd-architecture` |
-| Экосистема (6 шаблонов + библиотеки, контракты, оркестрация из `<org>/infra`) | `docs/reference/ecosystem.md` |
+| Экосистема: 7 шаблонов + 2 библиотеки, соседи, когда SPA / когда сайт, контракты, флоу (хаб `<org>/infra` или прямой заход) | `docs/reference/ecosystem.md` |
 | Observability (Sentry, web-vitals) | `docs/reference/observability.md` |
 | Deployment (Dockerfile, nginx, runtime config) | `docs/reference/deployment.md` |
 | Тесты | rule `tests-pipeline` |
 | env, секреты, runtime config | rule `env-local` |
-| UI-компоненты (свои, agnostic, свой токен-слой) | rule `shared-ui` |
-| FSD-карта (8 kinds, cross-repo) | `../strategy/docs/projects/<slug>/fsd/<surface>/` (канон — `_template/fsd/README.md` в strategy) |
+| UI-компоненты (свои, на собственном токен-слое) | rule `shared-ui` |
+| FSD-карта (8 kinds, cross-repo) | `../strategy/docs/projects/<slug>/fsd/<surface>/` (канон слоя — `../strategy/docs/projects/_template/fsd/README.md`) |
 | Stack-артефакты (8 kinds) | `docs/stack/README.md` |
-| Forward-only стиль | rule `forward-only` |
+| Путь потребителя шаблона: форк → свой проект | `docs/getting-started.md` |
+| Устройство `.claude`-системы (правила, скиллы, план, state) | `docs/contributing.md` |
+| Forward-only, комментарии | rules `forward-only`, `comments` |
 
 ## Стиль кода (инварианты)
 
@@ -76,29 +94,30 @@ kind + slug. Артефакты платформы — локальные `docs/
 - **React Compiler 1.0** (`compilationMode: infer`) — код пишется без ручных
   `useMemo`/`useCallback`/`memo` кроме обоснованных случаев (compiler-правила
   `eslint-plugin-react-hooks` ловят нарушения Rules of React)
-- **FSD-импорты** строго нисходящие (Steiger + `eslint-plugin-boundaries` + `no-restricted-imports`)
-- **Public API** — `index.ts` на каждом слайсе/сегменте sliceless-слоя, explicit re-exports
-- **UI-компоненты пишутся в проекте** — design-system-agnostic, на собственном
-  токен-слое (`app/styles/index.css`), без внешней DS (rule `shared-ui`)
+- **FSD-импорты** строго нисходящие и только через public API — без deep-import
+  `@/<layer>/<slice>/<segment>/…` (Steiger + `eslint-plugin-boundaries` +
+  `no-restricted-imports`)
+- **Public API** — `index.ts` на каждом слайсе/сегменте sliceless-слоя, explicit
+  re-exports, без `export *`
+- **UI-компоненты пишутся в проекте** на собственном токен-слое
+  (`app/styles/index.css`): семантические токены вместо сырых цветов и размеров,
+  вендорные UI-киты (Material UI, shadcn, chakra…) не подключаются (rule `shared-ui`)
 - **Комментарии** — только WHY, кратко (rule `comments`)
-- **Forward-only** — все доки/комментарии описывают текущее состояние,
-  без «было/стало», без changelog'ов в prose
 
 ## Git workflow
 
 - **Conventional Commits**: `feat|fix|refactor|docs|test|chore|meta|perf|style`,
   формат `<type>(<scope>)?: <subject>`, subject ≤ 72
 - **Push в `main` разрешён** (прямой или через PR); линейная история
-- Gate `lefthook pre-push → pnpm check` (skip только при явной просьбе юзера)
-- git-хуки ставятся `pnpm prepare` (== `lefthook install`)
+- Хуки ставит `pnpm prepare` (`lefthook install`): pre-commit — Biome и ESLint по
+  staged, commit-msg — commitlint, pre-push — `pnpm check`
 
 ## Границы
 
 ### Делать всегда
-- Перед claim «готово» — `pnpm check`
-- **Изменение — через план** (skill `/plan`). Отклонение — осознанное
 - Cross-feature — только через подъём в entities/shared или композицию в widget/page
-- Compute-side-effects — в `app/init.ts` или в Query (`queryFn`); никогда в рендере
+- Побочные эффекты — в `app/init.ts` или в Query (`queryFn`/`mutationFn`), не в
+  рендере: рендер обязан быть чистым (Rules of React, на них опирается компилятор)
 - При правке `docs/stack/*.md` — следить за `status: stable` и `Generates`-секцией;
   FSD-карта правится только в `<org>/strategy` (его `/fsd-deep-dive`), не здесь
 
@@ -106,24 +125,14 @@ kind + slug. Артефакты платформы — локальные `docs/
 - Правка `docker/*`, `.npmrc`, `package.json#dependencies` без записи в `docs/stack/dependencies.md`
 - Удаление reference-слайсов вручную (это работа `/de-template`)
 - Изменение FSD-структуры (новый слой, переименование сегментов)
-- Любой `--no-verify`
 
-### Не делать никогда
-- `--no-verify` без явного разрешения юзера
-- Коммитить `.env`, `*.pem`, `*.key`
-- Прямой `export *` из `index.ts` (только explicit re-exports)
-- Импорт из `../*/*/*/*` или мимо public API
-- Импорт внешней дизайн-системы / вендорных UI-китов (Material UI, shadcn, chakra…)
-- Хардкод сырых цветов/размеров в компонентах вместо семантических токенов (`app/styles/index.css`)
+Хуки не обходятся: `--no-verify` (как и `--no-gpg-sign`) закрыт deny-правилами
+`.claude/settings.json`, пропустить pre-push `pnpm check` может только сам юзер.
+`.env`, `*.pem`, `*.key` не коммитятся — в них секреты.
 
-## Forward-only
+## Долгосрочное знание
 
-Любой текст в репо описывает **только текущее состояние** — не «было/стало».
-История — в `git log` + Conventional Commits. Полное правило —
-`.claude/rules/forward-only.md`.
-
-## Авто-память
-
-Запись в файловую авто-память запрещена глобально (см. `~/.claude/CLAUDE.md`).
-Не предлагай «сохранить в память». Долгосрочное знание — в репо: `CLAUDE.md`,
-`.claude/rules/`, `state/` каждого скила.
+Авто-память Claude Code не используется: запись в её каталог закрыта deny-правилом
+`.claude/settings.json`. Не предлагай «сохранить в память» — знание, которое должно
+пережить сессию, записывается в репо: `CLAUDE.md`, `.claude/rules/`, `state/`
+скиллов, `docs/`.

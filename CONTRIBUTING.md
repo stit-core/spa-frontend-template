@@ -28,9 +28,9 @@
   Между слайсами одного слоя импорт запрещён; только вниз через public API. Steiger +
   `eslint-plugin-boundaries` enforce'ят.
 - **Public API** — `index.ts` на каждом слайсе/сегменте, explicit re-exports (не `export *`).
-- **UI-компоненты пишутся в проекте, design-system-agnostic.** Внешней DS нет;
-  компоненты опираются только на собственный токен-слой (`src/app/styles/index.css`,
-  тема через `data-scheme`) — в `shared/ui/` (переиспользуемое) или `ui/`-сегменте
+- **UI-компоненты пишутся в проекте.** Они опираются только на собственный
+  токен-слой (`src/app/styles/index.css`, тема через `data-scheme`), вендорные
+  UI-киты не подключаются; место — `shared/ui/` (переиспользуемое) или `ui/`-сегмент
   слайса. Rule `shared-ui`.
 - **Секреты не в бандле.** Access-token не в localStorage; в `import.meta.env.VITE_*` —
   только не-секретное (попадает в публичный бандл). Детали — rule `env-local`.
@@ -49,7 +49,7 @@
 ## Перед PR
 
 ```bash
-pnpm check    # gate: typecheck + lint + format:check + test + steiger + size + build
+pnpm check    # gate: typecheck + lint + format:check + test + steiger + build + size
 ```
 
 Зелёный `pnpm check` — gate пройден (его же гоняет `lefthook pre-push`). E2E
@@ -63,8 +63,9 @@ pnpm check    # gate: typecheck + lint + format:check + test + steiger + size + 
 
 Спокойно и по делу, без хайпа. **Biome formatter** + **ESLint flat config**
 обязательны, **TypeScript strict** (без `as any` без явной причины). React Compiler
-делает полный проход — без ручных `useMemo`/`useCallback`/`memo` кроме обоснованных
-случаев. Комментарии — только когда WHY неочевидно, не пересказ кода.
+(`compilationMode: 'infer'`) компилирует компоненты и хуки — без ручных
+`useMemo`/`useCallback`/`memo` кроме обоснованных случаев. Комментарии — только когда
+WHY неочевидно, не пересказ кода.
 
 ## Лицензия
 

@@ -6,7 +6,8 @@
 
 Шаблон фронтенда экосистемы stit: Vite + TypeScript + React 19 + TanStack,
 Feature-Sliced Design под линтером, mock-режим из коробки. Крутится без бэкенда
-с первой минуты; код пишется по спроектированной FSD-карте.
+с первой минуты; код пишется по спроектированной FSD-карте. Индексируемый сайт
+(страницы под поиск) — это [`ssr-frontend-template`](https://git.stit.tech/stit-core/ssr-frontend-template).
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-2563eb)](LICENSE)
 [![Часть stit](https://img.shields.io/badge/stit-открытые_шаблоны-6366f1)](https://git.stit.tech/stit-core/stit-public)
@@ -39,8 +40,9 @@ pnpm gen:msw         # init Service Worker для MSW в public/
 pnpm dev             # mock-режим по умолчанию → http://localhost:5173
 ```
 
-В углу появится мини-панель `mock:` — переключатель сценариев
-(`empty | populated | authenticated | error`) и кнопка `reset`. Бэкенд не нужен.
+Бэкенд не нужен: MSW отвечает на `/api/*`. С `VITE_MOCK_DEVTOOLS=1` в `.env.local`
+(шаблон — `.env.local.example`) в углу появляется мини-панель `mock:` —
+переключатель сценариев (`empty | populated | authenticated | error`) и кнопка `reset`.
 
 ## Воркфлоу нового проекта
 
@@ -49,9 +51,8 @@ pnpm dev             # mock-режим по умолчанию → http://localh
 1. /smartdev          → сводка состояния
 2. /init-service      → оркестратор онбординга:
    ├─ привязка к FSD-карте из ../strategy (проектируется там: /fsd-deep-dive)
-   ├─ /stack-deep-dive→ проектирование стека (docs/stack/*)
-   ├─ /de-template    → разворот фундамента
-   └─ /scaffold       → реализация по слайсам
+   ├─ /stack-deep-dive → проектирование стека (docs/stack/*)
+   └─ /de-template    → разворот фундамента, свои слайсы через /scaffold
 3. pnpm dev           → SPA крутится в mock-режиме
 4. когда бэк появится → zod-схемы сущностей по контракту, VITE_API_MODE=real
 5. pnpm check → /release → образ в registry → rollout в <org>/infra (make bump)
@@ -73,7 +74,7 @@ pnpm test:e2e         # Playwright
 pnpm lint             # Biome + ESLint
 pnpm steiger          # FSD-линтер
 pnpm gen              # route-tree (TanStack Router CLI)
-pnpm check            # gate: typecheck + lint + format + test + steiger + build + size
+pnpm check            # gate: typecheck + lint + format:check + test + steiger + build + size
 ```
 
 Перед claim «готово» / push — **`pnpm check`** (его же гоняет `lefthook pre-push`).
@@ -92,18 +93,17 @@ src/features/     пользовательские сценарии
 src/entities/     доменные сущности
 src/shared/       инфра: api, config, i18n, lib, ui
 docs/stack/       проектная карта стека (/stack-deep-dive)
-docs/reference/   стационарные доки (architecture, ecosystem, deployment)
-.claude/          скиллы и path-scoped правила
+docs/reference/   стационарные доки (architecture, ecosystem, deployment, observability)
+.claude/          скиллы, правила по темам, планы
 ```
 
 ## UI-компоненты
 
-Внешней дизайн-системы нет — компоненты пишутся в проекте и делаются
-design-system-agnostic: опираются только на собственный токен-слой
+Компоненты пишутся в проекте и опираются только на собственный токен-слой
 (`src/app/styles/index.css` — Tailwind v4 `@theme` + семантические
-CSS-переменные, тема через `data-scheme`). Слайс-локальный UI — в `ui/`-сегменте
-слайса; переиспользуемые примитивы/обёртки — в `src/shared/ui/`. Дисциплина —
-rule `shared-ui`.
+CSS-переменные, тема через `data-scheme`); вендорные UI-киты не подключаются.
+Слайс-локальный UI — в `ui/`-сегменте слайса; переиспользуемые примитивы/обёртки —
+в `src/shared/ui/`. Дисциплина — rule `shared-ui`.
 
 ## Документация
 
@@ -112,6 +112,7 @@ rule `shared-ui`.
 | [`docs/README.md`](docs/README.md) | карта документации |
 | [`docs/getting-started.md`](docs/getting-started.md) | старт для потребителя шаблона |
 | [`docs/reference/architecture.md`](docs/reference/architecture.md) | FSD, слои, public API |
+| [`docs/reference/ecosystem.md`](docs/reference/ecosystem.md) | соседи по экосистеме, когда SPA / когда сайт, контракты |
 | [`docs/reference/deployment.md`](docs/reference/deployment.md) | Docker + nginx + runtime config |
 | [`CLAUDE.md`](CLAUDE.md) | гайд для агента (ядро + роутер) |
 

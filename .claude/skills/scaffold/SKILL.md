@@ -1,45 +1,30 @@
 ---
 name: scaffold
-description: Интерактивно разложить один FSD-слайс (entity/feature/widget/page) по канону — папка с ui/model/api/lib/config + index.ts + пустые тесты + (для page) route + (если просит) mock-handler. Источник слайса — stable-запись FSD-карты в соседнем <org>/strategy (docs/projects/<slug>/fsd/<surface>/); src/-пути скилл выводит сам из kind + slug. Активируй когда юзер говорит "/scaffold", "создай слайс X", "добавь страницу Y", "новый widget Z", или когда оркестратор /init-service / /de-template чейнит этап реализации.
+description: Разложить один FSD-слайс (entity, feature, widget или page) по канону шаблона за один проход — сегменты ui/model/api/lib, public API index.ts, заготовки тестов, route для page и mock-handler для слайса с API. Источник — stable-запись FSD-карты в соседнем <org>/strategy (docs/projects/<slug>/fsd/<surface>/); src/-пути скилл выводит из kind и slug. Используй, когда нужно завести в коде слайс, страницу, виджет или сущность, и когда /init-service или /de-template доходят до реализации своих слайсов. Сам слайс проектируется в strategy (/fsd-deep-dive), не здесь.
 ---
 
 # Skill: scaffold
 
-Раскладывает один слайс по FSD-канону за один проход. Не интервьюирует про
-бизнес — карта слайсов проектируется в `<org>/strategy` (его
-`/fsd-deep-dive`). Скилл детерминированно создаёт файлы по stable-записи
-из `<strategy-path>/docs/projects/<slug>/fsd/<surface>/<kind>.md`
-(резолв — поля `project-slug`/`strategy-path`/`surface` в
-`docs/stack/service.md`, дефолт `../strategy`); `src/`-пути выводит сам из
-kind + slug — в карте их нет.
+Раскладывает один слайс по FSD-канону за один проход. Бизнес здесь не
+проектируется — карта слайсов живёт в `<org>/strategy` (его `/fsd-deep-dive`).
+Скилл создаёт файлы по stable-записи из
+`<strategy-path>/docs/projects/<slug>/fsd/<surface>/<kind>.md` (резолв — поля
+`project-slug` / `strategy-path` / `surface` в `docs/stack/service.md`, дефолт
+`../strategy`); `src/`-путей в карте нет — их скилл выводит сам из kind + slug.
 
-## Когда применять
+## Вход
 
-- "/scaffold" + аргумент (slice / page / widget / entity / feature)
-- Юзер: «создай слайс X», «добавь страницу Y», «новый widget Z»
-- Оркестратор `/init-service` или `/de-template` чейнит этап «свои слайсы»
+- Запись слайса есть в FSD-карте strategy (`fsd/<surface>/<kind>.md`) со
+  `status: stable`. Нет соседа или записи — next-step юзеру «спроектируй слайс в
+  `<org>/strategy` (`/fsd-deep-dive`)»: слайс без записи в карте здесь не заводится.
+- Slug — kebab-case (`create-todo`, `payment-status`) и не конфликтует с
+  существующими слайсами.
 
-## Pre-flight
-
-- [ ] Запись слайса есть в FSD-карте strategy (`fsd/<surface>/<kind>.md`) со
-      `status: stable`; нет соседа/записи — next-step «спроектируй в
-      `<org>/strategy` (/fsd-deep-dive)», не выдумывать слайс здесь
-- [ ] Имя слайса в kebab-case, не конфликтует с существующими
-
-## Вопросы юзеру (≤ 3, не интервью)
-
-1. **Тип** — `entity | feature | widget | page` (из `/scaffold <type>`-аргумента)
-2. **Имя слайса** — kebab-case (`create-todo`, `payment-status`)
-3. **Что нужно** — какие сегменты создать:
-   - `ui/` (всегда для feature/widget/page; опционально для entity)
-   - `model/` (всегда для entity; для feature если есть store/schema)
-   - `api/` (для entity всегда; для feature если есть mutation; для widget/page редко)
-   - `lib/` (опционально)
-4. **Сопутствующее** — нужен ли:
-   - test stub (`*.test.tsx`) — да по умолчанию
-   - mock-handler в `shared/api/mock/handlers/<slice>.ts` (для entity/feature
-     с API) — да если есть `api/`
-   - route в `pages/` (только для page) — обязательно
+Тип и slug берутся из аргумента (`/scaffold <kind> <slug>`) и записи карты; что
+создавать — из kind и колонок записи (`entities`: `source`, `поля`; `features`:
+`entities`, `результат`; `pages`: `path`, `guard`, композиция). Юзера спрашивай
+одним раундом и только о том, чего запись не определяет: опциональные сегменты
+(`lib/`, `ui/` у entity) и нужен ли mock-handler.
 
 ## Раскладка
 
@@ -47,11 +32,11 @@ kind + slug — в карте их нет.
 
 ```
 src/entities/<slug>/
-├─ model/types.ts          # Zod schema + type
+├─ model/schema.ts         # Zod-схема + тип (контракт API)
 ├─ api/queries.ts          # queryOptions + мутации
 ├─ ui/<slug>-card.tsx      # presenter (опционально)
 ├─ index.ts                # public API
-└─ model/types.test.ts     # schema-тест
+└─ model/schema.test.ts    # тест схемы
 ```
 
 ### feature
@@ -59,7 +44,7 @@ src/entities/<slug>/
 ```
 src/features/<slug>/
 ├─ ui/<slug>-form.tsx      # основной компонент
-├─ model/schema.ts         # Zod input schema (если форма)
+├─ model/schema.ts         # Zod-схема ввода (если форма)
 ├─ api/<slug>.ts           # mutation (если есть)
 ├─ index.ts
 └─ ui/<slug>-form.test.tsx
@@ -77,13 +62,14 @@ src/widgets/<slug>/
 ### page
 
 ```
-src/pages/<slug>.tsx       # TanStack Router file-based
-└─ test (опционально — e2e лучше для page-уровня)
+src/pages/<slug>.tsx       # TanStack Router file-based route
 ```
 
-После записи файла page — `pnpm gen` регенерирует `routeTree.gen.ts`.
+`path` и `guard` — из записи карты; guard — в `beforeLoad` с `redirect`, не в
+рендере. Route-tree (`src/app/router/routeTree.gen.ts`) регенерирует vite-плагин
+на `pnpm dev`, без dev-сервера — `pnpm gen`. Тест page-уровня — e2e в `e2e/`.
 
-## Public API (обязательно)
+## Public API
 
 `index.ts` — explicit re-exports:
 
@@ -93,14 +79,14 @@ export { useLoginMutation } from './api/login'
 export { LoginSchema, type LoginInput } from './model/schema'
 ```
 
-**Не `export *`** — теряем discoverability и tree-shake.
+Не `export *`: он прячет, что слайс отдаёт наружу, и мешает tree-shake.
 
-## Mock handler (если нужен)
+## Mock handler
 
-`src/shared/api/mock/handlers/<slug>.ts`:
+Для entity/feature с `api/` — `src/shared/api/mock/handlers/<slug>.ts`:
 
 ```ts
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 import type { DB } from '../db'
 
 export function <slug>Handlers(db: DB) {
@@ -111,18 +97,17 @@ export function <slug>Handlers(db: DB) {
 }
 ```
 
-Зарегистрировать в `src/shared/api/mock/handlers/index.ts`.
+Подключить в `buildHandlers` (`src/shared/api/mock/handlers/index.ts`); новая
+сущность — ещё и модель в `src/shared/api/mock/db.ts` и её снапшот в `persist.ts`
+(иначе mock-данные не переживут перезагрузку).
 
 ## После раскладки
 
-- `pnpm steiger src` — должен быть зелёным (slice canonical, public API на месте)
+- `pnpm steiger` — зелёный (канон слайса, public API на месте)
 - `pnpm typecheck` — нет битых импортов
-- `pnpm lint` — формат / правила в порядке
+- `pnpm lint` — формат и правила в порядке
 
-## Что НЕ делать
-
-- ❌ Создавать сегменты `components/`, `hooks/`, `utils/`, `types/` — это
-  группировка по типу, запрещено каноном (Steiger `no-reserved-folder-names`)
-- ❌ `export * from './...'` в `index.ts`
-- ❌ Импортировать из соседнего слайса того же слоя
-- ❌ Создавать слайс «на будущее» (Steiger `insignificant-slice`)
+Линтеры держат канон: сегменты по назначению (`components/`, `hooks/`, `utils/`,
+`types/` — группировка по типу, Steiger `no-reserved-folder-names`), импорт из
+соседнего слайса того же слоя запрещён, слайс «на будущее» не заводится (Steiger
+`insignificant-slice`).

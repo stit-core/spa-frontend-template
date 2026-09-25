@@ -9,6 +9,9 @@ pre-commit:
       glob: "src/**/*.{ts,tsx}"
       run: pnpm eslint --fix --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
+    plans:
+      glob: ".claude/plans/*.md"
+      run: bash scripts/validate-plan.sh
 
 commit-msg:
   commands:

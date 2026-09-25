@@ -10,7 +10,8 @@ status: draft
 ## TanStack Router
 
 - Версия: `^1.95`
-- Mode: **file-based** через `@tanstack/router-vite-plugin`
+- Mode: **file-based** через `@tanstack/router-plugin` (`tanstackRouter` в `vite.config.ts`;
+  standalone `pnpm gen` читает `tsr.config.json` — конфиги держатся в синхроне)
 - Routes dir: `src/pages/`
 - Generated tree: `src/app/router/routeTree.gen.ts` (коммитится)
 - Default preload: `intent`
@@ -32,7 +33,7 @@ status: draft
 
 ## Generates
 
-- `vite.config.ts#plugins[TanStackRouterVite]`
+- `vite.config.ts#plugins[tanstackRouter]` + `tsr.config.json`
 - `src/app/router/index.ts` — `createRouter`
 - `src/pages/__root.tsx` — корневой layout
 

@@ -41,8 +41,8 @@ features/<slice>/
 - `index.ts` обязателен на каждом слайсе **и** сегменте sliceless-слоя
 - Explicit re-exports, не `export *`
 - Внутри слайса — относительные пути, снаружи — только через `index.ts`
-- В `shared/ui` и `shared/lib` — отдельный `index.ts` на компонент/утилиту
-  (для tree-shake)
+- В `shared/ui` — отдельный `index.ts` на компонент (`shared/ui/<name>/index.ts`,
+  для tree-shake); остальные сегменты `shared` — один `index.ts` на сегмент
 
 ## Pages-first
 
@@ -61,10 +61,9 @@ Steiger ловит `insignificant-slice`.
 
 ## UI-компоненты
 
-Внешней дизайн-системы нет — все компоненты пишутся в проекте и делаются
-design-system-agnostic: опираются только на собственный токен-слой
+Все компоненты пишутся в проекте и опираются только на собственный токен-слой
 (`app/styles/index.css` — Tailwind v4 `@theme` + семантические переменные,
-тема через `data-scheme`), не на вендорную DS.
+тема через `data-scheme`); вендорные UI-киты не подключаются.
 
 - `shared/ui/` — переиспользуемые примитивы и обёртки с layout-/biz-семантикой
   (PageHeader, DataTable…)
@@ -79,7 +78,7 @@ design-system-agnostic: опираются только на собственн�
 |---|---|
 | TypeScript strict | типы (verbatimModuleSyntax, noUncheckedIndexedAccess, …) |
 | Biome 2 | format + базовые JS/TS правила |
-| ESLint 9 flat | React, jsx-a11y, react-compiler, testing-library, boundaries |
+| ESLint 9 flat | React, react-hooks (с compiler-правилами), jsx-a11y, testing-library, boundaries |
 | Steiger | архитектурный линтер FSD (forbidden-imports, public-api, slice-discipline) |
 | size-limit | бандл-бюджеты на entry-чанки |
 
@@ -92,7 +91,8 @@ design-system-agnostic: опираются только на собственн�
 ## Gate `pnpm check`
 
 ```
-typecheck → lint → format:check → test → steiger → size → build
+typecheck → lint → format:check → test → steiger → build → size
 ```
 
-E2E и visual-regression — отдельные таргеты, не в gate (платформозависимы).
+E2E (`pnpm test:e2e`) — отдельный запуск, не в gate (платформозависим: браузер и
+dev-сервер).

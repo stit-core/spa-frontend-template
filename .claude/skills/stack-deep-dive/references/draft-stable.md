@@ -4,15 +4,8 @@
 
 ## Чек-лист
 
-1. **Все секции заполнены** или явно `_нет_`:
-   - `service.md` § Идентичность / Связь с экосистемой
-   - `runtime.md` § Node / Browser / React
-   - `config.md` § Runtime config keys / Build-time env / Секреты
-   - `routing.md` § TanStack Router / Layouts / Guards
-   - `api.md` § HTTP-клиент / Контракт API / Auth / Mock
-   - `styling.md` § Источники / Оси темизации
-   - `observability.md` § Sentry / Web Vitals
-   - `dependencies.md` § Базовая подборка (зафиксирована) / Проектные / Запрещено
+1. **Обязательные секции kind'а** (`references/field-checklists.md`) заполнены
+   или явно `_нет_`.
 
 2. **Generates непуст** — конкретные файлы, которые правит `/de-template`.
 
@@ -22,10 +15,10 @@
    - `observability.md#DSN` (если активен) — есть в `config.md`
    - `dependencies.md` не противоречит установленному `package.json`
 
-4. **Нет открытых `**blocker**`-вопросов** в `state/<kind>.md`
+4. **Нет открытых `(**blocker**)`-вопросов** в `state/<kind>.md`
    (формат — `references/state-format.md`).
 
 ## Эскалация при сомнении
 
-Те же правила что у fsd-deep-dive — `**blocker**`-строка в `## Открытые
-вопросы` заметки `state/<kind>.md`, не промоушать.
+Сомнение — не промоушн: `(**blocker**)`-строка в `## Открытые вопросы` заметки
+`state/<kind>.md`.

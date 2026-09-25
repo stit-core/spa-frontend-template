@@ -19,7 +19,7 @@ status: draft
 
 - LCP / INP / CLS / FCP / TTFB
 - dev: `console.info`
-- prod: Sentry если активен, иначе noop
+- prod: _куда слать (Sentry / свой приёмник / никуда — репортер шаблона в prod ничего не шлёт)_
 
 ## Generates
 

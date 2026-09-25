@@ -12,8 +12,7 @@
 
 Стек — 8 фиксированных singleton-артефактов (`service`, `runtime`, `config`,
 `routing`, `api`, `styling`, `observability`, `dependencies`), поэтому путь
-плоский: `state/<kind>.md` (без вложений). Контракт зеркалит формат
-fsd-deep-dive.
+плоский: `state/<kind>.md` (без вложений).
 
 ## Шаблон
 
@@ -50,11 +49,12 @@ ref: docs/stack/observability.md
 
 Список незакрытых смысловых вопросов. Каждый — одна строка.
 
-- Префикс `**blocker:**` ИЛИ суффикс `(**blocker**)` — блокирует stable.
+- Суффикс `(**blocker**)` блокирует stable. По этой разметке гейт `/de-template`
+  ищет открытые blocker'ы (`grep -RlE '\*\*blocker\*\*'`), поэтому форма одна.
 - Закрытый вопрос **удаляется** (не зачёркивается). Пусто → удалить секцию.
 - Falsifiable формулировка. Хорошо: «Нужен ли Sentry self-hosted, если SaaS
   покрывает объёмы?». Плохо: «разобраться с observability».
-- **Cross-kind blocker** (kit-артефакт объявил env, который не появился в
+- **Cross-kind blocker** (артефакт одного kind объявил env, который не появился в
   `config.md`) — частый случай для стека. Помечать в state того роллапа,
   который недополучил: `state/config.md` → «`observability` объявил
   `SENTRY_DSN` — добавить в Runtime config keys (**blocker**)».

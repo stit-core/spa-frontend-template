@@ -23,8 +23,9 @@ status: draft
 Sibling-checkout'ы форков одной org (`~/git/<org>/…`):
 
 - strategy: `git.stit.tech/<org>/strategy` — design SoT; поля резолва ниже
+- infra: `git.stit.tech/<org>/infra` — операционный хаб и выкатка (`make bump SVC=frontend TAG=` там)
 - backend: `git.stit.tech/<org>/backend` (если есть)
-- infra: `git.stit.tech/<org>/infra` — деплой-звено (rollout: `make bump SVC=frontend TAG=` там)
+- site: `git.stit.tech/<org>/site` — индексируемый сайт (если есть)
 
 | поле | значение |
 |---|---|
@@ -36,7 +37,7 @@ Sibling-checkout'ы форков одной org (`~/git/<org>/…`):
 
 - `package.json` — `name`, `version`
 - `README.md` — шапка проекта
-- `docker/Dockerfile` — `LABEL` метаданные
+- `/release` — registry-путь образа (`image registry`)
 
 ## Открытые вопросы
 

@@ -36,7 +36,7 @@ status: draft
 ## Запрещено
 
 - ❌ Дублирование функционала базовых пакетов (axios вместо своего fetch-враппера, Redux вместо Zustand+Query)
-- ❌ Внешние UI-киты / DS (Material UI, shadcn, chakra…) — компоненты пишутся в проекте
+- ❌ Вендорные UI-киты (Material UI, shadcn, chakra…) — компоненты пишутся в проекте
 - ❌ Полифиллы без явной причины (target es2024 покрывает 99%)
 
 ## Generates

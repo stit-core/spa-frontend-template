@@ -1,6 +1,6 @@
 ---
-description: Работа с env и секретами. Активируется при правке .env*, runtime config, docker/.
-globs: [".env*", "src/shared/config/**", "docker/**", "vite.config.ts"]
+description: Работа с env и секретами. Активируется при правке .env*, runtime config, docker/, vite.config.ts.
+paths: [".env*", "src/shared/config/**", "docker/**", "vite.config.ts"]
 ---
 
 # env и секреты
@@ -26,8 +26,9 @@ globs: [".env*", "src/shared/config/**", "docker/**", "vite.config.ts"]
 
 - Не хранятся в фронт-бандле. Cookie-auth (httpOnly) на стороне бэка.
 - Sentry DSN — public by design, безопасно в runtime config.
-- В CI секреты приходят через env переменные → в Docker контейнер →
-  nginx-entrypoint впишет в `config.js` (только не-секретные).
+- Runtime-значения приходят env-переменными контейнера (на VPS их задаёт
+  `<org>/infra` в `.env`) → `nginx-entrypoint.sh` вписывает в `config.js`
+  только перечисленные в нём не-секретные ключи; `config.js` публичен, как и бандл.
 
 ## Что нельзя
 
