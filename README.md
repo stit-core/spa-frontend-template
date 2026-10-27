@@ -7,16 +7,18 @@
 Шаблон фронтенда экосистемы stit: Vite + TypeScript + React 19 + TanStack,
 Feature-Sliced Design под линтером, mock-режим из коробки. Крутится без бэкенда
 с первой минуты; код пишется по спроектированной FSD-карте. Индексируемый сайт
-(страницы под поиск) — это [`ssr-frontend-template`](https://git.stit.tech/stit-core/ssr-frontend-template).
+(страницы под поиск) — это [`ssr-frontend-template`](https://github.com/stit-core/ssr-frontend-template).
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-2563eb)](LICENSE)
-[![Часть stit](https://img.shields.io/badge/stit-открытые_шаблоны-6366f1)](https://git.stit.tech/stit-core/stit-public)
+[![Часть stit](https://img.shields.io/badge/stit-открытые_шаблоны-6366f1)](https://github.com/stit-core)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff)](#стек)
 [![React](https://img.shields.io/badge/React-19.2-149eca)](#стек)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6)](#стек)
 [![Arch](https://img.shields.io/badge/arch-FSD_%2B_Steiger-22c55e)](#структура)
 
 </div>
+
+> Разработка идёт в приватном Gitea (`git.stit.tech/stit-core/spa-frontend-template`), публичное зеркало — [github.com/stit-core/spa-frontend-template](https://github.com/stit-core/spa-frontend-template). Как с ним работать вне инфраструктуры stit — в [профиле stit-core](https://github.com/stit-core).
 
 ---
 
@@ -120,7 +122,7 @@ CSS-переменные, тема через `data-scheme`); вендорные
 
 Это один из открытых шаблонов stit (Apache-2.0) — фундамент «-1 уровня»,
 берите бесплатно и владейте. Карта всех шаблонов и точка входа —
-**[витрина stit](https://git.stit.tech/stit-core/stit-public)**. Нужна
+**[витрина stit](https://github.com/stit-core)**. Нужна
 команда, стандарт или поддержка — **[наш подход и контакты (vision)](https://git.stit.tech/stit/vision)**.
 
 ## Лицензия
