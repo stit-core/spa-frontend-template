@@ -6,13 +6,13 @@
 за логином. Код пишется по FSD-карте поверхности из `<org>/strategy`; результат
 репо — nginx-образ в registry.
 
-Индексируемый сайт — другой шаблон, `ssr-frontend-template`. Проект может держать
+Индексируемый сайт — другой шаблон, `seo-frontend-template`. Проект может держать
 оба: сайт на корне домена, приложение на `app.${DOMAIN}`.
 
 | нужно | берут |
 |---|---|
 | кабинет, дашборд, что угодно за логином | **этот шаблон** → форк `<org>/frontend` |
-| страницы, которые ищут в Google и Яндексе; блог, услуги, кейсы, лендинг | `ssr-frontend-template` → форк `<org>/site` |
+| страницы, которые ищут в Google и Яндексе; блог, услуги, кейсы, лендинг | `seo-frontend-template` → форк `<org>/site` |
 
 ## Шаблоны и соседи
 
@@ -24,7 +24,7 @@
 ├─ strategy/   ← business-strategy-template
 ├─ infra/      ← project-infra-template-compose (операционный хаб)
 ├─ frontend/   ← spa-frontend-template (этот репо)
-├─ site/       ← ssr-frontend-template (если есть)
+├─ site/       ← seo-frontend-template (если есть)
 ├─ backend/    ← go-backend-template (если есть)
 ├─ <bot>/      ← telegram-bot-template (если есть)
 └─ mobile/     ← mobile-template (если есть)
@@ -36,7 +36,7 @@
 | `project-infra-template-compose` → `<org>/infra` | runtime проекта (docker-compose на VPS) и **операционный хаб**: общий план, рассылка агентов по сиблингам, выкатка тегов (`make bump`) |
 | `go-backend-template` → `<org>/backend` | Go-сервис |
 | `spa-frontend-template` → `<org>/frontend` | React SPA (кабинет, всё за логином) — этот репо |
-| `ssr-frontend-template` → `<org>/site` | Astro SSR-сайт (индексируемый контент) |
+| `seo-frontend-template` → `<org>/site` | Astro SEO-сайт (индексируемый контент) |
 | `telegram-bot-template` → `<org>/<bot>` | Telegram-бот (Python, aiogram) |
 | `mobile-template` → `<org>/mobile` | KMP-приложение Android + iOS; релиз — в магазины |
 

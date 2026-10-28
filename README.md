@@ -7,7 +7,7 @@
 Шаблон фронтенда экосистемы stit: Vite + TypeScript + React 19 + TanStack,
 Feature-Sliced Design под линтером, mock-режим из коробки. Крутится без бэкенда
 с первой минуты; код пишется по спроектированной FSD-карте. Индексируемый сайт
-(страницы под поиск) — это [`ssr-frontend-template`](https://github.com/stit-core/ssr-frontend-template).
+(страницы под поиск) — это [`seo-frontend-template`](https://github.com/stit-core/seo-frontend-template).
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-2563eb)](LICENSE)
 [![Часть stit](https://img.shields.io/badge/stit-открытые_шаблоны-6366f1)](https://github.com/stit-core)
