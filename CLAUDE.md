@@ -16,14 +16,16 @@ Biome 2 + ESLint 9 + Steiger / Vitest 4 + Playwright / pnpm 10 / lefthook.
 Сюда приходят двумя путями, и в обоих работаешь обвязкой этого репо — этот файл,
 скиллы, гейт `pnpm check`:
 
-- **агентом из хаба `<org>/infra`** — проект стартует в `<org>/strategy`, дальше
-  работа идёт из операционного хаба: сквозная задача — план-программа в
-  `.claude/plans/` инфры, оттуда её фаза приходит сюда (`../frontend`) и ведётся
-  планом здесь (`/plan`, `parent: infra:<slug>`). Итог работы здесь — образ в registry
-  (`/release`); выкатка тега — только в `<org>/infra` (`make bump`);
-- **прямым заходом** — нормальный режим; то, что задевает соседей, уходит
-  handoff-блоком для `<org>/infra` (его печатает `/release`: новый образ, новые
-  runtime-ключи env), изменение дизайна — в `<org>/strategy` его скиллами.
+- **из корня проекта `~/git/<org>/`** — оттуда ведётся вся работа: сначала проект
+  продумывается в `<org>/strategy`, затем сессия корня (или её фоновый агент)
+  приходит сюда, в `frontend/`, с задачей или фазой программы. Сквозная задача —
+  программа в `.claude/plans/` хаба `<org>/infra`; её фаза ведётся планом здесь
+  (`/plan`, `parent: infra:<slug>`). Итог работы здесь — образ в registry
+  (`/release`); выкатка тега — только через хаб (`make bump`);
+- **прямым заходом** (сессия в папке репо) — нормальный режим; то, что задевает
+  соседей, уходит handoff-блоком для хаба `<org>/infra` (его печатает `/release`:
+  новый образ, новые runtime-ключи env), изменение дизайна — в `<org>/strategy` его
+  скиллами.
 
 Дальше:
 
@@ -49,7 +51,7 @@ kind + slug. Артефакты платформы — локальные `docs/
 `features/auth`, `pages/profile`, `pages/todos`, `features/theme` — учебные
 образцы: изучить, потом удалить под свой проект (через `/de-template`).
 
-Резолв соседа — sibling-checkout: поля `project-slug` / `strategy-path`
+Резолв соседа — sibling-checkout в корне проекта: поля `project-slug` / `strategy-path`
 (дефолт `../strategy`) / `surface` в `docs/stack/service.md`. Соседа нет —
 скиллы печатают next-step, не падают.
 
@@ -74,7 +76,7 @@ kind + slug. Артефакты платформы — локальные `docs/
 | Тема | Где |
 |---|---|
 | Архитектура FSD, слои, public API | `docs/reference/architecture.md` + rule `fsd-architecture` |
-| Экосистема: 7 шаблонов + 2 библиотеки, соседи, когда SPA / когда сайт, контракты, флоу (хаб `<org>/infra` или прямой заход) | `docs/reference/ecosystem.md` |
+| Экосистема: 7 шаблонов + 2 библиотеки, корень проекта и соседи, когда SPA / когда сайт, контракты, флоу (из корня проекта или прямой заход) | `docs/reference/ecosystem.md` |
 | Observability (Sentry, web-vitals) | `docs/reference/observability.md` |
 | Deployment (Dockerfile, nginx, runtime config) | `docs/reference/deployment.md` |
 | Тесты | rule `tests-pipeline` |

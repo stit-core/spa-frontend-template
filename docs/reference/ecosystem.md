@@ -16,13 +16,15 @@
 
 ## Шаблоны и соседи
 
-Шаблоны `stit-core/*` форкаются в репо клиентской орги `<org>/*`; форки одной орги
-лежат рядом sibling-checkout'ами (`../<name>`):
+Шаблоны `stit-core/*` форкаются в репо клиентской орги `<org>/*`. Проект — папка
+`~/git/<org>/`: в её корне — карта проекта `CLAUDE.md` и общие настройки сессии, в
+папках корня — форки орги sibling-checkout'ами (`../<name>`). Из корня ведётся вся
+работа ([`project-root.md`](https://github.com/stit-core/project-infra-template-compose/blob/main/docs/reference/project-root.md)):
 
 ```
-~/git/<org>/
+~/git/<org>/   ← корень проекта (<org>/project): CLAUDE.md, .claude/settings.json, local/
 ├─ strategy/   ← business-strategy-template
-├─ infra/      ← project-infra-template-compose (операционный хаб)
+├─ infra/      ← project-infra-template-compose (хаб)
 ├─ frontend/   ← spa-frontend-template (этот репо)
 ├─ site/       ← seo-frontend-template (если есть)
 ├─ backend/    ← go-backend-template (если есть)
@@ -33,7 +35,7 @@
 | шаблон → форк | роль |
 |---|---|
 | `business-strategy-template` → `<org>/strategy` | design-time source of truth: бизнес, AJTBD, SWOT, карта гипотез, продукты (vision/surface, interface, screens, fsd, telegram-bot-flow, mobile, services + domains), ИТ-периметр |
-| `project-infra-template-compose` → `<org>/infra` | runtime проекта (docker-compose на VPS) и **операционный хаб**: общий план, рассылка агентов по сиблингам, выкатка тегов (`make bump`) |
+| `project-infra-template-compose` → `<org>/infra` | runtime проекта (docker-compose на VPS) и **хаб**: программы сквозных задач, выкатка тегов (`make bump`) |
 | `go-backend-template` → `<org>/backend` | Go-сервис |
 | `spa-frontend-template` → `<org>/frontend` | React SPA (кабинет, всё за логином) — этот репо |
 | `seo-frontend-template` → `<org>/site` | Astro SEO-сайт (индексируемый контент) |
@@ -46,18 +48,24 @@
 
 ## Как сюда приходят
 
-1. **Старт проекта — `<org>/strategy`.** Там проектируется всё, что можно, в том
-   числе FSD-карта поверхности, которую реализует этот репо.
-2. **Дальше всё идёт из `<org>/infra` — операционного хаба.** Сквозная задача —
-   план-программа в `.claude/plans/` инфры; оттуда агент приходит сюда
-   (`../frontend`) с фазой, ведёт её планом здесь (`/plan`, `parent: infra:<slug>`) и
-   работает **обвязкой этого репо**: `CLAUDE.md`, скиллы, гейт `pnpm check`. Репо
-   останавливается на образе в registry (`/release`); выкатка тега — только из
-   `<org>/infra` (`make bump`). Изменение дизайна по ходу — тоже агентом из хаба, в
-   `../strategy` его скиллами.
-3. **Прямой заход сюда** — нормальный режим: репо работает своей обвязкой, а
-   последствия для соседей уходят handoff-блоком — для `<org>/infra` это
-   INFRA-HANDOFF, который печатает `/release` (новый образ, новые runtime-ключи env).
+1. **Корень проекта — первым.** Заводится папка `~/git/<org>/` с картой проекта
+   `CLAUDE.md`; в неё клонируются все репо проекта (этот — в `frontend/`), и из неё
+   ведётся вся работа — одной сессией Claude Code.
+2. **Сначала проектирование — `<org>/strategy`.** До кода там проектируется всё, что
+   можно, в том числе FSD-карта поверхности, которую реализует этот репо. Код
+   начинается, когда проект продуман.
+3. **Реализация — из корня.** Сессия корня (или её фоновый агент) приходит сюда, в
+   `frontend/`, с задачей или фазой программы и работает **обвязкой этого репо**:
+   сначала `CLAUDE.md` (с ним подхватываются правила и скиллы репо), дальше —
+   скиллы и гейт `pnpm check`. Сквозная задача — программа в `.claude/plans/` хаба
+   `<org>/infra`; её фаза ведётся планом здесь (`/plan`, `parent: infra:<slug>`).
+   Репо останавливается на образе в registry (`/release`); выкатка тега — только
+   через хаб (`make bump`). Изменение дизайна по ходу — в `strategy/`, скиллами
+   strategy.
+4. **Прямой заход сюда** (сессия в папке репо) — нормальный режим: репо работает
+   своей обвязкой, а последствия для соседей уходят handoff-блоком — для хаба
+   `<org>/infra` это INFRA-HANDOFF, который печатает `/release` (новый образ, новые
+   runtime-ключи env).
 
 Деплой-команды чужих репо (`make ship`, `make bump`, ssh) отсюда не запускаются.
 
