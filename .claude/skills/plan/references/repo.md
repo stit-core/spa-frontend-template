@@ -1,8 +1,8 @@
 # Профиль репо для /plan — spa-frontend-template
 
-- **Роль:** сервис — React SPA (`<org>/frontend`). Работа приходит фазой программы из хаба
-  `<org>/infra` (`parent: infra:<slug>`) или прямым заходом. Итог — образ в registry (`/release`);
-  выкатка тега — только из хаба (`make bump`).
+- **Роль:** сервис — React SPA (`<org>/frontend`). Работа приходит из корня проекта — задачей или
+  фазой программы хаба `<org>/infra` (`parent: infra:<slug>`) — или прямым заходом. Итог — образ в
+  registry (`/release`); выкатка тега — только из хаба (`make bump`).
 - **Гейт перед «готово»:** `pnpm check` (plan:check + typecheck + lint + format:check + test +
   steiger + build + size).
 - **Проверка планов:** `pnpm plan:check` (входит в `pnpm check`; pre-commit проверяет, когда

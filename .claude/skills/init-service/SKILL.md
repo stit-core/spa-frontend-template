@@ -16,7 +16,7 @@ description: Онбординг свежего форка spa-frontend-template 
 ## Pre-flight
 
 - [ ] Форк создан, репо склонирован (Gitea → **Use this template** → `<org>/frontend`)
-      рядом с `<org>/strategy`
+      в корень проекта `~/git/<org>/frontend`
 - [ ] `pnpm install` прогнан
 - [ ] `pnpm prepare` поставил lefthook-хуки
 - [ ] Если нет — подскажи шаг 0 из `docs/getting-started.md` и дальше не иди
